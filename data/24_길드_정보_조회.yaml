@@ -1,0 +1,260 @@
+openapi: 3.0.3
+info:
+  title: 메이플스토리 API
+  version: 1.0.0
+  contact:
+    name: help_openapi@nexon.co.kr
+  description: |-
+    - 2023년 12월 21일 데이터부터 조회할 수 있습니다.
+    - 길드 정보 조회 API는 일자별 데이터로 매일 오전 1시부터 전일 데이터 조회가 가능합니다. (예를 들어, 12월 22일 데이터를 조회하면 22일 00시부터 23일의 00시 사이의 데이터가 조회됩니다.)
+    - 게임 콘텐츠 변경으로 ocid가 변경될 수 있습니다. ocid 기반 서비스 갱신 시 유의해 주시길 바랍니다.
+  x-fileName: 24_script20231228075725.yaml
+  x-updateDate: '2023-12-28 07:57:25'
+  x-fileUrl: 'https://d39jgqf8odj4rj.cloudfront.net/api/24_script20231228075725.yaml'
+servers:
+  - url: 'https://open.api.nexon.com'
+tags:
+  - name: Guild
+    description: 길드 정보 조회
+
+paths:
+  /maplestory/v1/guild/id:
+    get:
+      tags:
+        - Guild
+      summary: 길드 식별자(oguild_id) 정보 조회
+      description: 길드 식별자(oguild_id) 정보를 조회합니다.
+      operationId: maplestory_get_oguild_id
+      parameters:
+        - name: x-nxopen-api-key
+          in: header
+          description: API KEY
+          required: true
+          schema:
+            type: string
+        - name: guild_name
+          in: query
+          description: 길드 명
+          required: true
+          schema:
+            type: string
+        - name: world_name
+          in: query
+          description: 월드 명
+          required: true
+          schema:
+            type: string
+            enum:
+              - 스카니아
+              - 베라
+              - 루나
+              - 제니스
+              - 크로아
+              - 유니온
+              - 엘리시움
+              - 이노시스
+              - 레드
+              - 오로라
+              - 아케인
+              - 노바
+              - 리부트
+              - 리부트2 
+              - 버닝
+              - 버닝2
+              - 버닝3
+      responses:
+          '200':
+            description: SUCCESS
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Guild'
+          '400':
+            description: Bad Request
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ErrorMessage'
+          '403':
+            description: Forbidden
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ErrorMessage'
+          '429':
+            description: Too Many Requests
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ErrorMessage'
+          '500':
+            description: Internal Server Error
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ErrorMessage'
+  /maplestory/v1/guild/basic:
+    get:
+      tags:
+        - Guild
+      summary: 기본 정보 조회
+      description: 기본 정보를 조회합니다.
+      operationId: maplestory_get_guild_basic
+      parameters:
+        - name: x-nxopen-api-key
+          in: header
+          description: API KEY
+          required: true
+          schema:
+            type: string
+        - name: oguild_id
+          in: query
+          description: 길드 식별자
+          required: true
+          schema:
+            type: string
+        - name: date
+          in: query
+          description: 조회 기준일 (KST)
+          example: "2023-12-21"
+          required: true
+          schema:
+            type: string
+      responses:
+          '200':
+            description: SUCCESS
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/GuildBasic'
+          '400':
+            description: Bad Request
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ErrorMessage'
+          '403':
+            description: Forbidden
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ErrorMessage'
+          '429':
+            description: Too Many Requests
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ErrorMessage'
+          '500':
+            description: Internal Server Error
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ErrorMessage'
+components:
+  schemas:
+    Guild:
+      type: object
+      properties:
+        oguild_id:
+          type: string
+          description: 길드 식별자 
+    GuildBasic:
+      type: object
+      properties:
+        date:
+          type: string
+          description: 조회 기준일 (KST, 일 단위 데이터로 시, 분은 일괄 0으로 표기)
+          example: "2023-12-21T00:00+09:00"
+        world_name:
+          type: string
+          description: 월드 명
+        guild_name:
+          type: string
+          description: 길드 명
+        guild_level:
+          type: number
+          format: int64
+          description: 길드 레벨
+        guild_fame:
+          type: number
+          format: int64
+          description: 길드 명성치
+        guild_point:
+          type: number
+          format: int64
+          description: 길드 포인트(GP)
+        guild_master_name:
+          type: string
+          description: 길드 마스터 캐릭터 명
+        guild_member_count:
+          type: number
+          format: int64
+          description: 길드원 수
+        guild_member:
+          type: array
+          description: 길드원 목록
+          items:
+            type: string
+        guild_skill:
+          type: array
+          description: 길드 스킬 목록
+          items:
+            type: object
+            properties:
+              skill_name:
+                type: string
+                description: 스킬 명
+              skill_description:
+                type: string
+                description: 스킬 설명
+              skill_level:
+                type: number
+                format: int64
+                description: 스킬 레벨
+              skill_effect:
+                type: string
+                description: 스킬 레벨 별 효과
+              skill_icon:
+                type: string
+                description: 스킬 아이콘
+        guild_noblesse_skill:
+          type: array
+          description: 노블레스 스킬 목록
+          items:
+            type: object
+            properties:
+              skill_name:
+                type: string
+                description: 스킬 명
+              skill_description:
+                type: string
+                description: 스킬 설명
+              skill_level:
+                type: number
+                format: int64
+                description: 스킬 레벨
+              skill_effect:
+                type: string
+                description: 스킬 레벨 별 효과
+              skill_icon:
+                type: string
+                description: 스킬 아이콘
+        guild_mark:
+          type: string
+          description: 조합형 길드 마크
+        guild_mark_custom:
+          type: string
+          description: 커스텀 길드 마크 (base64 인코딩 형식)
+    ErrorMessage:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            name:
+              type: string
+              description: 에러 명
+            message:
+              type: string
+              description: 에러 설명

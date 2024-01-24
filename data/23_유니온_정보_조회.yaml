@@ -1,0 +1,240 @@
+openapi: 3.0.3
+info:
+  title: 메이플스토리 API
+  version: 1.0.0
+  contact:
+    name: help_openapi@nexon.co.kr
+  description: |-
+    - 2023년 12월 21일 데이터부터 조회할 수 있습니다.
+    - 유니온 정보 조회 API는 일자별 데이터로 매일 오전 1시부터 전일 데이터 조회가 가능합니다. (예를 들어, 12월 22일 데이터를 조회하면 22일 00시부터 23일의 00시 사이의 데이터가 조회됩니다.)
+    - 게임 콘텐츠 변경으로 ocid가 변경될 수 있습니다. ocid 기반 서비스 갱신 시 유의해 주시길 바랍니다.
+  x-fileName: 23_script20231227042055.yaml
+  x-updateDate: '2023-12-27 04:20:55'
+  x-fileUrl: 'https://d39jgqf8odj4rj.cloudfront.net/api/23_script20231227042055.yaml'
+servers:
+  - url: 'https://open.api.nexon.com'
+tags:
+  - name: Union
+    description: 유니온 정보 조회
+
+paths:
+  /maplestory/v1/user/union:
+    get:
+      tags:
+        - Union
+      summary: 유니온 정보 조회
+      description: 유니온 레벨 및 유니온 등급 정보를 조회합니다.
+      operationId: maplestory_get_union
+      parameters:
+        - name: x-nxopen-api-key
+          in: header
+          description: API KEY
+          required: true
+          schema:
+            type: string
+        - name: ocid
+          in: query
+          description: 캐릭터 식별자
+          required: true
+          schema:
+            type: string
+        - name: date
+          in: query
+          description: 조회 기준일 (KST)
+          example: "2023-12-21"
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: SUCCESS
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Union'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+  /maplestory/v1/user/union-raider:
+    get:
+      tags:
+        - Union
+      summary: 유니온 공격대 정보 조회
+      description: 유니온에 배치된 공격대원 효과 및 공격대 점령 효과 등 상세 정보를 조회합니다.
+      operationId: maplestory_get_union_raider
+      parameters:
+        - name: x-nxopen-api-key
+          in: header
+          description: API KEY
+          required: true
+          schema:
+            type: string
+        - name: ocid
+          in: query
+          description: 캐릭터 식별자
+          required: true
+          schema:
+            type: string
+        - name: date
+          in: query
+          description: 조회 기준일 (KST)
+          example: "2023-12-21"
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: SUCCESS
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnionRaider'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+components:
+  schemas:
+    Union:
+      type: object
+      properties:
+        date:
+          type: string
+          description: 조회 기준일 (KST, 일 단위 데이터로 시, 분은 일괄 0으로 표기)
+          example: "2023-12-21T00:00+09:00"
+        union_level:
+          type: number
+          format: int64
+          description: 유니온 레벨
+        union_grade:
+          type: string
+          description: 유니온 등급
+    UnionRaider:
+      type: object
+      properties:
+        date:
+          type: string
+          description: 조회 기준일 (KST, 일 단위 데이터로 시, 분은 일괄 0으로 표기)
+          example: "2023-12-21T00:00+09:00"
+        union_raider_stat:
+          type: array
+          description: 유니온 공격대원 효과
+          items:
+            type: string
+        union_occupied_stat:
+          type: array
+          description: 유니온 공격대 점령 효과
+          items:
+            type: string
+        union_inner_stat:
+          type: array
+          description: 유니온 공격대 배치
+          items:
+            type: object
+            properties:
+              stat_field_id:
+                type: string
+                description: 공격대 배치 위치 (11시 방향부터 시계 방향 순서대로 0~7)
+              stat_field_effect:
+                type: string
+                description: 해당 지역 점령 효과
+        union_block:
+          type: array
+          description: 유니온 블록 정보
+          items:
+            type: object
+            properties:
+              block_type:
+                type: string
+                description: 블록 모양 (전사, 마법사, 궁수, 도적, 해적, 메이플m, 하이브리드)
+              block_class:
+                type: string
+                description: 블록 해당 캐릭터 직업
+              block_level:
+                type: string
+                description: 블록 해당 캐릭터 레벨
+              block_control_point:
+                type: object
+                description: |
+                  블록 기준점 좌표
+                  - 중앙 4칸 중 오른쪽 아래 칸이 x : 0, y : 0 포지션
+                  - 좌측으로 1칸씩 이동하면 x가 1씩 감소
+                  - 우측으로 1칸씩 이동하면 x가 1씩 증가
+                  - 아래로 1칸씩 이동하면 y가 1씩 감소
+                  - 위로 1칸씩 이동하면 y가 1씩 증가
+                properties:
+                  x:
+                    type: number
+                    format: int64
+                    description: 블록 기준점 X좌표
+                  y:
+                    type: number
+                    format: int64
+                    description: 블록 기준점 Y좌표
+              block_position:
+                type: array
+                description: 블록이 차지하고 있는 영역 좌표들 (null:미 배치 시)
+                items:
+                  type: object
+                  properties:
+                    x:
+                      type: number
+                      format: int64
+                      description: 블록 X좌표
+                    y:
+                      type: number
+                      format: int64
+                      description: 블록 Y좌표
+    ErrorMessage:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            name:
+              type: string
+              description: 에러 명
+            message:
+              type: string
+              description: 에러 설명

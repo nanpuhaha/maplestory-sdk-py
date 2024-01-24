@@ -1,0 +1,457 @@
+openapi: 3.0.3
+info:
+  title: 메이플스토리 API
+  version: 1.0.0
+  contact:
+    name: help_openapi@nexon.co.kr
+  x-fileName: 25_script20231228083009.yaml
+  x-updateDate: '2023-12-28 08:30:09'
+  x-fileUrl: 'https://d39jgqf8odj4rj.cloudfront.net/api/25_script20231228083009.yaml'
+servers:
+  - url: 'https://open.api.nexon.com'
+tags:
+  - name: User
+    description: 계정 정보 조회 
+  - name: Starforce
+    description: 스타포스 정보 조회 
+  - name: Cube
+    description: 큐브 정보 조회 
+paths:
+  /maplestory/legacy/ouid:
+    get:
+      tags:
+        - User
+      summary: 계정 식별자(ouid) 조회 (구 API KEY 사용)
+      description: 계정 식별자(ouid)를 조회합니다. 
+      parameters:
+        - name: x-nxopen-legacy-api-key
+          in: header
+          description: 구 개발자센터 API KEY
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: SUCCESS
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+  /maplestory/v1/ouid:
+    get:
+      tags:
+        - User
+      summary: 계정 식별자(ouid) 조회
+      description: 계정 식별자(ouid)를 조회합니다. 
+      parameters:
+        - name: x-nxopen-api-key
+          in: header
+          description: API KEY
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: SUCCESS
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+
+  /maplestory/v1/history/starforce:
+    get:
+      tags:
+        - Starforce
+      summary: 스타포스 강화 결과 조회
+      description: |- 
+        스타포스 강화 결과를 조회합니다.<br>
+        - 스타포스 확률 정보는 최대 5분 후 확인 가능합니다.
+        - 2023년 12월 27일 데이터부터 조회할 수 있습니다.
+      operationId: get_meta
+      parameters:
+        - name: x-nxopen-api-key
+          in: header
+          description: API KEY
+          required: true
+          schema:
+            type: string
+        - name: count
+          in: query
+          description: 한번에 가져오려는 결과의 갯수(최소 10, 최대 1000)
+          required: true
+          schema:
+            type: string
+        - name: date
+          in: query
+          description: 조회 기준일 (KST) (cursor가 없는 경우 필수이며 cursor와 함께 사용 불가)
+          example: "2023-12-27"
+          required: false
+          schema:
+            type: string
+        - name: cursor
+          in: query
+          description: 페이징 처리를 위한 cursor (date가 없는 경우 필수이며 date와 함께 사용 불가)
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: SUCCESS
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StarforceHistory'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+
+  /maplestory/v1/history/cube:
+    get:
+      tags:
+        - Cube
+      summary: 큐브 사용 결과 조회
+      description: |
+        큐브 사용 결과를 조회합니다.<br>
+        - 데이터는 매일 오전 4시, 전일 데이터가 갱신됩니다.
+        <br>e.g. 오늘 오후 3시 5분 큐브 확률 정보 조회 시, 어제의 큐브 확률 정보 데이터를 조회할 수 있습니다.
+        - 2022년 11월 25일 데이터부터 조회할 수 있습니다.
+      operationId: maplestory_get_cube_histories
+      parameters:
+        - name: x-nxopen-api-key
+          in: header
+          description: API KEY
+          required: true
+          schema:
+            type: string
+        - name: count
+          in: query
+          description: 한번에 가져오려는 결과의 갯수(최소 10, 최대 1000)
+          required: true
+          schema:
+            type: number
+            default: 10
+        - name: date
+          in: query
+          description: 조회 기준일 (KST) (cursor가 없는 경우 필수이며 cursor와 함께 사용 불가)
+          example: "2023-12-21"
+          required: false
+          schema:
+            type: string
+        - name: cursor
+          in: query
+          description: 페이징 처리를 위한 cursor (date가 없는 경우 필수이며 date와 함께 사용 불가)
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: SUCCESS
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CubeHistory'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        ouid:
+          type: string
+          description: 유저식별자
+          example: string
+
+    StarforceHistory:
+      type: object
+      properties:
+        count:
+          type: number
+          description: 결과 건 수
+        next_cursor:
+          type: string
+          description: 페이징 처리를 위한 cursor
+        starforce_history:
+          type: array
+          description: 스타포스 히스토리
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: 스타포스 히스토리 식별자
+              item_upgrade_result:
+                type: string
+                description: 강화 시도 결과
+              before_starforce_count:
+                type: number
+                format: int64
+                description: 강화 시도 전 스타포스 수치
+              after_starforce_count:
+                type: number
+                format: int64
+                description: 강화 시도 후 스타포스 수치
+              starcatch_result:
+                type: string
+                description: 스타 캐치
+              superior_item_flag:
+                type: string
+                description: 슈페리얼 장비
+              destroy_defence:
+                type: string
+                description: 파괴 방지
+              chance_time:
+                type: string
+                description: 찬스 타임
+              event_field_flag:
+                type: string
+                description: 파괴 방지 필드 이벤트
+              upgrade_item:
+                type: string
+                description: 사용 주문서 명
+              protect_shield:
+                type: string
+                description: 프로텍트 실드
+              bonus_stat_upgrade:
+                type: string
+                description: 보너스 스탯 부여 아이템 여부
+              character_name:
+                type: string
+                description: 캐릭터 명
+              world_name:
+                type: string
+                description: 월드 명
+              target_item:
+                type: string
+                description: 대상 장비 아이템 명
+              date_create:
+                type: string
+                description: 강화 일시 (KST)
+                example: "2023-12-27T17:28+09:00"
+              starforce_event_list:
+                type: array
+                description: 진행 중인 스타포스 강화 이벤트 정보
+                items:
+                  type: object
+                  properties:
+                    success_rate:
+                      type: string
+                      description: 이벤트 성공 확률
+                    cost_discount_rate:
+                      type: string
+                      description: 이벤트 비용 할인율
+                    plus_value:
+                      type: string
+                      description: 이벤트 강화 수치 가중값
+                    starforce_event_range:
+                      type: string
+                      description: 이벤트 적용 강화 시도 가능한 n성 범위
+
+    CubeHistory:
+      type: object
+      properties:
+        count:
+          type: number
+          description: 결과 건 수
+        next_cursor:
+          type: string
+          description: 페이징 처리를 위한 cursor
+        cube_history:
+          type: array
+          description: 큐브 히스토리
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: 큐브 히스토리 식별자
+              character_name:
+                type: string
+                description: 캐릭터 명
+              date_create:
+                type: string
+                description: 사용 일시 (KST)
+                example: "2023-12-21T17:28+09:00"
+              cube_type:
+                type: string
+                description: 사용 큐브 
+              item_upgrade_result:
+                type: string
+                description: 사용 결과
+              miracle_time_flag:
+                type: string
+                description: 미라클 타임 적용 여부
+              item_equipment_part:
+                type: string
+                description: 장비 분류
+              item_level:
+                type: number
+                description: 장비 레벨
+              target_item:
+                type: string
+                description: 큐브 사용한 장비
+              potential_option_grade:
+                type: string
+                description: 잠재능력 등급
+              additional_potential_option_grade:
+                type: string
+                description: 에디셔널 잠재능력 등급
+              upgrade_guarantee:
+                type: boolean
+                description: 천장에 도달하여 확정 등급 상승한 여부
+              upgrade_guarantee_count:
+                type: number
+                description: 현재까지 쌓은 스택
+              before_potential_option:
+                type: array
+                description: 사용 전 잠재능력 옵션
+                items:
+                  type: object
+                  properties:
+                    value:
+                      type: string
+                      description: 옵션 명
+                    grade:
+                      type: string
+                      description: 옵션 등급
+              before_additional_potential_option:
+                type: array
+                description: 사용 전 에디셔널 잠재능력 옵션
+                items:
+                  type: object
+                  properties:
+                    value:
+                      type: string
+                      description: 옵션 명 
+                    grade:
+                      type: string
+                      description: 옵션 등급
+              after_potential_option:
+                type: array
+                description: 사용 후 잠재능력 옵션
+                items:
+                  type: object
+                  properties:
+                    value:
+                      type: string
+                      description: 옵션 명 
+                    grade:
+                      type: string
+                      description: 옵션 등급
+              after_additional_potential_option:
+                type: array
+                description: 사용 후 에디셔널 잠재능력 옵션
+                items:
+                  type: object
+                  properties:
+                    value:
+                      type: string
+                      description: 옵션 명 
+                    grade:
+                      type: string
+                      description: 옵션 등급
+    ErrorMessage:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            name:
+              type: string
+              description: 에러 명
+              example: string
+            message:
+              type: string
+              description: 에러 설명
+              example: stirng
