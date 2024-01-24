@@ -8,9 +8,9 @@ info:
     - 2023년 12월 21일 데이터부터 조회할 수 있습니다.
     - 캐릭터 정보 조회 API는 일자별 데이터로 매일 오전 1시부터 전일 데이터 조회가 가능합니다. (예를 들어, 12월 22일 데이터를 조회하면 22일 00시부터 23일의 00시 사이의 데이터가 조회됩니다.)
     - 게임 콘텐츠 변경으로 ocid가 변경될 수 있습니다. ocid 기반 서비스 갱신 시 유의해 주시길 바랍니다.
-  x-fileName: 22_script20231227042027.yaml
-  x-updateDate: '2023-12-27 04:20:27'
-  x-fileUrl: 'https://d39jgqf8odj4rj.cloudfront.net/api/22_script20231227042027.yaml'
+  x-fileName: 22_script20240119020003.yaml
+  x-updateDate: '2024-01-19 02:00:03'
+  x-fileUrl: 'https://d39jgqf8odj4rj.cloudfront.net/api/22_script20240119020003.yaml'
 servers:
   - url: 'https://open.api.nexon.com'
 tags:
@@ -1311,7 +1311,7 @@ components:
           description: 사용 가능한 최대 하이퍼스탯 포인트
         hyper_stat_preset_1:
           type: array
-          description: 프리셋 1번 하이퍼 스탯 정보
+          description: 1번 프리셋 하이퍼 스탯 정보
           items:
             type: object
             properties:
@@ -1332,10 +1332,10 @@ components:
         hyper_stat_preset_1_remain_point:
           type: number
           format: int64
-          description: 프리셋 1번 하이퍼 스탯 잔여 포인트
+          description: 1번 프리셋 하이퍼 스탯 잔여 포인트
         hyper_stat_preset_2:
           type: array
-          description: 프리셋 2번 하이퍼 스탯 정보
+          description: 2번 프리셋 하이퍼 스탯 정보
           items:
             type: object
             properties:
@@ -1356,10 +1356,10 @@ components:
         hyper_stat_preset_2_remain_point:
           type: number
           format: int64
-          description: 프리셋 2번 하이퍼 스탯 잔여 포인트
+          description: 2번 프리셋 하이퍼 스탯 잔여 포인트
         hyper_stat_preset_3:
             type: array
-            description: 프리셋 3번 하이퍼 정보
+            description: 3번 프리셋 하이퍼 스탯 정보
             items:
               type: object
               properties:
@@ -1380,7 +1380,7 @@ components:
         hyper_stat_preset_3_remain_point:
           type: number
           format: int64
-          description: 프리셋 3번 하이퍼 스탯 잔여 포인트
+          description: 3번 프리셋 하이퍼 스탯 잔여 포인트
     CharacterPropensity:
       type: object
       properties:
@@ -1441,6 +1441,76 @@ components:
           type: number
           format: int64
           description: 보유 명성치
+        preset_no: 
+          type: number
+          format: int64
+          description: 적용 중인 어빌리티 프리셋 번호(number)
+        ability_preset_1: 
+          type: object
+          description: 어빌리티 1번 프리셋 전체 정보  
+          properties:
+            ability_preset_grade:
+              type: string
+              description: 어빌리티 1번 프리셋의 어빌리티 등급  
+            ability_info:
+              type: array
+              description: 어빌리티 1번 프리셋 정보
+              items:
+                type: object 
+                properties:
+                  ability_no: 
+                    type: string 
+                    description: 어빌리티 번호  
+                  ability_grade: 
+                    type: string 
+                    description: 어빌리티 등급    
+                  ability_value: 
+                    type: string 
+                    description: 어빌리티 옵션 및 수치      
+        ability_preset_2: 
+          type: object
+          description: 어빌리티 2번 프리셋 전체 정보  
+          properties:
+            ability_preset_grade:
+              type: string
+              description: 어빌리티 2번 프리셋의 어빌리티 등급  
+            ability_info:
+              type: array
+              description: 어빌리티 2번 프리셋 정보
+              items:
+                type: object 
+                properties:
+                  ability_no: 
+                    type: string 
+                    description: 어빌리티 번호  
+                  ability_grade: 
+                    type: string 
+                    description: 어빌리티 등급    
+                  ability_value: 
+                    type: string 
+                    description: 어빌리티 옵션 및 수치      
+        ability_preset_3: 
+          type: object
+          description: 어빌리티 3번 프리셋 전체 정보  
+          properties:
+            ability_preset_grade:
+              type: string
+              description: 어빌리티 3번 프리셋의 어빌리티 등급  
+            ability_info:
+              type: array
+              description: 어빌리티 3번 프리셋 정보
+              items:
+                type: object 
+                properties:
+                  ability_no: 
+                    type: string 
+                    description: 어빌리티 번호  
+                  ability_grade: 
+                    type: string 
+                    description: 어빌리티 등급    
+                  ability_value: 
+                    type: string 
+                    description: 어빌리티 옵션 및 수치                  
     CharacterItemEquipment:
       type: object
       properties:
@@ -1454,6 +1524,10 @@ components:
         character_class:
           type: string
           description: 캐릭터 직업
+        preset_no  :
+          type: number
+          format: int64
+          description: 적용 중인 어빌리티 프리셋 번호(number)
         item_equipment:
           type: array
           description: 장비 정보
@@ -1655,7 +1729,6 @@ components:
                   magic_power:
                     type: string
                     description: 마력
-
               item_add_option:
                 type: object
                 description: 장비 추가 옵션
@@ -1823,6 +1896,1110 @@ components:
                 type: string
                 description: 장비 유효 기간(KST)
                 example: "2023-12-21T17:28+09:00"
+        item_equipment_preset_1:
+          type: array
+          description: 1번 프리셋 장비 정보
+          items:
+            type: object
+            properties:
+              item_equipment_part:
+                type: string
+                description: 장비 부위 명
+              equipment_slot:
+                type: string
+                description: 장비 슬롯 위치
+              item_name:
+                type: string
+                description: 장비 명
+              item_icon:
+                type: string
+                description: 장비 아이콘
+              item_description:
+                type: string
+                description: 장비 설명
+              item_shape_name:
+                type: string
+                description: 장비 외형
+              item_shape_icon:
+                type: string
+                description: 장비 외형 아이콘
+              gender:
+                type: string
+                description: 전용 성별
+              item_total_option:
+                type: object
+                description: 장비 최종 옵션 정보
+                properties:
+                  str:
+                    type: string
+                    description: STR
+                  dex:
+                    type: string
+                    description: DEX
+                  int:
+                    type: string
+                    description: INT
+                  luk:
+                    type: string
+                    description: LUK
+                  max_hp:
+                    type: string
+                    description: 최대 HP
+                  max_mp:
+                    type: string
+                    description: 최대 MP
+                  attack_power:
+                    type: string
+                    description: 공격력
+                  magic_power:
+                    type: string
+                    description: 마력
+                  armor:
+                    type: string
+                    description: 방어력
+                  speed:
+                    type: string
+                    description: 이동속도
+                  jump:
+                    type: string
+                    description: 점프력
+                  boss_damage:
+                    type: string
+                    description: 보스 공격 시 데미지 증가(%)
+                  ignore_monster_armor:
+                    type: string
+                    description: 몬스터 방어율 무시(%)
+                  all_stat:
+                    type: string
+                    description: 올스탯(%)
+                  damage:
+                    type: string
+                    description: 데미지(%)
+                  equipment_level_decrease:
+                    type: number
+                    format: int64
+                    description: 착용 레벨 감소
+                  max_hp_rate:
+                    type: string
+                    description: 최대 HP(%)
+                  max_mp_rate:
+                    type: string
+                    description: 최대 MP(%)
+              item_base_option:
+                type: object
+                description: 장비 기본 옵션 정보
+                properties:
+                  str:
+                    type: string
+                    description: STR
+                  dex:
+                    type: string
+                    description: DEX
+                  int:
+                    type: string
+                    description: INT
+                  luk:
+                    type: string
+                    description: LUK
+                  max_hp:
+                    type: string
+                    description: 최대 HP
+                  max_mp:
+                    type: string
+                    description: 최대 MP
+                  attack_power:
+                    type: string
+                    description: 공격력
+                  magic_power:
+                    type: string
+                    description: 마력
+                  armor:
+                    type: string
+                    description: 방어력
+                  speed:
+                    type: string
+                    description: 이동속도
+                  jump:
+                    type: string
+                    description: 점프력
+                  boss_damage:
+                    type: string
+                    description: 보스 공격 시 데미지 증가(%)
+                  ignore_monster_armor:
+                    type: string
+                    description: 몬스터 방어율 무시(%)
+                  all_stat:
+                    type: string
+                    description: 올스탯(%)
+                  max_hp_rate:
+                    type: string
+                    description: 최대 HP(%)
+                  max_mp_rate:
+                    type: string
+                    description: 최대 MP(%)
+                  base_equipment_level:
+                    type: number
+                    format: int64
+                    description: 기본 착용 레벨
+              potential_option_grade:
+                type: string
+                description: 잠재능력 등급
+              additional_potential_option_grade:
+                type: string
+                description: 에디셔널 잠재능력 등급
+              potential_option_1:
+                type: string
+                description: 잠재능력 첫 번째 옵션
+              potential_option_2:
+                type: string
+                description: 잠재능력 두 번째 옵션
+              potential_option_3:
+                type: string
+                description: 잠재능력 세 번째 옵션
+              additional_potential_option_1:
+                type: string
+                description: 에디셔널 잠재능력 첫 번째 옵션
+              additional_potential_option_2:
+                type: string
+                description: 에디셔널 잠재능력 두 번째 옵션
+              additional_potential_option_3:
+                type: string
+                description: 에디셔널 잠재능력 세 번째 옵션
+              equipment_level_increase:
+                type: number
+                format: int64
+                description: 착용 레벨 증가
+              item_exceptional_option:
+                type: object
+                description: 장비 특별 옵션 정보
+                properties:
+                  str:
+                    type: string
+                    description: STR
+                  dex:
+                    type: string
+                    description: DEX
+                  int:
+                    type: string
+                    description: INT
+                  luk:
+                    type: string
+                    description: LUK
+                  max_hp:
+                    type: string
+                    description: 최대 HP
+                  max_mp:
+                    type: string
+                    description: 최대 MP
+                  attack_power:
+                    type: string
+                    description: 공격력
+                  magic_power:
+                    type: string
+                    description: 마력
+              item_add_option:
+                type: object
+                description: 장비 추가 옵션
+                properties:
+                  str:
+                    type: string
+                    description: STR
+                  dex:
+                    type: string
+                    description: DEX
+                  int:
+                    type: string
+                    description: INT
+                  luk:
+                    type: string
+                    description: LUK
+                  max_hp:
+                    type: string
+                    description: 최대 HP
+                  max_mp:
+                    type: string
+                    description: 최대 MP
+                  attack_power:
+                    type: string
+                    description: 공격력
+                  magic_power:
+                    type: string
+                    description: 마력
+                  armor:
+                    type: string
+                    description: 방어력
+                  speed:
+                    type: string
+                    description: 이동속도
+                  jump:
+                    type: string
+                    description: 점프력
+                  boss_damage:
+                    type: string
+                    description: 보스 공격 시 데미지 증가(%)
+                  damage:
+                    type: string
+                    description: 데미지(%)
+                  all_stat:
+                    type: string
+                    description: 올스탯(%)
+                  equipment_level_decrease:
+                    type: number
+                    format: int64
+                    description: 착용 레벨 감소
+              growth_exp:
+                type: number
+                format: int64
+                description: 성장 경험치
+              growth_level:
+                type: number
+                format: int64
+                description: 성장 레벨
+              scroll_upgrade:
+                type: string
+                description: 업그레이드 횟수
+              cuttable_count:
+                type: string
+                description: 가위 사용 가능 횟수 (교환 불가 장비, 가위 횟수가 없는 교환 가능 장비는 255)
+              golden_hammer_flag:
+                type: string
+                description: 황금 망치 재련 적용 (1:적용, 이외 미 적용)
+              scroll_resilience_count:
+                type: string
+                description: 복구 가능 횟수
+              scroll_upgradeable_count:
+                type: string
+                description: 업그레이드 가능 횟수
+              soul_name:
+                type: string
+                description: 소울 명
+              soul_option:
+                type: string
+                description: 소울 옵션 
+              item_etc_option:
+                type: object
+                description: 장비 기타 옵션 정보
+                properties:
+                  str:
+                    type: string
+                    description: STR
+                  dex:
+                    type: string
+                    description: DEX
+                  int:
+                    type: string
+                    description: INT
+                  luk:
+                    type: string
+                    description: LUK
+                  max_hp:
+                    type: string
+                    description: 최대 HP
+                  max_mp:
+                    type: string
+                    description: 최대 MP
+                  attack_power:
+                    type: string
+                    description: 공격력
+                  magic_power:
+                    type: string
+                    description: 마력
+                  armor:
+                    type: string
+                    description: 방어력
+                  speed:
+                    type: string
+                    description: 이동속도
+                  jump:
+                    type: string
+                    description: 점프력
+              starforce:
+                type: string
+                description: 강화 단계 
+              starforce_scroll_flag:
+                type: string
+                description: 놀라운 장비 강화 주문서 사용 여부 (0:미사용, 1:사용)
+              item_starforce_option:
+                type: object
+                description: 장비 스타포스 옵션 정보
+                properties:
+                  str:
+                    type: string
+                    description: STR
+                  dex:
+                    type: string
+                    description: DEX
+                  int:
+                    type: string
+                    description: INT
+                  luk:
+                    type: string
+                    description: LUK
+                  max_hp:
+                    type: string
+                    description: 최대 HP
+                  max_mp:
+                    type: string
+                    description: 최대 MP
+                  attack_power:
+                    type: string
+                    description: 공격력
+                  magic_power:
+                    type: string
+                    description: 마력
+                  armor:
+                    type: string
+                    description: 방어력
+                  speed:
+                    type: string
+                    description: 이동속도
+                  jump:
+                    type: string
+                    description: 점프력
+              special_ring_level:
+                type: number
+                format: int64
+                description: 특수 반지 레벨
+              date_expire:
+                type: string
+                description: 장비 유효 기간(KST)
+                example: "2023-12-21T17:28+09:00"
+        item_equipment_preset_2:
+          type: array
+          description: 2번 프리셋 장비 정보
+          items:
+            type: object
+            properties:
+              item_equipment_part:
+                type: string
+                description: 장비 부위 명
+              equipment_slot:
+                type: string
+                description: 장비 슬롯 위치
+              item_name:
+                type: string
+                description: 장비 명
+              item_icon:
+                type: string
+                description: 장비 아이콘
+              item_description:
+                type: string
+                description: 장비 설명
+              item_shape_name:
+                type: string
+                description: 장비 외형
+              item_shape_icon:
+                type: string
+                description: 장비 외형 아이콘
+              gender:
+                type: string
+                description: 전용 성별
+              item_total_option:
+                type: object
+                description: 장비 최종 옵션 정보
+                properties:
+                  str:
+                    type: string
+                    description: STR
+                  dex:
+                    type: string
+                    description: DEX
+                  int:
+                    type: string
+                    description: INT
+                  luk:
+                    type: string
+                    description: LUK
+                  max_hp:
+                    type: string
+                    description: 최대 HP
+                  max_mp:
+                    type: string
+                    description: 최대 MP
+                  attack_power:
+                    type: string
+                    description: 공격력
+                  magic_power:
+                    type: string
+                    description: 마력
+                  armor:
+                    type: string
+                    description: 방어력
+                  speed:
+                    type: string
+                    description: 이동속도
+                  jump:
+                    type: string
+                    description: 점프력
+                  boss_damage:
+                    type: string
+                    description: 보스 공격 시 데미지 증가(%)
+                  ignore_monster_armor:
+                    type: string
+                    description: 몬스터 방어율 무시(%)
+                  all_stat:
+                    type: string
+                    description: 올스탯(%)
+                  damage:
+                    type: string
+                    description: 데미지(%)
+                  equipment_level_decrease:
+                    type: number
+                    format: int64
+                    description: 착용 레벨 감소
+                  max_hp_rate:
+                    type: string
+                    description: 최대 HP(%)
+                  max_mp_rate:
+                    type: string
+                    description: 최대 MP(%)
+              item_base_option:
+                type: object
+                description: 장비 기본 옵션 정보
+                properties:
+                  str:
+                    type: string
+                    description: STR
+                  dex:
+                    type: string
+                    description: DEX
+                  int:
+                    type: string
+                    description: INT
+                  luk:
+                    type: string
+                    description: LUK
+                  max_hp:
+                    type: string
+                    description: 최대 HP
+                  max_mp:
+                    type: string
+                    description: 최대 MP
+                  attack_power:
+                    type: string
+                    description: 공격력
+                  magic_power:
+                    type: string
+                    description: 마력
+                  armor:
+                    type: string
+                    description: 방어력
+                  speed:
+                    type: string
+                    description: 이동속도
+                  jump:
+                    type: string
+                    description: 점프력
+                  boss_damage:
+                    type: string
+                    description: 보스 공격 시 데미지 증가(%)
+                  ignore_monster_armor:
+                    type: string
+                    description: 몬스터 방어율 무시(%)
+                  all_stat:
+                    type: string
+                    description: 올스탯(%)
+                  max_hp_rate:
+                    type: string
+                    description: 최대 HP(%)
+                  max_mp_rate:
+                    type: string
+                    description: 최대 MP(%)
+                  base_equipment_level:
+                    type: number
+                    format: int64
+                    description: 기본 착용 레벨
+              potential_option_grade:
+                type: string
+                description: 잠재능력 등급
+              additional_potential_option_grade:
+                type: string
+                description: 에디셔널 잠재능력 등급
+              potential_option_1:
+                type: string
+                description: 잠재능력 첫 번째 옵션
+              potential_option_2:
+                type: string
+                description: 잠재능력 두 번째 옵션
+              potential_option_3:
+                type: string
+                description: 잠재능력 세 번째 옵션
+              additional_potential_option_1:
+                type: string
+                description: 에디셔널 잠재능력 첫 번째 옵션
+              additional_potential_option_2:
+                type: string
+                description: 에디셔널 잠재능력 두 번째 옵션
+              additional_potential_option_3:
+                type: string
+                description: 에디셔널 잠재능력 세 번째 옵션
+              equipment_level_increase:
+                type: number
+                format: int64
+                description: 착용 레벨 증가
+              item_exceptional_option:
+                type: object
+                description: 장비 특별 옵션 정보
+                properties:
+                  str:
+                    type: string
+                    description: STR
+                  dex:
+                    type: string
+                    description: DEX
+                  int:
+                    type: string
+                    description: INT
+                  luk:
+                    type: string
+                    description: LUK
+                  max_hp:
+                    type: string
+                    description: 최대 HP
+                  max_mp:
+                    type: string
+                    description: 최대 MP
+                  attack_power:
+                    type: string
+                    description: 공격력
+                  magic_power:
+                    type: string
+                    description: 마력
+              item_add_option:
+                type: object
+                description: 장비 추가 옵션
+                properties:
+                  str:
+                    type: string
+                    description: STR
+                  dex:
+                    type: string
+                    description: DEX
+                  int:
+                    type: string
+                    description: INT
+                  luk:
+                    type: string
+                    description: LUK
+                  max_hp:
+                    type: string
+                    description: 최대 HP
+                  max_mp:
+                    type: string
+                    description: 최대 MP
+                  attack_power:
+                    type: string
+                    description: 공격력
+                  magic_power:
+                    type: string
+                    description: 마력
+                  armor:
+                    type: string
+                    description: 방어력
+                  speed:
+                    type: string
+                    description: 이동속도
+                  jump:
+                    type: string
+                    description: 점프력
+                  boss_damage:
+                    type: string
+                    description: 보스 공격 시 데미지 증가(%)
+                  damage:
+                    type: string
+                    description: 데미지(%)
+                  all_stat:
+                    type: string
+                    description: 올스탯(%)
+                  equipment_level_decrease:
+                    type: number
+                    format: int64
+                    description: 착용 레벨 감소
+              growth_exp:
+                type: number
+                format: int64
+                description: 성장 경험치
+              growth_level:
+                type: number
+                format: int64
+                description: 성장 레벨
+              scroll_upgrade:
+                type: string
+                description: 업그레이드 횟수
+              cuttable_count:
+                type: string
+                description: 가위 사용 가능 횟수 (교환 불가 장비, 가위 횟수가 없는 교환 가능 장비는 255)
+              golden_hammer_flag:
+                type: string
+                description: 황금 망치 재련 적용 (1:적용, 이외 미 적용)
+              scroll_resilience_count:
+                type: string
+                description: 복구 가능 횟수
+              scroll_upgradeable_count:
+                type: string
+                description: 업그레이드 가능 횟수
+              soul_name:
+                type: string
+                description: 소울 명
+              soul_option:
+                type: string
+                description: 소울 옵션 
+              item_etc_option:
+                type: object
+                description: 장비 기타 옵션 정보
+                properties:
+                  str:
+                    type: string
+                    description: STR
+                  dex:
+                    type: string
+                    description: DEX
+                  int:
+                    type: string
+                    description: INT
+                  luk:
+                    type: string
+                    description: LUK
+                  max_hp:
+                    type: string
+                    description: 최대 HP
+                  max_mp:
+                    type: string
+                    description: 최대 MP
+                  attack_power:
+                    type: string
+                    description: 공격력
+                  magic_power:
+                    type: string
+                    description: 마력
+                  armor:
+                    type: string
+                    description: 방어력
+                  speed:
+                    type: string
+                    description: 이동속도
+                  jump:
+                    type: string
+                    description: 점프력
+              starforce:
+                type: string
+                description: 강화 단계 
+              starforce_scroll_flag:
+                type: string
+                description: 놀라운 장비 강화 주문서 사용 여부 (0:미사용, 1:사용)
+              item_starforce_option:
+                type: object
+                description: 장비 스타포스 옵션 정보
+                properties:
+                  str:
+                    type: string
+                    description: STR
+                  dex:
+                    type: string
+                    description: DEX
+                  int:
+                    type: string
+                    description: INT
+                  luk:
+                    type: string
+                    description: LUK
+                  max_hp:
+                    type: string
+                    description: 최대 HP
+                  max_mp:
+                    type: string
+                    description: 최대 MP
+                  attack_power:
+                    type: string
+                    description: 공격력
+                  magic_power:
+                    type: string
+                    description: 마력
+                  armor:
+                    type: string
+                    description: 방어력
+                  speed:
+                    type: string
+                    description: 이동속도
+                  jump:
+                    type: string
+                    description: 점프력
+              special_ring_level:
+                type: number
+                format: int64
+                description: 특수 반지 레벨
+              date_expire:
+                type: string
+                description: 장비 유효 기간(KST)
+                example: "2023-12-21T17:28+09:00"
+        item_equipment_preset_3:
+          type: array
+          description: 3번 프리셋 장비 정보
+          items:
+            type: object
+            properties:
+              item_equipment_part:
+                type: string
+                description: 장비 부위 명
+              equipment_slot:
+                type: string
+                description: 장비 슬롯 위치
+              item_name:
+                type: string
+                description: 장비 명
+              item_icon:
+                type: string
+                description: 장비 아이콘
+              item_description:
+                type: string
+                description: 장비 설명
+              item_shape_name:
+                type: string
+                description: 장비 외형
+              item_shape_icon:
+                type: string
+                description: 장비 외형 아이콘
+              gender:
+                type: string
+                description: 전용 성별
+              item_total_option:
+                type: object
+                description: 장비 최종 옵션 정보
+                properties:
+                  str:
+                    type: string
+                    description: STR
+                  dex:
+                    type: string
+                    description: DEX
+                  int:
+                    type: string
+                    description: INT
+                  luk:
+                    type: string
+                    description: LUK
+                  max_hp:
+                    type: string
+                    description: 최대 HP
+                  max_mp:
+                    type: string
+                    description: 최대 MP
+                  attack_power:
+                    type: string
+                    description: 공격력
+                  magic_power:
+                    type: string
+                    description: 마력
+                  armor:
+                    type: string
+                    description: 방어력
+                  speed:
+                    type: string
+                    description: 이동속도
+                  jump:
+                    type: string
+                    description: 점프력
+                  boss_damage:
+                    type: string
+                    description: 보스 공격 시 데미지 증가(%)
+                  ignore_monster_armor:
+                    type: string
+                    description: 몬스터 방어율 무시(%)
+                  all_stat:
+                    type: string
+                    description: 올스탯(%)
+                  damage:
+                    type: string
+                    description: 데미지(%)
+                  equipment_level_decrease:
+                    type: number
+                    format: int64
+                    description: 착용 레벨 감소
+                  max_hp_rate:
+                    type: string
+                    description: 최대 HP(%)
+                  max_mp_rate:
+                    type: string
+                    description: 최대 MP(%)
+              item_base_option:
+                type: object
+                description: 장비 기본 옵션 정보
+                properties:
+                  str:
+                    type: string
+                    description: STR
+                  dex:
+                    type: string
+                    description: DEX
+                  int:
+                    type: string
+                    description: INT
+                  luk:
+                    type: string
+                    description: LUK
+                  max_hp:
+                    type: string
+                    description: 최대 HP
+                  max_mp:
+                    type: string
+                    description: 최대 MP
+                  attack_power:
+                    type: string
+                    description: 공격력
+                  magic_power:
+                    type: string
+                    description: 마력
+                  armor:
+                    type: string
+                    description: 방어력
+                  speed:
+                    type: string
+                    description: 이동속도
+                  jump:
+                    type: string
+                    description: 점프력
+                  boss_damage:
+                    type: string
+                    description: 보스 공격 시 데미지 증가(%)
+                  ignore_monster_armor:
+                    type: string
+                    description: 몬스터 방어율 무시(%)
+                  all_stat:
+                    type: string
+                    description: 올스탯(%)
+                  max_hp_rate:
+                    type: string
+                    description: 최대 HP(%)
+                  max_mp_rate:
+                    type: string
+                    description: 최대 MP(%)
+                  base_equipment_level:
+                    type: number
+                    format: int64
+                    description: 기본 착용 레벨
+              potential_option_grade:
+                type: string
+                description: 잠재능력 등급
+              additional_potential_option_grade:
+                type: string
+                description: 에디셔널 잠재능력 등급
+              potential_option_1:
+                type: string
+                description: 잠재능력 첫 번째 옵션
+              potential_option_2:
+                type: string
+                description: 잠재능력 두 번째 옵션
+              potential_option_3:
+                type: string
+                description: 잠재능력 세 번째 옵션
+              additional_potential_option_1:
+                type: string
+                description: 에디셔널 잠재능력 첫 번째 옵션
+              additional_potential_option_2:
+                type: string
+                description: 에디셔널 잠재능력 두 번째 옵션
+              additional_potential_option_3:
+                type: string
+                description: 에디셔널 잠재능력 세 번째 옵션
+              equipment_level_increase:
+                type: number
+                format: int64
+                description: 착용 레벨 증가
+              item_exceptional_option:
+                type: object
+                description: 장비 특별 옵션 정보
+                properties:
+                  str:
+                    type: string
+                    description: STR
+                  dex:
+                    type: string
+                    description: DEX
+                  int:
+                    type: string
+                    description: INT
+                  luk:
+                    type: string
+                    description: LUK
+                  max_hp:
+                    type: string
+                    description: 최대 HP
+                  max_mp:
+                    type: string
+                    description: 최대 MP
+                  attack_power:
+                    type: string
+                    description: 공격력
+                  magic_power:
+                    type: string
+                    description: 마력
+              item_add_option:
+                type: object
+                description: 장비 추가 옵션
+                properties:
+                  str:
+                    type: string
+                    description: STR
+                  dex:
+                    type: string
+                    description: DEX
+                  int:
+                    type: string
+                    description: INT
+                  luk:
+                    type: string
+                    description: LUK
+                  max_hp:
+                    type: string
+                    description: 최대 HP
+                  max_mp:
+                    type: string
+                    description: 최대 MP
+                  attack_power:
+                    type: string
+                    description: 공격력
+                  magic_power:
+                    type: string
+                    description: 마력
+                  armor:
+                    type: string
+                    description: 방어력
+                  speed:
+                    type: string
+                    description: 이동속도
+                  jump:
+                    type: string
+                    description: 점프력
+                  boss_damage:
+                    type: string
+                    description: 보스 공격 시 데미지 증가(%)
+                  damage:
+                    type: string
+                    description: 데미지(%)
+                  all_stat:
+                    type: string
+                    description: 올스탯(%)
+                  equipment_level_decrease:
+                    type: number
+                    format: int64
+                    description: 착용 레벨 감소
+              growth_exp:
+                type: number
+                format: int64
+                description: 성장 경험치
+              growth_level:
+                type: number
+                format: int64
+                description: 성장 레벨
+              scroll_upgrade:
+                type: string
+                description: 업그레이드 횟수
+              cuttable_count:
+                type: string
+                description: 가위 사용 가능 횟수 (교환 불가 장비, 가위 횟수가 없는 교환 가능 장비는 255)
+              golden_hammer_flag:
+                type: string
+                description: 황금 망치 재련 적용 (1:적용, 이외 미 적용)
+              scroll_resilience_count:
+                type: string
+                description: 복구 가능 횟수
+              scroll_upgradeable_count:
+                type: string
+                description: 업그레이드 가능 횟수
+              soul_name:
+                type: string
+                description: 소울 명
+              soul_option:
+                type: string
+                description: 소울 옵션 
+              item_etc_option:
+                type: object
+                description: 장비 기타 옵션 정보
+                properties:
+                  str:
+                    type: string
+                    description: STR
+                  dex:
+                    type: string
+                    description: DEX
+                  int:
+                    type: string
+                    description: INT
+                  luk:
+                    type: string
+                    description: LUK
+                  max_hp:
+                    type: string
+                    description: 최대 HP
+                  max_mp:
+                    type: string
+                    description: 최대 MP
+                  attack_power:
+                    type: string
+                    description: 공격력
+                  magic_power:
+                    type: string
+                    description: 마력
+                  armor:
+                    type: string
+                    description: 방어력
+                  speed:
+                    type: string
+                    description: 이동속도
+                  jump:
+                    type: string
+                    description: 점프력
+              starforce:
+                type: string
+                description: 강화 단계 
+              starforce_scroll_flag:
+                type: string
+                description: 놀라운 장비 강화 주문서 사용 여부 (0:미사용, 1:사용)
+              item_starforce_option:
+                type: object
+                description: 장비 스타포스 옵션 정보
+                properties:
+                  str:
+                    type: string
+                    description: STR
+                  dex:
+                    type: string
+                    description: DEX
+                  int:
+                    type: string
+                    description: INT
+                  luk:
+                    type: string
+                    description: LUK
+                  max_hp:
+                    type: string
+                    description: 최대 HP
+                  max_mp:
+                    type: string
+                    description: 최대 MP
+                  attack_power:
+                    type: string
+                    description: 공격력
+                  magic_power:
+                    type: string
+                    description: 마력
+                  armor:
+                    type: string
+                    description: 방어력
+                  speed:
+                    type: string
+                    description: 이동속도
+                  jump:
+                    type: string
+                    description: 점프력
+              special_ring_level:
+                type: number
+                format: int64
+                description: 특수 반지 레벨
+              date_expire:
+                type: string
+                description: 장비 유효 기간(KST)
+                example: "2023-12-21T17:28+09:00" 
         title:
           type: object
           description: 칭호 정보
@@ -2551,9 +3728,75 @@ components:
           type: number
           format: int64
           description: 적용 중인 캐시 장비 프리셋 번호 
+        cash_item_equipment_base:
+          type: array
+          description: 장착 중인 캐시 장비 
+          items:
+            type: object
+            properties:
+              cash_item_equipment_part:
+                type: string
+                description: 캐시 장비 부위 명
+              cash_item_equipment_slot:
+                type: string
+                description: 캐시 장비 슬롯 위치
+              cash_item_name:
+                type: string
+                description: 캐시 장비 명
+              cash_item_icon:
+                type: string
+                description: 캐시 장비 아이콘
+              cash_item_description:
+                type: string
+                description: 캐시 장비 설명
+              cash_item_option:
+                type: array
+                description: 캐시 장비 옵션
+                items:
+                  type: object
+                  properties:
+                    option_type:
+                      type: string
+                      description: 옵션 타입
+                    option_value:
+                      type: string
+                      description: 옵션 값
+              date_expire:
+                type: string
+                description: 캐시 장비 유효 기간 (KST)
+                example: "2023-12-21T17:28+09:00"
+              date_option_expire:
+                type: string
+                description: 캐시 장비 옵션 유효 기간 (KST, 시간 단위 데이터로 분은 일괄 0으로 표기)
+                example: "2023-12-21T17:00+09:00"
+              cash_item_label:
+                type: string
+                description: 캐시 장비 라벨 정보
+              cash_item_coloring_prism:
+                type: object
+                description: 캐시 장비 컬러링프리즘 정보
+                properties:
+                  color_range:
+                    type: string
+                    description: 컬러링프리즘 색상 범위
+                  hue:
+                    type: number
+                    format: int64
+                    description: 컬러링프리즘 색조
+                  saturation:
+                    type: number
+                    format: int64
+                    description: 컬러링프리즘 채도
+                  value:
+                    type: number
+                    format: int64
+                    description: 컬러링프리즘 명도
+              item_gender:
+                type: string
+                description: 아이템 장착 가능 성별 
         cash_item_equipment_preset_1:
           type: array
-          description: 1번 프리셋 장착 캐시 장비 정보
+          description: 1번 코디 프리셋
           items:
             type: object
             properties:
@@ -2616,10 +3859,14 @@ components:
                     description: 컬러링프리즘 명도
               base_preset_item_disable_flag:
                 type: string
-                description: 다른 프리셋에서 장비 추가 장착 없이 1번 프리셋의 장비 공유를 비활성화 했는지 여부
+                description: 다른 프리셋에서 장비 추가 장착 없이 1번 프리셋의 장비 공유를 비활성화 했는지 여부  
+                deprecated: true
+              item_gender:
+                type: string
+                description: 아이템 장착 가능 성별 
         cash_item_equipment_preset_2:
           type: array
-          description: 2번 프리셋 장착 캐시 장비 정보
+          description: 2번 코디 프리셋
           items:
             type: object
             properties:
@@ -2682,10 +3929,14 @@ components:
                     description: 컬러링프리즘 명도
               base_preset_item_disable_flag:
                 type: string
-                description: 다른 프리셋에서 장비 추가 장착 없이 1번 프리셋의 장비 공유를 비활성화 했는지 여부
+                description: 다른 프리셋에서 장비 추가 장착 없이 1번 프리셋의 장비 공유를 비활성화 했는지 여부  
+                deprecated: true
+              item_gender:
+                type: string
+                description: 아이템 장착 가능 성별 
         cash_item_equipment_preset_3:
           type: array
-          description: 3번 프리셋 장착 캐시 장비 정보
+          description: 3번 코디 프리셋 
           items:
             type: object
             properties:
@@ -2748,10 +3999,80 @@ components:
                     description: 컬러링프리즘 명도
               base_preset_item_disable_flag:
                 type: string
-                description: 다른 프리셋에서 장비 추가 장착 없이 1번 프리셋의 장비 공유를 비활성화 했는지 여부 
+                description: 다른 프리셋에서 장비 추가 장착 없이 1번 프리셋의 장비 공유를 비활성화 했는지 여부  
+                deprecated: true
+              item_gender:
+                type: string
+                description: 아이템 장착 가능 성별                     
+        additional_cash_item_equipment_base:
+          type: array
+          description: 제로인 경우 베타, 엔젤릭버스터인 경우 드레스 업 모드에서 장착 중인 캐시 장비
+          items:
+            type: object
+            properties:
+              cash_item_equipment_part:
+                type: string
+                description: 캐시 장비 부위 명
+              cash_item_equipment_slot:
+                type: string
+                description: 캐시 장비 슬롯 위치
+              cash_item_name:
+                type: string
+                description: 캐시 장비 명
+              cash_item_icon:
+                type: string
+                description: 캐시 장비 아이콘
+              cash_item_description:
+                type: string
+                description: 캐시 장비 설명
+              cash_item_option:
+                type: array
+                description: 캐시 장비 옵션
+                items:
+                  type: object
+                  properties:
+                    option_type:
+                      type: string
+                      description: 옵션 타입
+                    option_value:
+                      type: string
+                      description: 옵션 값
+              date_expire:
+                type: string
+                description: 캐시 장비 유효 기간 (KST)
+                example: "2023-12-21T17:28+09:00"
+              date_option_expire:
+                type: string
+                description: 캐시 장비 옵션 유효 기간 (KST, 시간 단위 데이터로 분은 일괄 0으로 표기)
+                example: "2023-12-21T17:00+09:00"
+              cash_item_label:
+                type: string
+                description: 캐시 장비 라벨 정보
+              cash_item_coloring_prism:
+                type: object
+                description: 캐시 장비 컬러링프리즘 정보
+                properties:
+                  color_range:
+                    type: string
+                    description: 컬러링프리즘 색상 범위
+                  hue:
+                    type: number
+                    format: int64
+                    description: 컬러링프리즘 색조
+                  saturation:
+                    type: number
+                    format: int64
+                    description: 컬러링프리즘 채도
+                  value:
+                    type: number
+                    format: int64
+                    description: 컬러링프리즘 명도
+              item_gender:
+                type: string
+                description: 아이템 장착 가능 성별       
         additional_cash_item_equipment_preset_1:
           type: array
-          description: 제로인 경우 베타, 엔젤릭버스터인 경우 드레스 업 모드의 1번 프리셋 장착 캐시 장비 정보
+          description: 제로인 경우 베타, 엔젤릭버스터인 경우 드레스 업 모드의 1번 코디 프리셋
           items:
             type: object
             properties:
@@ -2814,10 +4135,14 @@ components:
                     description: 컬러링프리즘 명도
               base_preset_item_disable_flag:
                 type: string
-                description: 다른 프리셋에서 장비 추가 장착 없이 1번 프리셋의 장비 공유를 비활성화 했는지 여부
+                description: 다른 프리셋에서 장비 추가 장착 없이 1번 프리셋의 장비 공유를 비활성화 했는지 여부  
+                deprecated: true
+              item_gender:
+                type: string
+                description: 아이템 장착 가능 성별       
         additional_cash_item_equipment_preset_2:
           type: array
-          description: 제로인 경우 베타, 엔젤릭버스터인 경우 드레스 업 모드의 2번 프리셋 장착 캐시 장비 정보
+          description: 제로인 경우 베타, 엔젤릭버스터인 경우 드레스 업 모드의 2번 코디 프리셋
           items:
             type: object
             properties:
@@ -2880,10 +4205,14 @@ components:
                     description: 컬러링프리즘 명도
               base_preset_item_disable_flag:
                 type: string
-                description: 다른 프리셋에서 장비 추가 장착 없이 1번 프리셋의 장비 공유를 비활성화 했는지 여부
+                description: 다른 프리셋에서 장비 추가 장착 없이 1번 프리셋의 장비 공유를 비활성화 했는지 여부  
+                deprecated: true
+              item_gender:
+                type: string
+                description: 아이템 장착 가능 성별       
         additional_cash_item_equipment_preset_3:
           type: array
-          description: 제로인 경우 베타, 엔젤릭버스터인 경우 드레스 업 모드의 3번 프리셋 장착 캐시 장비 정보
+          description: 제로인 경우 베타, 엔젤릭버스터인 경우 드레스 업 모드의 3번 코디 프리셋
           items:
             type: object
             properties:
@@ -2946,7 +4275,11 @@ components:
                     description: 컬러링프리즘 명도
               base_preset_item_disable_flag:
                 type: string
-                description: 다른 프리셋에서 장비 추가 장착 없이 1번 프리셋의 장비 공유를 비활성화 했는지 여부
+                description: 다른 프리셋에서 장비 추가 장착 없이 1번 프리셋의 장비 공유를 비활성화 했는지 여부  
+                deprecated: true
+              item_gender:
+                type: string
+                description: 아이템 장착 가능 성별       
     CharacterSymbolEquipment:
       type: object
       properties:
@@ -3119,6 +4452,7 @@ components:
         additional_character_skin_name:
           type: string
           description: 제로인 경우 베타, 엔젤릭버스터인 경우 드레스 업 모드에 적용 중인 피부 명
+
     CharacterAndroidEquipment:
       type: object
       properties:
@@ -3236,9 +4570,226 @@ components:
                     type: number
                     format: int64
                     description: 컬러링프리즘 명도
+              android_item_gender:
+                type: string
+                description: 아이템 장착 가능 성별       
         android_ear_sensor_clip_flag:
           type: string
           description: 안드로이드 이어센서 클립 적용 여부
+        android_gender: 
+          type: string
+          description: 안드로이드 성별 
+        android_grade: 
+          type: string
+          description: 안드로이드 등급
+        android_non_humanoid_flag: 
+          type: string
+          description: 비인간형 안드로이드 여부      
+        android_shop_usable_flag: 
+          type: string
+          description: 잡화상점 기능 이용 가능 여부                  
+        preset_no: 
+          type: string
+          description: 적용 중인 장비 프리셋 번호(number)      
+        android_preset_1: 
+          type: object
+          description: 1번 프리셋 안드로이드 정보
+          properties: 
+            android_name: 
+              type: string
+              description: 안드로이드 명
+            android_nickname: 
+              type: string
+              description: 안드로이드 닉네임
+            android_icon:
+              type: string
+              description: 안드로이드 아이콘
+            android_description:
+              type: string
+              description: 안드로이드 아이템 설명                
+            android_gender:
+              type: string
+              description: 안드로이드 성별             
+            android_grade:
+              type: string
+              description: 안드로이드 등급             
+            android_skin_name:
+              type: string
+              description: 안드로이드 피부             
+            android_hair:
+              type: object
+              description: 안드로이드 헤어 정보
+              properties:
+                hair_name:
+                  type: string
+                  description: 안드로이드 헤어 명
+                base_color:
+                  type: string
+                  description: 안드로이드 헤어 베이스 컬러 
+                mix_color:
+                  type: string
+                  description: 안드로이드 헤어 믹스 컬러
+                mix_rate:
+                  type: string
+                  description: 안드로이드 헤어 믹스 컬러의 염색 비율
+            android_face:
+              type: object
+              description: 안드로이드 성형 정보
+              properties:
+                face_name:
+                  type: string
+                  description: 안드로이드 성형 명
+                base_color:
+                  type: string
+                  description: 안드로이드 성형 베이스 컬러
+                mix_color:
+                  type: string
+                  description: 안드로이드 성형 믹스 컬러
+                mix_rate:
+                  type: string
+                  description: 안드로이드 성형 믹스 컬러의 염색 비율      
+            android_ear_sensor_clip_flag:
+              type: string
+              description: 안드로이드 이어센서 클립 적용 여부
+            android_non_humanoid_flag: 
+              type: string
+              description: 비인간형 안드로이드 여부      
+            android_shop_usable_flag: 
+              type: string
+              description: 잡화상점 기능 이용 가능 여부                  
+        android_preset_2: 
+          type: object
+          description: 2번 프리셋 안드로이드 정보
+          properties: 
+            android_name: 
+              type: string
+              description: 안드로이드 명
+            android_nickname: 
+              type: string
+              description: 안드로이드 닉네임
+            android_icon:
+              type: string
+              description: 안드로이드 아이콘
+            android_description:
+              type: string
+              description: 안드로이드 아이템 설명                
+            android_gender:
+              type: string
+              description: 안드로이드 성별             
+            android_grade:
+              type: string
+              description: 안드로이드 등급             
+            android_skin_name:
+              type: string
+              description: 안드로이드 피부             
+            android_hair:
+              type: object
+              description: 안드로이드 헤어 정보
+              properties:
+                hair_name:
+                  type: string
+                  description: 안드로이드 헤어 명
+                base_color:
+                  type: string
+                  description: 안드로이드 헤어 베이스 컬러 
+                mix_color:
+                  type: string
+                  description: 안드로이드 헤어 믹스 컬러
+                mix_rate:
+                  type: string
+                  description: 안드로이드 헤어 믹스 컬러의 염색 비율
+            android_face:
+              type: object
+              description: 안드로이드 성형 정보
+              properties:
+                face_name:
+                  type: string
+                  description: 안드로이드 성형 명
+                base_color:
+                  type: string
+                  description: 안드로이드 성형 베이스 컬러
+                mix_color:
+                  type: string
+                  description: 안드로이드 성형 믹스 컬러
+                mix_rate:
+                  type: string
+                  description: 안드로이드 성형 믹스 컬러의 염색 비율      
+            android_ear_sensor_clip_flag:
+              type: string
+              description: 안드로이드 이어센서 클립 적용 여부
+            android_non_humanoid_flag: 
+              type: string
+              description: 비인간형 안드로이드 여부      
+            android_shop_usable_flag: 
+              type: string
+              description: 잡화상점 기능 이용 가능 여부         
+        android_preset_3: 
+          type: object
+          description: 3번 프리셋 안드로이드 정보
+          properties: 
+            android_name: 
+              type: string
+              description: 안드로이드 명
+            android_nickname: 
+              type: string
+              description: 안드로이드 닉네임
+            android_icon:
+              type: string
+              description: 안드로이드 아이콘
+            android_description:
+              type: string
+              description: 안드로이드 아이템 설명                
+            android_gender:
+              type: string
+              description: 안드로이드 성별             
+            android_grade:
+              type: string
+              description: 안드로이드 등급             
+            android_skin_name:
+              type: string
+              description: 안드로이드 피부             
+            android_hair:
+              type: object
+              description: 안드로이드 헤어 정보
+              properties:
+                hair_name:
+                  type: string
+                  description: 안드로이드 헤어 명
+                base_color:
+                  type: string
+                  description: 안드로이드 헤어 베이스 컬러 
+                mix_color:
+                  type: string
+                  description: 안드로이드 헤어 믹스 컬러
+                mix_rate:
+                  type: string
+                  description: 안드로이드 헤어 믹스 컬러의 염색 비율
+            android_face:
+              type: object
+              description: 안드로이드 성형 정보
+              properties:
+                face_name:
+                  type: string
+                  description: 안드로이드 성형 명
+                base_color:
+                  type: string
+                  description: 안드로이드 성형 베이스 컬러
+                mix_color:
+                  type: string
+                  description: 안드로이드 성형 믹스 컬러
+                mix_rate:
+                  type: string
+                  description: 안드로이드 성형 믹스 컬러의 염색 비율      
+            android_ear_sensor_clip_flag:
+              type: string
+              description: 안드로이드 이어센서 클립 적용 여부
+            android_non_humanoid_flag: 
+              type: string
+              description: 비인간형 안드로이드 여부      
+            android_shop_usable_flag: 
+              type: string
+              description: 잡화상점 기능 이용 가능 여부     
+
     CharacterPetEquipment:
       type: object
       properties:
@@ -3291,6 +4842,12 @@ components:
               type: number
               format: int64
               description: 업그레이드 가능 횟수
+            item_shape:
+              type: string
+              description: 아이템 외형 
+            item_shape_icon:
+              type: string
+              description: 아이템 외형 아이콘   
         pet_1_auto_skill:
           type: object
           description: 펫1 펫 버프 자동스킬 정보
@@ -3319,6 +4876,12 @@ components:
           type: string
           description: 펫1 마법의 시간 (KST, 시간 단위 데이터로 분은 일괄 0으로 표기)
           example: "2023-12-21T17:00+09:00"
+        pet_1_appearance:
+          type: string
+          description: 펫1 외형
+        pet_1_appearance_icon:
+          type: string
+          description: 펫1 외형 아이콘
         pet_2_name:
           type: string
           description: 펫2 명
@@ -3364,6 +4927,12 @@ components:
               type: number
               format: int64
               description: 업그레이드 가능 횟수
+            item_shape:
+              type: string
+              description: 아이템 외형 
+            item_shape_icon:
+              type: string
+              description: 아이템 외형 아이콘   
         pet_2_auto_skill:
           type: object
           description: 펫2 펫 버프 자동 스킬 정보
@@ -3392,6 +4961,12 @@ components:
           type: string
           description: 펫2 마법의 시간 (KST, 시간 단위 데이터로 분은 일괄 0으로 표기)
           example: "2023-12-21T17:00+09:00"
+        pet_2_appearance:
+          type: string
+          description: 펫2 외형
+        pet_2_appearance_icon:
+          type: string
+          description: 펫2 외형 아이콘
         pet_3_name:
           type: string
           description: 펫3 명
@@ -3437,6 +5012,12 @@ components:
               type: number
               format: int64
               description: 업그레이드 가능 횟수
+            item_shape:
+              type: string
+              description: 아이템 외형 
+            item_shape_icon:
+              type: string
+              description: 아이템 외형 아이콘  
         pet_3_auto_skill:
           type: object
           description: 펫3 펫 버프 자동 스킬 정보
@@ -3465,6 +5046,12 @@ components:
           type: string
           description: 펫3 마법의 시간 (KST, 시간 단위 데이터로 분은 일괄 0으로 표기)
           example: "2023-12-21T17:00+09:00"
+        pet_3_appearance:
+          type: string
+          description: 펫3 외형
+        pet_3_appearance_icon:
+          type: string
+          description: 펫3 외형 아이콘          
     CharacterSkill:
       type: object
       properties:
@@ -3530,9 +5117,135 @@ components:
             skill_icon:
               type: string
               description: 스킬 아이콘
+        character_link_skill_preset_1:
+          type: array
+          description: 링크 스킬 1번 프리셋 정보
+          items:
+            type: object
+            properties:
+              skill_name: 
+                type: string
+                description: 스킬 명  
+              skill_description:
+                type: string
+                description: 스킬 설명
+              skill_level:
+                type: number
+                format: int64
+                description: 스킬 레벨
+              skill_effect:
+                type: string
+                description: 스킬 효과
+              skill_icon:
+                type: string
+                description: 스킬 아이콘         
+        character_link_skill_preset_2:
+          type: array
+          description: 링크 스킬 2번 프리셋 정보
+          items:
+            type: object
+            properties:
+              skill_name: 
+                type: string
+                description: 스킬 명  
+              skill_description:
+                type: string
+                description: 스킬 설명
+              skill_level:
+                type: number
+                format: int64
+                description: 스킬 레벨
+              skill_effect:
+                type: string
+                description: 스킬 효과
+              skill_icon:
+                type: string
+                description: 스킬 아이콘               
+        character_link_skill_preset_3:
+          type: array
+          description: 링크 스킬 3번 프리셋 정보
+          items:
+            type: object
+            properties:
+              skill_name: 
+                type: string
+                description: 스킬 명  
+              skill_description:
+                type: string
+                description: 스킬 설명
+              skill_level:
+                type: number
+                format: int64
+                description: 스킬 레벨
+              skill_effect:
+                type: string
+                description: 스킬 효과
+              skill_icon:
+                type: string
+                description: 스킬 아이콘             
         character_owned_link_skill:
           type: object
           description: 내 링크 스킬 정보 
+          properties:
+            skill_name:
+              type: string
+              description: 스킬 명
+            skill_description:
+              type: string
+              description: 스킬 설명
+            skill_level:
+              type: number
+              format: int64
+              description: 스킬 레벨
+            skill_effect:
+              type: string
+              description: 스킬 효과
+            skill_icon:
+              type: string
+              description: 스킬 아이콘
+        character_owned_link_skill_preset_1:
+          type: object
+          description: 내 링크 스킬 1번 프리셋 정보  
+          properties:
+            skill_name:
+              type: string
+              description: 스킬 명
+            skill_description:
+              type: string
+              description: 스킬 설명
+            skill_level:
+              type: number
+              format: int64
+              description: 스킬 레벨
+            skill_effect:
+              type: string
+              description: 스킬 효과
+            skill_icon:
+              type: string
+              description: 스킬 아이콘
+        character_owned_link_skill_preset_2:
+          type: object
+          description: 내 링크 스킬 2번 프리셋 정보  
+          properties:
+            skill_name:
+              type: string
+              description: 스킬 명
+            skill_description:
+              type: string
+              description: 스킬 설명
+            skill_level:
+              type: number
+              format: int64
+              description: 스킬 레벨
+            skill_effect:
+              type: string
+              description: 스킬 효과
+            skill_icon:
+              type: string
+              description: 스킬 아이콘
+        character_owned_link_skill_preset_3:
+          type: object
+          description: 내 링크 스킬 3번 프리셋 정보  
           properties:
             skill_name:
               type: string

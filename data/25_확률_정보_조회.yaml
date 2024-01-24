@@ -4,9 +4,9 @@ info:
   version: 1.0.0
   contact:
     name: help_openapi@nexon.co.kr
-  x-fileName: 25_script20231228083009.yaml
-  x-updateDate: '2023-12-28 08:30:09'
-  x-fileUrl: 'https://d39jgqf8odj4rj.cloudfront.net/api/25_script20231228083009.yaml'
+  x-fileName: 25_script20240123020849.yaml
+  x-updateDate: '2024-01-23 02:08:49'
+  x-fileUrl: 'https://d39jgqf8odj4rj.cloudfront.net/api/25_script20240123020849.yaml'
 servers:
   - url: 'https://open.api.nexon.com'
 tags:
@@ -318,7 +318,7 @@ components:
               date_create:
                 type: string
                 description: 강화 일시 (KST)
-                example: "2023-12-27T17:28+09:00"
+                example: "2023-12-21T17:28:31.000+09:00"
               starforce_event_list:
                 type: array
                 description: 진행 중인 스타포스 강화 이벤트 정보
@@ -362,7 +362,7 @@ components:
               date_create:
                 type: string
                 description: 사용 일시 (KST)
-                example: "2023-12-21T17:28+09:00"
+                example: "2023-12-21T17:28:31.000+09:00"
               cube_type:
                 type: string
                 description: 사용 큐브 

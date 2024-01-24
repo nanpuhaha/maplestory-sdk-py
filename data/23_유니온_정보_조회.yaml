@@ -8,9 +8,9 @@ info:
     - 2023년 12월 21일 데이터부터 조회할 수 있습니다.
     - 유니온 정보 조회 API는 일자별 데이터로 매일 오전 1시부터 전일 데이터 조회가 가능합니다. (예를 들어, 12월 22일 데이터를 조회하면 22일 00시부터 23일의 00시 사이의 데이터가 조회됩니다.)
     - 게임 콘텐츠 변경으로 ocid가 변경될 수 있습니다. ocid 기반 서비스 갱신 시 유의해 주시길 바랍니다.
-  x-fileName: 23_script20231227042055.yaml
-  x-updateDate: '2023-12-27 04:20:55'
-  x-fileUrl: 'https://d39jgqf8odj4rj.cloudfront.net/api/23_script20231227042055.yaml'
+  x-fileName: 23_script20240119020018.yaml
+  x-updateDate: '2024-01-19 02:00:18'
+  x-fileUrl: 'https://d39jgqf8odj4rj.cloudfront.net/api/23_script20240119020018.yaml'
 servers:
   - url: 'https://open.api.nexon.com'
 tags:
@@ -134,6 +134,66 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorMessage'
+  /maplestory/v1/user/union-artifact:
+    get:
+      tags:
+        - Union
+      summary: 유니온 아티팩트 정보 조회
+      description: 유니온 아티팩트 정보를 조회합니다.
+      operationId: maplestory_get_union_artifact
+      parameters:
+        - name: x-nxopen-api-key
+          in: header
+          description: API KEY
+          required: true
+          schema:
+            type: string
+        - name: ocid
+          in: query
+          description: 캐릭터 식별자
+          required: true
+          schema:
+            type: string
+        - name: date
+          in: query
+          description: 조회 기준일 (KST)
+          example: "2023-12-21"
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: SUCCESS
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnionArtifact'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+
+
 components:
   schemas:
     Union:
@@ -150,6 +210,18 @@ components:
         union_grade:
           type: string
           description: 유니온 등급
+        union_artifact_level:
+          type: number
+          format: int64
+          description: 아티팩트 레벨 
+        union_artifact_exp:
+          type: number
+          format: int64
+          description: 보유 아티팩트 경험치  
+        union_artifact_point:
+          type: number
+          format: int64
+          description: 보유 아티팩트 포인트  
     UnionRaider:
       type: object
       properties:
@@ -226,6 +298,59 @@ components:
                       type: number
                       format: int64
                       description: 블록 Y좌표
+
+    UnionArtifact:
+      type: object
+      properties:
+        date:
+          type: string
+          description: 조회 기준일 (KST, 일 단위 데이터로 시, 분은 일괄 0으로 표기)
+          example: "2023-12-21T00:00+09:00"
+        union_artifact_effect:
+          type: array
+          description: 아티팩트 효과 정보
+          items:
+            type: object
+            properties: 
+              name:
+                type: string
+                description: 아티팩트 효과 명 
+              level:
+                type: string
+                description: 아티팩트 효과 레벨 
+        union_artifact_crystal:
+          type: array
+          description: 아티팩트 크리스탈 정보
+          items:
+            type: object
+            properties: 
+              name: 
+                type: string
+                description: 아티팩트 크리스탈 명 
+              validity_flag:
+                type: string
+                description: 능력치 유효 여부 (0:유효, 1:유효하지 않음)
+              date_expire:
+                type: string
+                description: 능력치 유효 기간(KST)
+                example: "2023-12-21T17:28+09:00"
+              level:
+                type: number
+                format: int64
+                description: 아티팩트 크리스탈 등급
+              crystal_option_name_1: 
+                type: string
+                description: 아티팩트 크리스탈 첫 번째 옵션 명
+              crystal_option_name_2: 
+                type: string
+                description: 아티팩트 크리스탈 두 번째 옵션 명              
+              crystal_option_name_3: 
+                type: string
+                description: 아티팩트 크리스탈 세 번째 옵션 명  
+        union_artifact_remain_ap:
+          type: number
+          format: int64
+          description: 잔여 아티팩트 AP           
     ErrorMessage:
       type: object
       properties:
