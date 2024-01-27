@@ -4,9 +4,9 @@ info:
   version: 1.0.0
   contact:
     name: help_openapi@nexon.co.kr
-  x-fileName: 25_script20240123020849.yaml
-  x-updateDate: '2024-01-23 02:08:49'
-  x-fileUrl: 'https://d39jgqf8odj4rj.cloudfront.net/api/25_script20240123020849.yaml'
+  x-fileName: 25_script20240126010017.yaml
+  x-updateDate: '2024-01-26 01:00:17'
+  x-fileUrl: 'https://d39jgqf8odj4rj.cloudfront.net/api/25_script20240126010017.yaml'
 servers:
   - url: 'https://open.api.nexon.com'
 tags:
@@ -14,8 +14,8 @@ tags:
     description: 계정 정보 조회 
   - name: Starforce
     description: 스타포스 정보 조회 
-  - name: Cube
-    description: 큐브 정보 조회 
+  - name: Potential
+    description: 잠재능력 재설정 정보 조회 
 paths:
   /maplestory/legacy/ouid:
     get:
@@ -61,6 +61,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorMessage'
+                
   /maplestory/v1/ouid:
     get:
       tags:
@@ -174,10 +175,80 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorMessage'
 
+  /maplestory/v1/history/potential:
+    get:
+      tags:
+        - Potential
+      summary: 잠재능력 재설정 이용 결과 조회 
+      description: |
+        잠재능력 재설정 이용 결과를 조회합니다.<br>
+        - 데이터는 매일 오전 4시, 전일 데이터가 갱신됩니다.
+        <br>e.g. 오늘 오후 3시 5분 잠재능력 재설정 정보 조회 시, 어제의 잠재능력 재설정 정보 데이터를 조회할 수 있습니다.
+        - 2024년 1월 25일 데이터부터 조회할 수 있습니다.
+      operationId: maplestory_get_potential_histories
+      parameters:
+        - name: x-nxopen-api-key
+          in: header
+          description: API KEY
+          required: true
+          schema:
+            type: string
+        - name: count
+          in: query
+          description: 한번에 가져오려는 결과의 갯수(최소 10, 최대 1000)
+          required: true
+          schema:
+            type: number
+            default: 10
+        - name: date
+          in: query
+          description: 조회 기준일 (KST) (cursor가 없는 경우 필수이며 cursor와 함께 사용 불가)
+          example: "2024-01-25"
+          required: false
+          schema:
+            type: string
+        - name: cursor
+          in: query
+          description: 페이징 처리를 위한 cursor (date가 없는 경우 필수이며 date와 함께 사용 불가)
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: SUCCESS
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PotentialHistory'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+
   /maplestory/v1/history/cube:
     get:
       tags:
-        - Cube
+        - Potential
       summary: 큐브 사용 결과 조회
       description: |
         큐브 사용 결과를 조회합니다.<br>
@@ -337,6 +408,110 @@ components:
                     starforce_event_range:
                       type: string
                       description: 이벤트 적용 강화 시도 가능한 n성 범위
+
+    PotentialHistory:
+      type: object
+      properties:
+        count:
+          type: number
+          description: 결과 건 수
+        next_cursor:
+          type: string
+          description: 페이징 처리를 위한 cursor
+        potential_history:
+          type: array
+          description: 잠재능력 재설정 히스토리  
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: 잠재능력 재설정 히스토리 식별자
+              character_name:
+                type: string
+                description: 캐릭터 명
+              date_create:
+                type: string
+                description: 사용 일시 (KST)
+                example: "2024-01-25T17:28:31.000+09:00"
+              potential_type:
+                type: string
+                description: 대상 잠재능력 타입 (잠재능력, 에디셔널 잠재능력)
+              item_upgrade_result:
+                type: string
+                description: 사용 결과
+              miracle_time_flag:
+                type: string
+                description: 미라클 타임 적용 여부
+              item_equipment_part:
+                type: string
+                description: 장비 분류
+              item_level:
+                type: number
+                description: 장비 레벨
+              target_item:
+                type: string
+                description: 잠재능력 재설정 장비 명  
+              potential_option_grade:
+                type: string
+                description: 잠재능력 등급
+              additional_potential_option_grade:
+                type: string
+                description: 에디셔널 잠재능력 등급
+              upgrade_guarantee:
+                type: boolean
+                description: 천장에 도달하여 확정 등급 상승한 여부
+              upgrade_guarantee_count:
+                type: number
+                description: 현재까지 쌓은 스택
+              before_potential_option:
+                type: array
+                description: 사용 전 잠재능력 옵션
+                items:
+                  type: object
+                  properties:
+                    value:
+                      type: string
+                      description: 옵션 명
+                    grade:
+                      type: string
+                      description: 옵션 등급
+              before_additional_potential_option:
+                type: array
+                description: 사용 전 에디셔널 잠재능력 옵션
+                items:
+                  type: object
+                  properties:
+                    value:
+                      type: string
+                      description: 옵션 명 
+                    grade:
+                      type: string
+                      description: 옵션 등급
+              after_potential_option:
+                type: array
+                description: 사용 후 잠재능력 옵션
+                items:
+                  type: object
+                  properties:
+                    value:
+                      type: string
+                      description: 옵션 명 
+                    grade:
+                      type: string
+                      description: 옵션 등급
+              after_additional_potential_option:
+                type: array
+                description: 사용 후 에디셔널 잠재능력 옵션
+                items:
+                  type: object
+                  properties:
+                    value:
+                      type: string
+                      description: 옵션 명 
+                    grade:
+                      type: string
+                      description: 옵션 등급
 
     CubeHistory:
       type: object
