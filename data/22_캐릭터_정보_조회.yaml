@@ -8,9 +8,9 @@ info:
     - 2023년 12월 21일 데이터부터 조회할 수 있습니다.
     - 캐릭터 정보 조회 API는 일자별 데이터로 매일 오전 1시부터 전일 데이터 조회가 가능합니다. (예를 들어, 12월 22일 데이터를 조회하면 22일 00시부터 23일의 00시 사이의 데이터가 조회됩니다.)
     - 게임 콘텐츠 변경으로 ocid가 변경될 수 있습니다. ocid 기반 서비스 갱신 시 유의해 주시길 바랍니다.
-  x-fileName: 22_script20240129014727.yaml
-  x-updateDate: '2024-01-29 01:47:27'
-  x-fileUrl: 'https://d39jgqf8odj4rj.cloudfront.net/api/22_script20240129014727.yaml'
+  x-fileName: 22_script20240208012400.yaml
+  x-updateDate: '2024-02-08 01:24:00'
+  x-fileUrl: 'https://d39jgqf8odj4rj.cloudfront.net/api/22_script20240208012400.yaml'
 servers:
   - url: 'https://open.api.nexon.com'
 tags:
@@ -1555,7 +1555,7 @@ components:
               item_shape_icon:
                 type: string
                 description: 장비 외형 아이콘
-              gender:
+              item_gender:
                 type: string
                 description: 전용 성별
               item_total_option:
@@ -1923,7 +1923,7 @@ components:
               item_shape_icon:
                 type: string
                 description: 장비 외형 아이콘
-              gender:
+              item_gender:
                 type: string
                 description: 전용 성별
               item_total_option:
@@ -2291,7 +2291,7 @@ components:
               item_shape_icon:
                 type: string
                 description: 장비 외형 아이콘
-              gender:
+              item_gender:
                 type: string
                 description: 전용 성별
               item_total_option:
@@ -2659,7 +2659,7 @@ components:
               item_shape_icon:
                 type: string
                 description: 장비 외형 아이콘
-              gender:
+              item_gender:
                 type: string
                 description: 전용 성별
               item_total_option:
@@ -3048,7 +3048,7 @@ components:
               item_shape_icon:
                 type: string
                 description: 장비 외형 아이콘
-              gender:
+              item_gender:
                 type: string
                 description: 전용 성별
               item_total_option:
@@ -3393,7 +3393,7 @@ components:
               item_shape_icon:
                 type: string
                 description: 장비 외형 아이콘
-              gender:
+              item_gender:
                 type: string
                 description: 전용 성별
               item_total_option:
