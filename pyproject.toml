@@ -1,48 +1,99 @@
 [tool.poetry]
-authors     = ["Jangwon Seo <nanpuhaha@gmail.com>"]
-description = "Unofficial Python API client for MapleStory"
-name        = "maplestory-sdk-py"
-packages    = [{ include = "maplestory", from = "." }]
-readme      = "README.md"
-version     = "0.1.1"
+authors = ["Jangwon Seo <nanpuhaha@gmail.com>"]
+description = "MapleStory OpenAPI Python Client Library"
+keywords = ["maplestory", "api", "api-wrapper"]
+license = "MIT"
+name = "maplestory"
+packages = [{ include = "maplestory", from = "." }]
+readme = "README.md"
+repository = "https://github.com/nanpuhaha/maplestory-py"
+version = "1.0.0"
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Topic :: Games/Entertainment",
+  "Topic :: Games/Entertainment :: Role-Playing",
+  "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
+  "Topic :: Software Development",
+  "Topic :: Software Development :: Libraries",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+[tool.poetry.urls]
+Homepage = "https://github.com/nanpuhaha/maplestory-py"
+Documentation = "https://readthedocs.org"
+Repository = "https://github.com/nanpuhaha/maplestory-py"
+"Bug Tracker" = "https://github.com/nanpuhaha/maplestory-py/issues"
+Changelog = "https://github.com/nanpuhaha/maplestory-py/blob/main/CHANGELOG.md"
 
 [tool.poetry.dependencies]
-python            = "^3.12"
-bs4               = "^0.0.2"
-httpx             = "^0.26.0"
-lxml              = "^5.1.0"
-pydantic          = "^2.5.3"
+python = "^3.11"
+bs4 = "^0.0.2"
+httpx = "^0.26.0"
+lxml = "^5.1.0"
+pillow = "^10.2.0"
+pydantic = "^2.5.3"
 pydantic-settings = "^2.1.0"
-tenacity          = "^8.2.3"
+tenacity = "^8.2.3"
 
 [tool.poetry.group.dev.dependencies]
-black                  = "^23.12.1"
-furo                   = "^2023.9.10"
-ipykernel              = "^6.29.0"
-isort                  = "^5.13.2"
-pytest                 = "^7.4.4"
-pytest-cov             = "^4.1.0"
-pytest-env             = "^1.1.3"
-pytest-sugar           = "^0.9.7"
-rich                   = "^13.7.0"
+autoflake = "^2.2.1"
+black = {version = "^23.12.1", extras = ["jupyter"]}
+coverage = "^7.4.1"
+devtools = "^0.12.2"
+furo = "^2023.9.10"
+ipykernel = "^6.29.0"
+isort = "^5.13.2"
+psutil = "^5.9.8"
+pytest = "^7.4.4"
+pytest-cov = "^4.1.0"
+pytest-env = "^1.1.3"
+pytest-sugar = "^0.9.7"
+pytest-xdist = "^3.5.0"
+rich = "^13.7.0"
 
 [tool.black]
-color          = true
-line-length    = 88
+color = true
+line-length = 88
 target-version = ['py312']
 
 [tool.isort]
-atomic         = true
-line_length    = 88
-profile        = "black"
-py_version     = 312
+atomic = true
+color_output = true
+float_to_top = true
+line_length = 88
+profile = "black"
+py_version = 312
+skip_gitignore = true
+src_paths = ["maplestory", "tests"]
 
 [tool.pytest.ini_options]
-addopts    = "-ra -s"
+addopts = "-ra"  # -s
 minversion = "6.0"
 pythonpath = "."
-testpaths  = ["tests"]
+testpaths = ["tests"]
+
+[tool.coverage.run]
+source = ["maplestory"]
+omit = ["**/__init__.py"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:",
+]
 
 [build-system]
 build-backend = "poetry.core.masonry.api"
-requires      = ["poetry-core"]
+requires = ["poetry-core"]
