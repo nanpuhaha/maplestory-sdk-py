@@ -8,7 +8,7 @@ from datetime import datetime
 
 import maplestory.utils.date as dates
 import maplestory.utils.kst as kst
-from maplestory.enum import QueryableDate
+from maplestory.enums import QueryableDate
 from maplestory.models.history import Account, CubeHistory, StarforceHistory
 from maplestory.models.history.potential import PotentialHistory
 from maplestory.models.types import PageCursor

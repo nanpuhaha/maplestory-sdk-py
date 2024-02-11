@@ -1,4 +1,4 @@
-"""이 모듈은 날짜와 관련된 유틸리티 함수를 제공합니다. 
+"""이 모듈은 날짜와 관련된 유틸리티 함수를 제공합니다.
 
 - `to_string` 함수는 datetime 객체를 문자열로 변환합니다.
 - `is_valid` 함수는 주어진 날짜가 특정 카테고리에 대해 유효한지 확인합니다.
@@ -7,7 +7,7 @@
 from datetime import datetime
 
 import maplestory.utils.kst as kst
-from maplestory.enum import QueryableDate
+from maplestory.enums import QueryableDate
 
 DATE_FORMAT = "%Y-%m-%d"
 
@@ -40,4 +40,6 @@ def is_valid(date: kst.AwareDatetime, category: QueryableDate) -> None:
 
     if date < category.value:
         queryable_date = category.value.strftime(DATE_FORMAT)
-        raise ValueError(f"{category.name}은 {queryable_date}부터 데이터를 조회할 수 있습니다.")
+        raise ValueError(
+            f"{category.name}은 {queryable_date}부터 데이터를 조회할 수 있습니다."
+        )

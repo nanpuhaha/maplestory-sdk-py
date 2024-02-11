@@ -8,7 +8,7 @@ Note:
 
 import maplestory.utils.date as dates
 import maplestory.utils.kst as kst
-from maplestory.enum import DojangDifficulty, GuildRankType, QueryableDate, WorldType
+from maplestory.enums import DojangDifficulty, GuildRankType, QueryableDate, WorldType
 from maplestory.models.ranking import (
     AchievementRanking,
     DojangRanking,
