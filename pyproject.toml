@@ -83,10 +83,15 @@ testpaths = ["tests"]
 source = ["maplestory"]
 
 [tool.coverage.run]
+branch = true
 source = ["maplestory"]
-omit = ["**/__init__.py"]
+omit = [
+    "**/__init__.py",
+    "*/tests/*",
+]
 
 [tool.coverage.report]
+show_missing = true
 exclude_lines = [
     "pragma: no cover",
     "def __repr__",
@@ -96,6 +101,13 @@ exclude_lines = [
     "if 0:",
     "if __name__ == .__main__.:",
 ]
+
+[tool.coverage.xml]
+output = "coverage.xml"
+
+[tool.coverage.json]
+output = "coverage.json"
+pretty_print = true
 
 [build-system]
 build-backend = "poetry.core.masonry.api"
