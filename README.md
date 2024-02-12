@@ -62,50 +62,24 @@ The following libraries will be installed when you install the client library:
 
 To use the MapleStory OpenAPI, you first need to create a Nexon account at https://www.nexon.com. After creating your account, proceed to the [NEXON OPEN API site](https://openapi.nexon.com) and create a new application. Once your application is created, copy the **API Key** and set it as an environment variable or enter it into a `.env` file within your project.
 
-```conf
+```env
 # set environment variable
 MAPLESTORY_OPENAPI_KEY=INSERT_YOUR_KEY_HERE
 ```
 
 ### Examples
 
-캐릭터명, 길드명 등 이름만 있으면 됩니다.
-과거 특정 날짜를 조회하고 싶을 때에는 날짜도 입력하시면 됩니다.
-날짜는 기본적으로 어젯자를 기준으로 조회합니다. (추후 API 종류별로 세분화될 예정)
+Only the **names**, such as character names and guild names, are required.
 
-오직 필요한 건 이름 뿐이다.
-과거 특정 날짜의 결과를 원하면 날짜도 입력하면 된다.
-
-#### Character
+If you wish to query a specific date in the past, you can also enter the date.
+By default, the query is based on the date of yesterday. (The plan is to detail this further by API type in the future.)
 
 <details>
-<summary>Query only the data you want by character name.</summary>
+<summary>Character</summary>
+
+You can query all character data using just the **character name** using `Character` class.
 
 ```python
->>> from maplestory.services.character import get_basic_character_info
->>> character_name = "온앤온"
->>> get_basic_character_info(character_name)
-CharacterBasic(
-    date=datetime.datetime(2024, 2, 3, 0, 0, tzinfo=TzInfo(+09:00)),
-    name='온앤온',
-    world='스카니아',
-    gender='여',
-    job='아크메이지(썬,콜)',
-    job_level=6,
-    level=280,
-    exp=25478806855352,
-    exp_rate='75.723',
-    guild_name='온앤온',
-    image='https://open.api.nexon.com/static/maplestory/Character/MBFDMCELMOHJLEJDOKIPBBPFJKDEILAGALCOMHLGJKHBJGGLHCKELOBFDDBONKKPFIHCEONNBGBMNFAALOHOJFEAPIHJHJJNONNDPFPNPIGMNGNIAPADJLGJMKBCPJIANOHOOMLHBJEAKIHALNHFCOLBFIFOCNCEKOHJKMHCGHKFOCBODKAMICEDDJICKHMLEHKKPOEHEEJIJNFMBIGJHOPNDMGLFKOOPJAMJHNKGFNLKDIFNJNFJHIBDDKCPPMF.png'
-)
-```
-</details>
-
-<details>
-<summary>Query all character data using just the character name using <code>Character</code> class</summary>
-
-```python
->>> from rich import print
 >>> from mapletory.services.character import Character
 >>> char = Character(name="온앤온")
 
@@ -164,10 +138,11 @@ Ability(
 </details>
 
 <details>
-<summary><h4>Gulid Examples</h4></summary>
+<summary>Gulid</summary>
+
+To query guild information, you only need the **guild name** and the **world name** to which the guild belongs.
 
 ```python
->>> from rich import print
 >>> from mapletory.services.guild import Guild
 >>> guild = Guild(name="리더", world="스카니아")
 
@@ -219,15 +194,15 @@ Guild(
 </details>
 
 <details>
-<summary><h4>Union Examples</h4></summary>
+<summary>Union</summary>
 
-공격대원효과, 공격대점령효과, 아티팩트 효과는 각각 **요약된 결과**를 보여줍니다.
+Raider effects, occupation effects, and artifact effects each show a **summarized result**.
 
-예를 들어, `STR 100 증가`가 2개이면 `STR 200 증가`로 표기됩니다.
+For example, if there are two instances of `STR 100 increase`, it will be shown as `STR 200 increase`.
 
-단, 방어율 무시 옵션는 곱적용되므로 예외적으로 합치지 않습니다. 추후 곱적용 방식으로 계산된 방어율 무시를 제공할 계획입니다.
+In addition, `STR, DEX, LUK 40 increase` is broken down into `STR 40 increase`, `DEX 40 increase`, `LUK 40 increase`, and `Attack/Magic Attack 20 increase` is calculated as `Attack 20 increase`, `Magic Attack 20 increase`.
 
-`STR, DEX, LUK 40 증가`는 `STR 40 증가`, `DEX 40 증가`, `LUK 40 증가`로 분리되며, `공격력/마력 20 증가`는 `공격력 20 증가`, `마력 20 증가`로 분리되어 계산됩니다.
+However, options that ignore defense rate are not combined due to multiplicative application. (Plans are to provide ignored defense rate calculations in a multiplicative manner in the future.)
 
 ```python
 >>> from maplestory.services.union import Union
@@ -285,16 +260,11 @@ Union(
     ]
 )
 ```
-</details>
 
-
-<details>
-<summary><h4>Union - Korean attributes</h4></summary>
-
-You can also use Korean.
-- 공격대원효과
-- 공격대점령효과
-- 아티팩트효과
+You can also access attributes in Korean.
+- `공격대원효과`
+- `공격대점령효과`
+- `아티팩트효과`
 
 ```python
 >>> print(union.공격대원효과)
