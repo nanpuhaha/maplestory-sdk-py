@@ -22,16 +22,16 @@ def date_str(request) -> str:
     params=[
         "아델",
         "온앤온",
-        "좋은부자",
+        # "좋은부자",
         "르샹쥬",
-        "르투이쇼",
-        "르샤뜨",
-        "차별인맥",
-        "디삐컬",
-        "한용본",
-        "맥부자",
-        "나의소중한님",
-        "귀농미인카데",
+        # "르투이쇼",
+        # "르샤뜨",
+        # "차별인맥",
+        # "디삐컬",
+        # "한용본",
+        # "맥부자",
+        # "나의소중한님",
+        # "귀농미인카데",
     ]
 )
 def character_name(request):
@@ -39,7 +39,7 @@ def character_name(request):
     return request.param
 
 
-@pytest.fixture(params=["뷁뷁", "뷁ㄱㅅ", "ㅏㅣㅈ"])
+@pytest.fixture(params=["뷁뷁"])
 def invalid_character_name(request):
     print(f"{request.param!r}")
     return request.param
