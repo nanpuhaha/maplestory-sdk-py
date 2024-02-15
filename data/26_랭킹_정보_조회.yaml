@@ -9,9 +9,9 @@ info:
     - 오전 8시 30분부터 오늘의 랭킹 정보를 조회할 수 있습니다. 
     - 게임 콘텐츠 변경으로 ocid가 변경될 수 있습니다. ocid 기반 서비스 갱신 시 유의해 주시길 바랍니다. 
 
-  x-fileName: 26_script20240118053205.yaml
-  x-updateDate: '2024-01-18 05:32:05'
-  x-fileUrl: 'https://d39jgqf8odj4rj.cloudfront.net/api/26_script20240118053205.yaml'
+  x-fileName: 26_script20240215021949.yaml
+  x-updateDate: '2024-02-15 02:19:50'
+  x-fileUrl: 'https://d39jgqf8odj4rj.cloudfront.net/api/26_script20240215021949.yaml'
 servers:
   - url: 'https://open.api.nexon.com'
 tags:
@@ -766,8 +766,8 @@ components:
             properties:
               date:
                 type: string
-                description: 랭킹 업데이트 일자 (KST, 일 단위 데이터로 시, 분은 일괄 0으로 표기)
-                example: "2023-12-22T00:00+09:00"
+                description: 랭킹 업데이트 일자 (KST)
+                example: "2023-12-22"
               ranking:
                 type: number
                 format: int32
@@ -809,8 +809,8 @@ components:
             properties:
               date:
                 type: string
-                description: 랭킹 업데이트 일자 (KST, 일 단위 데이터로 시, 분은 일괄 0으로 표기)
-                example: "2023-12-22T00:00+09:00"
+                description: 랭킹 업데이트 일자 (KST)
+                example: "2023-12-22"
               ranking:
                 type: number
                 format: int32
@@ -845,8 +845,8 @@ components:
             properties:
               date:
                 type: string
-                description: 랭킹 업데이트 일자 (KST, 일 단위 데이터로 시, 분은 일괄 0으로 표기)
-                example: "2023-12-22T00:00+09:00"
+                description: 랭킹 업데이트 일자 (KST)
+                example: "2023-12-22"
               ranking:
                 type: number
                 format: int32
@@ -881,8 +881,8 @@ components:
             properties:
               date:
                 type: string
-                description: 랭킹 업데이트 일자 (KST, 일 단위 데이터로 시, 분은 일괄 0으로 표기)
-                example: "2023-12-22T00:00+09:00"
+                description: 랭킹 업데이트 일자 (KST)
+                example: "2023-12-22"
               ranking:
                 type: number
                 format: int32
@@ -921,8 +921,8 @@ components:
             properties:
               date:
                 type: string
-                description: 랭킹 업데이트 일자 (KST, 일 단위 데이터로 시, 분은 일괄 0으로 표기)
-                example: "2023-12-22T00:00+09:00"
+                description: 랭킹 업데이트 일자 (KST)
+                example: "2023-12-22"
               ranking:
                 type: number
                 format: int32
@@ -961,8 +961,8 @@ components:
             properties:
               date:
                 type: string
-                description: 랭킹 업데이트 일자 (KST, 일 단위 데이터로 시, 분은 일괄 0으로 표기)
-                example: "2023-12-22T00:00+09:00"
+                description: 랭킹 업데이트 일자 (KST)
+                example: "2023-12-22"
               ranking:
                 type: number
                 format: int32
