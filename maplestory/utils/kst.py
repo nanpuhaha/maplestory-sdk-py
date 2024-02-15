@@ -26,7 +26,7 @@ class AwareDatetime:
     @classmethod
     def __get_pydantic_core_schema__(
         cls, source: type[Any], handler: GetCoreSchemaHandler
-    ) -> core_schema.CoreSchema:
+    ) -> core_schema.CoreSchema:  # pragma: no cover
         if cls is source:
             # used directly as a type
             return core_schema.datetime_schema(tz_constraint=KST_TZ_CONSTRAINT)

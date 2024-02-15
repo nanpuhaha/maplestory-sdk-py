@@ -12,7 +12,7 @@ from maplestory.enum import QueryableDate
 DATE_FORMAT = "%Y-%m-%d"
 
 
-def to_string(date: datetime | None, format=DATE_FORMAT) -> str | None:
+def to_string(date: datetime | None, format: str = DATE_FORMAT) -> str | None:
     """datetime 객체를 주어진 포맷의 문자열로 변환합니다. 만약 date가 None이면 None을 반환합니다.
 
     Args:
@@ -22,7 +22,13 @@ def to_string(date: datetime | None, format=DATE_FORMAT) -> str | None:
     Returns:
         str | None: datetime 객체를 문자열로 변환한 결과입니다. date가 None이면 None을 반환합니다.
     """
-    return None if date is None else date.strftime(format)
+    if date is None:
+        return None
+
+    if isinstance(date, datetime):
+        return date.strftime(format)
+
+    raise ValueError(f"Invalid date type: {type(date)}")
 
 
 def is_valid(date: kst.AwareDatetime, category: QueryableDate) -> None:
@@ -40,4 +46,6 @@ def is_valid(date: kst.AwareDatetime, category: QueryableDate) -> None:
 
     if date < category.value:
         queryable_date = category.value.strftime(DATE_FORMAT)
-        raise ValueError(f"{category.name}은 {queryable_date}부터 데이터를 조회할 수 있습니다.")
+        raise ValueError(
+            f"{category.name}{{은,는}} {queryable_date}부터 데이터를 조회할 수 있습니다."
+        )

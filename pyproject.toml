@@ -79,6 +79,9 @@ minversion = "6.0"
 pythonpath = "."
 testpaths = ["tests"]
 
+[tool.coverage.paths]
+source = ["maplestory"]
+
 [tool.coverage.run]
 source = ["maplestory"]
 omit = ["**/__init__.py"]

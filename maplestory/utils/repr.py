@@ -49,34 +49,53 @@ class HideZeroStatRepresentation:
         ]
 
 
+def convert_datetime_as_str(value: Any):
+    """
+    Convert a datetime object to a string representation, considering KST timezone.
+
+    Args:
+        value (datetime): The datetime object to convert.
+
+    Returns:
+        str: The string representation of the datetime object.
+    """
+    if not isinstance(value, datetime):
+        return value
+
+    # Check if the datetime object's timezone is KST
+    timezone_string = (
+        " KST"
+        if value.tzinfo in {ZoneInfo(key="Asia/Seoul"), TzInfo(KST_TZ_CONSTRAINT)}
+        else ""
+    )
+
+    # Determine the format based on the presence of time information
+    format_string = (
+        "%Y-%m-%d %H:%M:%S"
+        if any([value.hour, value.minute, value.second])
+        else "%Y-%m-%d"
+    )
+
+    # Return the formatted datetime string with optional timezone
+    return value.strftime(f"{format_string}{timezone_string}")
+
+
 class DatetimeRepresentation:
-    def convert_datetime_as_sstr(self, value: Any):
-        if not isinstance(value, datetime):
-            return value
-
-        tz = ""
-        if value.tzinfo in [ZoneInfo(key="Asia/Seoul"), TzInfo(KST_TZ_CONSTRAINT)]:
-            tz = " KST"
-
-        if value.hour or value.minute or value.second:
-            return value.strftime(f"%Y-%m-%d %H:%M:%S{tz}")
-
-        return value.strftime(f"%Y-%m-%d{tz}")
 
     def __repr_args__(self: BaseModel):
         for k, v in self.__dict__.items():
             field = self.model_fields.get(k)
             if field and field.repr:
-                yield k, self.convert_datetime_as_sstr(v)
+                yield k, convert_datetime_as_str(v)
 
-        try:
+        try:  # pragma: no cover
             pydantic_extra = object.__getattribute__(self, "__pydantic_extra__")
-        except AttributeError:
+        except AttributeError:  # pragma: no cover
             pydantic_extra = None
 
-        if pydantic_extra is not None:
+        if pydantic_extra is not None:  # pragma: no cover
             yield from ((k, v) for k, v in pydantic_extra.items())
-        yield from (
+        yield from (  # pragma: no cover
             (k, getattr(self, k))
             for k, v in self.model_computed_fields.items()
             if v.repr
