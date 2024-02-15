@@ -5,6 +5,8 @@ from typing import Any
 
 from pydantic import BaseModel, Field, computed_field, field_validator
 
+import maplestory.utils.kst as kst
+
 from ..types import ArtifactCrystalOption
 
 StatTuple = tuple[str, int | float]
@@ -196,7 +198,7 @@ class UnionArtifactCrystal(BaseModel):
 
     @computed_field
     def remaining_time(self) -> int:
-        return self.date_expire - datetime.now()
+        return self.date_expire - kst.now()
 
     @computed_field
     def remaining_time_str(self) -> int:
@@ -214,7 +216,7 @@ class UnionArtifactCrystal(BaseModel):
 
     @computed_field
     def remaining_days(self) -> int:
-        return (self.date_expire - datetime.now()).days
+        return (self.date_expire - kst.now()).days
 
 
 class UnionArtifactCrystalGrade(Enum):
