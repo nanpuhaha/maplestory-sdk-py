@@ -437,6 +437,6 @@ class CharacterEquipment(BaseModel):
     mechanic_items: list[MechanicEquipmentInfo] = Field(alias="mechanic_equipment")
     title: EquipmentTitle | None
     preset_no: PresetNumber
-    preset1: list[EquipmentInfo] = Field(alias="item_equipment_preset1")
-    preset2: list[EquipmentInfo] = Field(alias="item_equipment_preset2")
-    preset3: list[EquipmentInfo] = Field(alias="item_equipment_preset3")
+    preset1: list[EquipmentInfo] = Field(alias="item_equipment_preset_1")
+    preset2: list[EquipmentInfo] = Field(alias="item_equipment_preset_2")
+    preset3: list[EquipmentInfo] = Field(alias="item_equipment_preset_3")
