@@ -2,7 +2,7 @@ from datetime import datetime
 
 from pydantic import BaseModel, Field
 
-from ..types import CubePotenialGrade, ItemSlotName, PageCursor, PotentialGrade
+from ..types import CubePotenialGrade, ItemSlotName, PageCursor
 
 
 class PotentialOption(BaseModel):
@@ -81,8 +81,8 @@ class CubeHistoryInfo(BaseModel):
     item_equipment_part: ItemSlotName
     item_level: int
     target_item: str
-    potential_option_grade: PotentialGrade
-    additional_potential_option_grade: PotentialGrade
+    potential_option_grade: CubePotenialGrade
+    additional_potential_option_grade: CubePotenialGrade
     upgrade_guarantee: bool
     upgrade_guarantee_count: int
     before_potential_option: list[PotentialOption]
