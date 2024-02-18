@@ -1,6 +1,6 @@
-"""이 모듈은 네트워크 요청을 처리하는 함수를 제공합니다. 
+"""이 모듈은 네트워크 요청을 처리하는 함수를 제공합니다.
 
-- `fetch` 함수는 주어진 URL 경로와 쿼리 파라미터를 사용하여 GET 요청을 보내고, 응답을 JSON 형태로 반환합니다. 
+- `fetch` 함수는 주어진 URL 경로와 쿼리 파라미터를 사용하여 GET 요청을 보내고, 응답을 JSON 형태로 반환합니다.
     만약 응답에 에러가 포함되어 있으면, `APIError`를 발생시킵니다.
 """
 
@@ -10,6 +10,7 @@ from tenacity import retry, retry_if_exception_message, wait_exponential
 
 from maplestory.config import Config
 from maplestory.error import APIError, ErrorMessage
+from maplestory.utils.params import remove_none_values
 
 
 @retry(
@@ -34,7 +35,7 @@ def fetch(url_path: str, query_params: dict | None = None) -> dict:
     config = Config()
     resp: Response = httpx.get(
         f"{config.url}{url_path}",
-        params=query_params,
+        params=remove_none_values(query_params),
         headers={
             "x-nxopen-api-key": config.key,
             "Accept": "application/json",
