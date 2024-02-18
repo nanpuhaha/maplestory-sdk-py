@@ -38,7 +38,8 @@ class TestValidateDateAndCursor:
         date = datetime.now()
         cursor = "some_cursor"
 
-        validate_date_and_cursor(date, cursor)
+        with pytest.raises(ValueError, match="date and cursor cannot be used together"):
+            validate_date_and_cursor(date, cursor)
 
     # Providing only a valid cursor should not raise any exceptions.
     def test_valid_date_and_cursor_with_valid_cursor(self):
@@ -420,15 +421,15 @@ class TestGetCubeUsageHistory:
         assert cube_history.upgrade_guarantee_count == 0
         assert cube_history.before_potential_option == []
         assert cube_history.before_additional_potential_option == [
-            PotentialOption(option="최대 HP : +100", grade="레어"),
-            PotentialOption(option="DEX : +6", grade="노멀"),
-            PotentialOption(option="최대 HP : +50", grade="노멀"),
+            PotentialOption(value="최대 HP : +100", grade="레어"),
+            PotentialOption(value="DEX : +6", grade="노멀"),
+            PotentialOption(value="최대 HP : +50", grade="노멀"),
         ]
         assert cube_history.after_potential_option == []
         assert cube_history.after_additional_potential_option == [
-            PotentialOption(option="이동속도 : +5", grade="레어"),
-            PotentialOption(option="방어력 : +50", grade="노멀"),
-            PotentialOption(option="최대 HP : +50", grade="노멀"),
+            PotentialOption(value="이동속도 : +5", grade="레어"),
+            PotentialOption(value="방어력 : +50", grade="노멀"),
+            PotentialOption(value="최대 HP : +50", grade="노멀"),
         ]
 
     # Should raise a ValueError when neither date nor page cursor are provided

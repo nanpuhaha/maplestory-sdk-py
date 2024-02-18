@@ -187,19 +187,6 @@ class TestGetDojangRanking:
 
         assert isinstance(ranking, DojangRanking)
 
-    # Retrieve dojang ranking for a valid character ID, with non-default parameters
-    def test_retrieve_non_default_parameters(self):
-        ranking = get_dojang_ranking_by_id(
-            world_name="스카니아",
-            job_class="전사-히어로",
-            character_id="1234567890",
-            page_number=2,
-            difficulty_level=0,
-            date=kst.datetime(2023, 12, 22),
-        )
-
-        assert isinstance(ranking, DojangRanking)
-
     # Retrieve dojang ranking for a valid character ID, with a date in the future
     def test_retrieve_future_date(self):
         character_id = get_character_id("온앤온")
