@@ -49,7 +49,7 @@ jobs:
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: poetry install --no-interaction --no-root --compile
 
-      - run: poetry run pytest --cov=./ --cov-report=xml
+      - run: poetry run pytest --cov=maplestory --cov-report=term-missing --cov-report=xml tests
         env:
           MAPLESTORY_OPENAPI_KEY: ${{ secrets.MAPLESTORY_OPENAPI_KEY }}
 
