@@ -93,7 +93,7 @@ def get_starforce_history(
     path = "/maplestory/v1/history/starforce"
     query = {
         "count": result_count,
-        "date": date.to_string(date),
+        "date": date_util.to_string(date),
         "cursor": page_cursor,
     }
     response = fetch(path, query)
@@ -134,7 +134,7 @@ def get_cube_usage_history(
     path = "/maplestory/v1/history/cube"
     query = {
         "count": result_count,
-        "date": date.to_string(date),
+        "date": date_util.to_string(date),
         "cursor": page_cursor,
     }
     response = fetch(path, query)
@@ -172,7 +172,7 @@ def get_potential_history(
     path = "/maplestory/v1/history/potential"
     query = {
         "count": result_count,
-        "date": date.to_string(date),
+        "date": date_util.to_string(date),
         "cursor": page_cursor,
     }
     response = fetch(path, query)
