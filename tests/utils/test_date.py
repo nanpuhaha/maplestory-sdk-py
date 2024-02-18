@@ -8,7 +8,6 @@ from maplestory.utils.date import is_valid, to_string
 
 
 class TestToString:
-
     # Returns a string in the default format when given a valid datetime object.
     def test_returns_default_format(self):
         date = datetime(2022, 1, 1)
@@ -54,7 +53,6 @@ class TestToString:
 
 
 class TestIsValid:
-
     def test_invalid_date(self):
         category = QueryableDate.캐릭터
         invalid_date = category.value - timedelta(days=1)

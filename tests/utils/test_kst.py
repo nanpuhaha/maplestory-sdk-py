@@ -8,7 +8,6 @@ from maplestory.utils.kst import KST_TZ, datetime, now, validate
 
 
 class TestNow:
-
     # Returns the current time in the KST timezone.
     def test_returns_current_time_in_KST_timezone(self):
         result = now()
@@ -22,7 +21,6 @@ class TestNow:
 
 
 class TestDatetime:
-
     # Returns a datetime object with the correct year, month, day, hour, minute, second, and microsecond values, with KST timezone info.
     def test_correct_values_with_timezone_info(self):
         result = datetime(2022, 10, 15, 12, 30, 45, 500)
@@ -54,7 +52,6 @@ class TestDatetime:
 
 
 class TestValidate:
-
     # The function should not raise any errors if the input datetime has timezone information and the timezone offset is equal to the KST timezone offset.
     def test_valid_timezone_offset(self):
         date = _datetime(2022, 1, 1, tzinfo=KST_TZ)

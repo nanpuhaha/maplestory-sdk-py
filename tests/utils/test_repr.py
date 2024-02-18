@@ -15,7 +15,6 @@ from maplestory.utils.repr import (
 
 
 class TestHideNoneRepresentation:
-
     # The __repr_args__ method returns a list of tuples containing field names and their values, excluding those with None values.
     def test_repr_args_excludes_none_values(self):
         class TestModel(HideNoneRepresentation, BaseModel):
@@ -86,7 +85,6 @@ class TestHideNoneRepresentation:
 
 
 class TestHideZeroStatRepresentation:
-
     # The __repr_args__ method returns a list of tuples containing field names and values, excluding fields with a value of 0.
     def test_repr_args_excludes_fields_with_value_of_0(self):
         class TestModel(HideZeroStatRepresentation, BaseModel):
@@ -169,7 +167,6 @@ class TestHideZeroStatRepresentation:
 
 
 class TestConvertDatetimeAsStr:
-
     def test_convert_datetime_without_timezone(self):
         """Test converting a datetime object without a timezone."""
         dt = datetime(2022, 1, 1, 15, 30, 45)
@@ -209,7 +206,6 @@ class TestConvertDatetimeAsStr:
 
 
 class TestDatetimeRepresentation:
-
     def test_without_timezone(self):
         class TestModel(DatetimeRepresentation, BaseModel):
             name: str

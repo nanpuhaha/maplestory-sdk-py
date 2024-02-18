@@ -7,7 +7,6 @@ from maplestory.error import APIError, APIErrorCode, ErrorMessage
 
 
 class TestFromCode:
-
     # Should return the corresponding APIErrorCode enum value when given a valid code string
     def test_valid_code_string(self):
         code = "OPENAPI00001"
