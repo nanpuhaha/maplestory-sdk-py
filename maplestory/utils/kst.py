@@ -54,10 +54,17 @@ def now() -> AwareDatetime:
     return _datetime.now(KST_TZ)
 
 
+def today() -> AwareDatetime:
+    """어제의 한국 표준시(KST) 시간을 반환합니다."""
+    today_kst = _datetime.now(KST_TZ)
+    return datetime(today_kst.year, today_kst.month, today_kst.day)
+
+
 def yesterday() -> AwareDatetime:
     """어제의 한국 표준시(KST) 시간을 반환합니다."""
     today_kst = _datetime.now(KST_TZ)
-    return today_kst - timedelta(days=1)
+    yesterday_kst = today_kst - timedelta(days=1)
+    return datetime(yesterday_kst.year, yesterday_kst.month, yesterday_kst.day)
 
 
 def datetime(
@@ -65,3 +72,12 @@ def datetime(
 ) -> AwareDatetime:
     """주어진 시간의 한국 표준시(KST)를 반환합니다."""
     return _datetime(year, month, day, hour, minute, second, microsecond, tzinfo=KST_TZ)
+
+
+def today_with_time(hour=0, minute=0) -> AwareDatetime:
+    _today = today()
+    return datetime(_today.year, _today.month, _today.day, hour, minute)
+
+
+def is_same_date(date1: AwareDatetime, date2: AwareDatetime) -> bool:
+    return date1.date() == date2.date()
