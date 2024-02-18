@@ -6,7 +6,7 @@ Note:
 
 from datetime import datetime
 
-import maplestory.utils.date as dates
+import maplestory.utils.dates as dates
 import maplestory.utils.kst as kst
 from maplestory.enums import QueryableDate
 from maplestory.models.history import Account, CubeHistory, StarforceHistory

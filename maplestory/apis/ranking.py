@@ -6,7 +6,7 @@ Note:
     - 게임 콘텐츠 변경으로 ocid가 변경될 수 있습니다. ocid 기반 서비스 갱신 시 유의해 주시길 바랍니다.
 """
 
-import maplestory.utils.date as dates
+import maplestory.utils.dates as dates
 import maplestory.utils.kst as kst
 from maplestory.enums import DojangDifficulty, GuildRankType, QueryableDate, WorldType
 from maplestory.models.ranking import (
@@ -114,7 +114,7 @@ def get_union_ranking(
 
     path = "/maplestory/v1/ranking/union"
     query = {
-        "date": dates.to_string(dates),
+        "date": dates.to_string(date),
         "world_name": world,
         "ocid": character_id,
         "page": page_number,
