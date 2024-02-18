@@ -9,7 +9,7 @@ Note:
 
 from datetime import datetime
 
-import maplestory.utils.date as dates
+import maplestory.utils.date as date_util
 import maplestory.utils.kst as kst
 from maplestory.models.guild import GuildBasic, GuildModel
 from maplestory.models.types import WorldName
@@ -56,7 +56,7 @@ def get_basic_info_by_id(
     path = "/maplestory/v1/guild/basic"
     query = {
         "oguild_id": guild_id,
-        "date": dates.to_string(date),
+        "date": date_util.to_string(date),
     }
     response = fetch(path, query)
 

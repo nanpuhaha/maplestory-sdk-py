@@ -9,7 +9,7 @@ Note:
 
 from datetime import datetime
 
-import maplestory.utils.date as dates
+import maplestory.utils.date as date_util
 import maplestory.utils.kst as kst
 from maplestory.models.character import (
     Ability,
@@ -75,7 +75,7 @@ def get_basic_character_info_by_ocid(
     path = "/maplestory/v1/character/basic"
     query = {
         "ocid": character_ocid,
-        "date": dates.to_string(date),
+        "date": date_util.to_string(date),
     }
     response = fetch(path, query)
 
@@ -100,7 +100,7 @@ def get_popularity_by_ocid(
     path = "/maplestory/v1/character/popularity"
     query = {
         "ocid": character_ocid,
-        "date": dates.to_string(date),
+        "date": date_util.to_string(date),
     }
     response = fetch(path, query)
 
@@ -125,7 +125,7 @@ def get_character_stat_by_ocid(
     path = "/maplestory/v1/character/stat"
     query = {
         "ocid": character_ocid,
-        "date": dates.to_string(date),
+        "date": date_util.to_string(date),
     }
     response = fetch(path, query)
 
@@ -150,7 +150,7 @@ def get_character_hyper_stat_by_ocid(
     path = "/maplestory/v1/character/hyper-stat"
     query = {
         "ocid": character_ocid,
-        "date": dates.to_string(date),
+        "date": date_util.to_string(date),
     }
     response = fetch(path, query)
 
@@ -174,7 +174,7 @@ def get_character_propensity_by_ocid(
     path = "/maplestory/v1/character/propensity"
     query = {
         "ocid": character_ocid,
-        "date": dates.to_string(date),
+        "date": date_util.to_string(date),
     }
     response = fetch(path, query)
 
@@ -198,7 +198,7 @@ def get_character_ability_by_ocid(
     path = "/maplestory/v1/character/ability"
     query = {
         "ocid": character_ocid,
-        "date": dates.to_string(date),
+        "date": date_util.to_string(date),
     }
     response = fetch(path, query)
 
@@ -222,7 +222,7 @@ def get_character_equipment_by_ocid(
     path = "/maplestory/v1/character/item-equipment"
     query = {
         "ocid": character_ocid,
-        "date": dates.to_string(date),
+        "date": date_util.to_string(date),
     }
     response = fetch(path, query)
 
@@ -247,7 +247,7 @@ def get_character_cashitem_equipment_by_ocid(
     path = "/maplestory/v1/character/cashitem-equipment"
     query = {
         "ocid": character_ocid,
-        "date": dates.to_string(date),
+        "date": date_util.to_string(date),
     }
     response = fetch(path, query)
 
@@ -271,7 +271,7 @@ def get_character_symbol_equipment_by_ocid(
     path = "/maplestory/v1/character/symbol-equipment"
     query = {
         "ocid": character_ocid,
-        "date": dates.to_string(date),
+        "date": date_util.to_string(date),
     }
     response = fetch(path, query)
 
@@ -295,7 +295,7 @@ def get_character_set_effect_by_ocid(
     path = "/maplestory/v1/character/set-effect"
     query = {
         "ocid": character_ocid,
-        "date": dates.to_string(date),
+        "date": date_util.to_string(date),
     }
     response = fetch(path, query)
 
@@ -319,7 +319,7 @@ def get_character_beauty_equipment_by_ocid(
     path = "/maplestory/v1/character/beauty-equipment"
     query = {
         "ocid": character_ocid,
-        "date": dates.to_string(date),
+        "date": date_util.to_string(date),
     }
     response = fetch(path, query)
 
@@ -343,7 +343,7 @@ def get_character_android_equipment_by_ocid(
     path = "/maplestory/v1/character/android-equipment"
     query = {
         "ocid": character_ocid,
-        "date": dates.to_string(date),
+        "date": date_util.to_string(date),
     }
     response = fetch(path, query)
 
@@ -367,7 +367,7 @@ def get_character_pet_equipment_by_ocid(
     path = "/maplestory/v1/character/pet-equipment"
     query = {
         "ocid": character_ocid,
-        "date": dates.to_string(date),
+        "date": date_util.to_string(date),
     }
     response = fetch(path, query)
 
@@ -394,7 +394,7 @@ def get_character_skill_by_ocid(
     path = "/maplestory/v1/character/skill"
     query = {
         "ocid": character_ocid,
-        "date": dates.to_string(date),
+        "date": date_util.to_string(date),
         "character_skill_grade": skill_grade,
     }
     response = fetch(path, query)
@@ -429,7 +429,7 @@ def get_character_link_skill_by_ocid(
     path = "/maplestory/v1/character/link-skill"
     query = {
         "ocid": character_ocid,
-        "date": dates.to_string(date),
+        "date": date_util.to_string(date),
     }
     response = fetch(path, query)
 
@@ -453,7 +453,7 @@ def get_character_vmatrix_by_ocid(
     path = "/maplestory/v1/character/vmatrix"
     query = {
         "ocid": character_ocid,
-        "date": dates.to_string(date),
+        "date": date_util.to_string(date),
     }
     response = fetch(path, query)
 
@@ -477,7 +477,7 @@ def get_character_hexamatrix_by_ocid(
     path = "/maplestory/v1/character/hexamatrix"
     query = {
         "ocid": character_ocid,
-        "date": dates.to_string(date),
+        "date": date_util.to_string(date),
     }
     response = fetch(path, query)
 
@@ -501,7 +501,7 @@ def get_character_hexamatrix_stat_by_ocid(
     path = "/maplestory/v1/character/hexamatrix-stat"
     query = {
         "ocid": character_ocid,
-        "date": dates.to_string(date),
+        "date": date_util.to_string(date),
     }
     response = fetch(path, query)
 
@@ -525,7 +525,7 @@ def get_character_dojang_record_by_ocid(
     path = "/maplestory/v1/character/dojang"
     query = {
         "ocid": character_ocid,
-        "date": dates.to_string(date),
+        "date": date_util.to_string(date),
     }
     response = fetch(path, query)
 

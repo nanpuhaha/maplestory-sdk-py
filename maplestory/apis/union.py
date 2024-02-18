@@ -9,7 +9,7 @@ Note:
 
 from datetime import datetime
 
-import maplestory.utils.date as dates
+import maplestory.utils.date as date_util
 import maplestory.utils.kst as kst
 from maplestory.models.union import UnionArtifact, UnionInfo, UnionRaider
 from maplestory.utils.network import fetch
@@ -32,7 +32,7 @@ def get_union_info_by_ocid(
     path = "/maplestory/v1/user/union"
     query = {
         "ocid": character_ocid,
-        "date": dates.to_string(date),
+        "date": date_util.to_string(date),
     }
     response = fetch(path, query)
 
@@ -57,7 +57,7 @@ def get_union_raider_info_by_ocid(
     path = "/maplestory/v1/user/union-raider"
     query = {
         "ocid": character_ocid,
-        "date": dates.to_string(date),
+        "date": date_util.to_string(date),
     }
     response = fetch(path, query)
 
@@ -82,7 +82,7 @@ def get_union_artifact_info_by_ocid(
     path = "/maplestory/v1/user/union-artifact"
     query = {
         "ocid": character_ocid,
-        "date": dates.to_string(date),
+        "date": date_util.to_string(date),
     }
     response = fetch(path, query)
 

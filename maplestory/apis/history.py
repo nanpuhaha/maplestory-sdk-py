@@ -6,7 +6,7 @@ Note:
 
 from datetime import datetime
 
-import maplestory.utils.dates as dates
+import maplestory.utils.date as date_util
 import maplestory.utils.kst as kst
 from maplestory.enums import QueryableDate
 from maplestory.models.history import Account, CubeHistory, StarforceHistory
@@ -88,12 +88,12 @@ def get_starforce_history(
     validate_date_and_cursor(date, page_cursor)
 
     if isinstance(date, datetime):
-        dates.is_valid(date, QueryableDate.스타포스)
+        date_util.is_valid(date, QueryableDate.스타포스)
 
     path = "/maplestory/v1/history/starforce"
     query = {
         "count": result_count,
-        "date": dates.to_string(date),
+        "date": date.to_string(date),
         "cursor": page_cursor,
     }
     response = fetch(path, query)
@@ -129,12 +129,12 @@ def get_cube_usage_history(
     validate_date_and_cursor(date, page_cursor)
 
     if isinstance(date, datetime):
-        dates.is_valid(date, QueryableDate.큐브)
+        date_util.is_valid(date, QueryableDate.큐브)
 
     path = "/maplestory/v1/history/cube"
     query = {
         "count": result_count,
-        "date": dates.to_string(date),
+        "date": date.to_string(date),
         "cursor": page_cursor,
     }
     response = fetch(path, query)
@@ -167,12 +167,12 @@ def get_potential_history(
     validate_date_and_cursor(date, page_cursor)
 
     if isinstance(date, datetime):
-        dates.is_valid(date, QueryableDate.잠재능력)
+        date_util.is_valid(date, QueryableDate.잠재능력)
 
     path = "/maplestory/v1/history/potential"
     query = {
         "count": result_count,
-        "date": dates.to_string(date),
+        "date": date.to_string(date),
         "cursor": page_cursor,
     }
     response = fetch(path, query)
