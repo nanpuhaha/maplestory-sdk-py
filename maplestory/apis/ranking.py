@@ -22,7 +22,7 @@ from maplestory.types.union import UnionWorldName
 from maplestory.utils.network import fetch
 
 
-def get_overall_ranking(
+def get_overall_ranking_by_id(
     world_name: WorldName | None = None,
     world_type: int | WorldType | None = None,
     job_class: JobClass | None = None,
@@ -63,6 +63,15 @@ def get_overall_ranking(
         - 게임 콘텐츠 변경으로 ocid가 변경될 수 있습니다. ocid 기반 서비스 갱신 시 유의해 주시길 바랍니다.
     """
 
+    if kst.is_same_date(date, kst.today()) and kst.now() < kst.today_with_time(8, 30):
+        raise ValueError("You can only get today's ranking information after 8:30 AM.")
+        # {
+        #     "error": {
+        #         "name": "OPENAPI00009",
+        #         "message": "Please wait until the data is ready"
+        #     }
+        # }
+
     dates.is_valid(date, QueryableDate.랭킹)
 
     if isinstance(world_type, WorldType):
@@ -85,7 +94,7 @@ def get_overall_ranking(
     return OverallRanking.model_validate(response)
 
 
-def get_union_ranking(
+def get_union_ranking_by_id(
     world: UnionWorldName | None = None,
     character_id: str | None = None,
     page_number: int = 1,
@@ -124,7 +133,7 @@ def get_union_ranking(
     return UnionRanking.model_validate(response)
 
 
-def get_guild_ranking(
+def get_guild_ranking_by_id(
     ranking_type: int | GuildRankType = GuildRankType.주간명성치,
     world_name: WorldName | None = None,
     guild: str | None = None,
@@ -172,7 +181,7 @@ def get_guild_ranking(
     return GuildRanking.model_validate(response)
 
 
-def get_dojang_ranking(
+def get_dojang_ranking_by_id(
     world_name: str | None = None,
     job_class: JobClass | None = None,
     character_id: str | None = None,
@@ -238,7 +247,7 @@ def get_dojang_ranking(
     return DojangRanking.model_validate(response)
 
 
-def get_theseed_ranking(
+def get_theseed_ranking_by_id(
     world_name: WorldName | None = None,
     character_id: str | None = None,
     page_number: int = 1,
@@ -277,7 +286,7 @@ def get_theseed_ranking(
     return TheSeedRanking.model_validate(response)
 
 
-def get_achievement_ranking(
+def get_achievement_ranking_by_id(
     character_id: str | None = None,
     page_number: int = 1,
     date: kst.AwareDatetime = kst.yesterday(),
