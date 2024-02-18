@@ -92,7 +92,7 @@ class StarforceHistoryInfo(BaseModel):
     world_name: str
     target_item: str
     date_create: datetime
-    starforce_event_list: list[StarforceHistoryEvent]
+    starforce_event_list: list[StarforceHistoryEvent] | None
 
 
 class StarforceHistory(BaseModel):
@@ -101,9 +101,9 @@ class StarforceHistory(BaseModel):
     Attributes:
         count: 결과 건 수
         next_cursor: 페이징 처리를 위한 cursor
-        starforce_history: 스타포스 히스토리
+        history: 스타포스 히스토리
     """
 
     count: int
     next_cursor: PageCursor | None
-    starforce_history: list[StarforceHistoryInfo]
+    history: list[StarforceHistoryInfo] = Field(alias="starforce_history")
