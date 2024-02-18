@@ -1,5 +1,7 @@
 from pydantic import BaseModel
 
+from maplestory.models.ranking.common import RankingModel
+
 
 class TheSeedRankingInfo(BaseModel):
     """더 시드 랭킹 상세 정보
@@ -27,11 +29,9 @@ class TheSeedRankingInfo(BaseModel):
     theseed_time_record: int
 
 
-class TheSeedRanking(BaseModel):
+class TheSeedRanking(RankingModel[TheSeedRankingInfo]):
     """더 시드 랭킹 정보
 
     Attributes:
         ranking: 더 시드 랭킹 정보
     """
-
-    ranking: list[TheSeedRankingInfo]

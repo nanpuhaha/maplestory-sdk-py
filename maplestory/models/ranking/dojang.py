@@ -1,5 +1,7 @@
 from pydantic import BaseModel
 
+from maplestory.models.ranking.common import RankingModel
+
 
 class DojangRankingInfo(BaseModel):
     """무릉도장 랭킹 상세 정보
@@ -27,11 +29,9 @@ class DojangRankingInfo(BaseModel):
     dojang_time_record: int
 
 
-class DojangRanking(BaseModel):
+class DojangRanking(RankingModel[DojangRankingInfo]):
     """무릉도장 랭킹 정보
 
     Attributes:
         ranking: 무릉도장 랭킹 정보
     """
-
-    ranking: list[DojangRankingInfo]

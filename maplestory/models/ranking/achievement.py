@@ -1,5 +1,7 @@
 from pydantic import BaseModel
 
+from maplestory.models.ranking.common import RankingModel
+
 
 class AchievementRankingInfo(BaseModel):
     """업적 랭킹 상세 정보
@@ -25,11 +27,9 @@ class AchievementRankingInfo(BaseModel):
     trophy_score: int
 
 
-class AchievementRanking(BaseModel):
+class AchievementRanking(RankingModel[AchievementRankingInfo]):
     """업적 랭킹 정보
 
     Attributes:
         ranking: 업적 랭킹 정보
     """
-
-    ranking: list[AchievementRankingInfo]

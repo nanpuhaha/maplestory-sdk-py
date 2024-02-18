@@ -1,5 +1,7 @@
 from pydantic import BaseModel, Field
 
+from maplestory.models.ranking.common import RankingModel
+
 
 class OverallRankingInfo(BaseModel):
     """종합 랭킹 상세 정보
@@ -45,11 +47,9 @@ class OverallRankingInfo(BaseModel):
         return self.guild_name
 
 
-class OverallRanking(BaseModel):
+class OverallRanking(RankingModel[OverallRankingInfo]):
     """종합 랭킹 정보
 
     Attributes:
         ranking: 종합 랭킹 정보
     """
-
-    ranking: list[OverallRankingInfo]

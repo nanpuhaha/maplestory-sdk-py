@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 
+from maplestory.models.ranking.common import RankingModel
 from maplestory.types.union import UnionWorldName
 
 
@@ -27,11 +28,9 @@ class UnionRankingInfo(BaseModel):
     union_power: int
 
 
-class UnionRanking(BaseModel):
+class UnionRanking(RankingModel[UnionRankingInfo]):
     """유니온 랭킹 정보
 
     Attributes:
         ranking: 유니온 랭킹 정보
     """
-
-    ranking: list[UnionRankingInfo]

@@ -1,5 +1,7 @@
 from pydantic import BaseModel
 
+from maplestory.models.ranking.common import RankingModel
+
 
 class GuildRankingInfo(BaseModel):
     """유니온 랭킹 상세 정보
@@ -25,11 +27,9 @@ class GuildRankingInfo(BaseModel):
     guild_point: int
 
 
-class GuildRanking(BaseModel):
+class GuildRanking(RankingModel[GuildRankingInfo]):
     """길드 랭킹 정보
 
     Attributes:
         ranking: 길드 랭킹 정보
     """
-
-    ranking: list[GuildRankingInfo]
