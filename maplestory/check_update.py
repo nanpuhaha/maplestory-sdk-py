@@ -141,7 +141,7 @@ def retrieve_api_result() -> dict:
         raise Exception(f"Failed to fetch API result: {str(e)}")
 
 
-if __name__ == "__main__":
+def main():
     PROJECT_DIRECTORY = Path(__file__).parent.parent
     DATA_DIRECTORY = PROJECT_DIRECTORY / "data"
     yaml_files = list(DATA_DIRECTORY.glob("*.yaml"))
@@ -177,3 +177,7 @@ if __name__ == "__main__":
         print(updated_files)
 
         open("updated_files.txt", "w").write("\n".join(updated_files))
+
+
+if __name__ == "__main__":
+    main()
