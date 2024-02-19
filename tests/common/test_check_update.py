@@ -6,6 +6,7 @@ import pytest
 
 from maplestory.check_update import (
     APIInformation,
+    APIResultList,
     add_api_information_to_file,
     decode_url,
     main,
@@ -80,6 +81,17 @@ class TestDecodeUrl:
 
         # Assert
         assert result == "http://www.example.com/path?param=value&key=#%"
+
+    # Decodes a URL with invalid encoding
+    def test_decodes_url_with_invalid_encoding(self):
+        # Arrange
+        url = "http%3A%2F%2Fwww.example.com%2Fpath%3Fparam%3Dvalue%26key%3D%23%"
+
+        # Act
+        result = decode_url(url)
+
+        # Assert
+        assert result is None
 
 
 class TestAddApiInformationToFile:
@@ -187,17 +199,11 @@ class TestAddApiInformationToFile:
             isVisible=True,
         )
 
-        # Call the function under test
-        add_api_information_to_file(temp_file, api_info)
-
-        # Read the modified YAML file
-        with open(temp_file, "r", encoding="utf-8") as f:
-            content = f.read()
-
-        # Check if the x-fields are added correctly
-        assert "  x-fileName: file1\n" in content
-        assert "  x-updateDate:" in content
-        assert "  x-fileUrl:" in content
+        # Call the function under test and expect a ValueError
+        with pytest.raises(
+            ValueError, match="The 'servers:' section was not found in the YAML file."
+        ):
+            add_api_information_to_file(temp_file, api_info)
 
         # Delete the temporary YAML file
         temp_file.unlink()
@@ -335,7 +341,7 @@ class TestAPIInformation:
         assert api_info.categoryName == "category1"
         assert api_info.filePath == "/path/to/file"
         assert api_info.fileName == "file.yaml"
-        assert api_info.fileUrl == "http://example.com/file.yaml"
+        assert api_info.fileUrl == YAML_FILE_URL
         assert api_info.ordering == 1
         assert api_info.createEmpNo == 123
         assert api_info.createEmpName == "John Doe"
@@ -430,7 +436,7 @@ class TestAPIInformation:
             categoryName="category1",
             filePath="/path/to/file",
             fileName="file.yaml",
-            fileUrl=YAML_FILE_URL,
+            fileUrl="https://raw.githubusercontent.com/actions/setup-python/main/action.yml",
             ordering=1,
             createEmpNo=123,
             createEmpName="John%20Doe",
@@ -447,6 +453,139 @@ class TestAPIInformation:
         with pytest.raises(ValueError):
             api_info.download(directory)
 
+    # APIResultList can be instantiated with a list of APIInformation objects
+    def test_instantiation_with_api_information_objects(self):
+        api_info_1 = APIInformation(
+            id=1,
+            gameId="game1",
+            categoryName="category1",
+            filePath="path1",
+            fileName="file1",
+            fileUrl="url1",
+            ordering=1,
+            createEmpNo=1,
+            createEmpName="name1",
+            updateEmpNo=1,
+            updateEmpName="name1",
+            createDate=datetime.now(),
+            updateDate=datetime.now(),
+            isVisible=True,
+        )
+        api_info_2 = APIInformation(
+            id=2,
+            gameId="game2",
+            categoryName="category2",
+            filePath="path2",
+            fileName="file2",
+            fileUrl="url2",
+            ordering=2,
+            createEmpNo=2,
+            createEmpName="name2",
+            updateEmpNo=2,
+            updateEmpName="name2",
+            createDate=datetime.now(),
+            updateDate=datetime.now(),
+            isVisible=True,
+        )
+        api_result_list = APIResultList(root=[api_info_1, api_info_2])
+        assert len(api_result_list.root) == 2
+        assert api_result_list.root[0] == api_info_1
+        assert api_result_list.root[1] == api_info_2
+
+    # APIResultList can be iterated over to access its APIInformation objects
+    def test_iteration_over_api_information_objects(self):
+        api_info_1 = APIInformation(
+            id=1,
+            gameId="game1",
+            categoryName="category1",
+            filePath="path1",
+            fileName="file1",
+            fileUrl="url1",
+            ordering=1,
+            createEmpNo=1,
+            createEmpName="name1",
+            updateEmpNo=1,
+            updateEmpName="name1",
+            createDate=datetime.now(),
+            updateDate=datetime.now(),
+            isVisible=True,
+        )
+        api_info_2 = APIInformation(
+            id=2,
+            gameId="game2",
+            categoryName="category2",
+            filePath="path2",
+            fileName="file2",
+            fileUrl="url2",
+            ordering=2,
+            createEmpNo=2,
+            createEmpName="name2",
+            updateEmpNo=2,
+            updateEmpName="name2",
+            createDate=datetime.now(),
+            updateDate=datetime.now(),
+            isVisible=True,
+        )
+        api_result_list = APIResultList(root=[api_info_1, api_info_2])
+        api_info_list = [api for api in api_result_list]
+        assert len(api_info_list) == 2
+        assert api_info_list[0] == api_info_1
+        assert api_info_list[1] == api_info_2
+
+    # APIResultList can return the latest update date among its APIInformation objects
+    def test_latest_update_date(self):
+        api_info_1 = APIInformation(
+            id=1,
+            gameId="game1",
+            categoryName="category1",
+            filePath="path1",
+            fileName="file1",
+            fileUrl="url1",
+            ordering=1,
+            createEmpNo=1,
+            createEmpName="name1",
+            updateEmpNo=1,
+            updateEmpName="name1",
+            createDate=datetime.now(),
+            updateDate=datetime(2022, 1, 1),
+            isVisible=True,
+        )
+        api_info_2 = APIInformation(
+            id=2,
+            gameId="game2",
+            categoryName="category2",
+            filePath="path2",
+            fileName="file2",
+            fileUrl="url2",
+            ordering=2,
+            createEmpNo=2,
+            createEmpName="name2",
+            updateEmpNo=2,
+            updateEmpName="name2",
+            createDate=datetime.now(),
+            updateDate=datetime(2023, 1, 1),
+            isVisible=True,
+        )
+        api_result_list = APIResultList(root=[api_info_1, api_info_2])
+        assert api_result_list.latest_update_date == datetime(2023, 1, 1)
+
+    # APIResultList raises a validation error if instantiated with an empty list
+    def test_instantiation_with_empty_list(self):
+        with pytest.raises(ValueError):
+            _ = APIResultList(root=[])
+
+    # APIResultList raises a validation error if instantiated with a list containing non-APIInformation objects
+    def test_instantiation_with_non_api_information_objects(self):
+        non_api_info = "not an APIInformation object"
+        with pytest.raises(ValueError):
+            _ = APIResultList(root=[non_api_info])
+
+    # APIResultList.latest_update_date raises a ValueError if called on an empty list
+    def test_latest_update_date_on_empty_list(self):
+        api_result_list = APIResultList(root=[])
+        with pytest.raises(ValueError):
+            api_result_list.latest_update_date
+
 
 class TestRetrieveApiResult:
     # Returns a dictionary when API call is successful.
@@ -455,17 +594,34 @@ class TestRetrieveApiResult:
         assert isinstance(result, list)
         assert isinstance(result[0], dict)
 
-    # Handles HTTP errors and raises an exception.
-    def test_handles_http_errors_and_raises_exception(self):
-        # Mock API_VERSION_URL
-        API_VERSION_URL = "https://example.com/api"
+        api_result = APIResultList.model_validate(result)
+        assert isinstance(api_result, APIResultList)
 
-        # Mock HTTP error response
-        response = httpx.Response(404)
+    # The function returns a parsed API result in the form of a dictionary.
+    def test_retrieve_api_result_parsed_result(self):
+        # Mock httpx.get to return a successful response
+        class MockResponse:
+            def __init__(self, text):
+                self.text = text
 
-        # Mock httpx.get() method
         def mock_get(url):
-            return response
+            return MockResponse(
+                '{"props": {"pageProps": {"apiResult": {"key": "value"}}}}'
+            )
+
+        httpx.get = mock_get
+
+        # Act
+        result = retrieve_api_result()
+
+        # Assert
+        assert isinstance(result, dict)
+
+    # The function handles HTTP errors and raises an exception.
+    def test_retrieve_api_result_http_error(self):
+        # Mock httpx.get to raise an HTTP error
+        def mock_get(url):
+            raise httpx.HTTPError("HTTP Error")
 
         httpx.get = mock_get
 
@@ -473,14 +629,12 @@ class TestRetrieveApiResult:
         with pytest.raises(Exception):
             retrieve_api_result()
 
-    # Raises an exception when API call fails.
-    def test_raises_exception_when_api_call_fails(self):
-        # Mock API_VERSION_URL
-        API_VERSION_URL = "https://example.com/api"
+    # The specified URL is not valid or does not exist, and the function raises an exception.
+    def test_retrieve_api_result_invalid_url(self):
 
-        # Mock connection error
+        # Mock httpx.get to raise an exception for invalid URL
         def mock_get(url):
-            raise httpx.ConnectError()
+            raise httpx.RequestError("Invalid URL")
 
         httpx.get = mock_get
 
@@ -488,17 +642,15 @@ class TestRetrieveApiResult:
         with pytest.raises(Exception):
             retrieve_api_result()
 
-    # Raises an exception when API result is not in the expected format.
-    def test_raises_exception_when_api_result_not_in_expected_format(self):
-        # Mock API_VERSION_URL
-        API_VERSION_URL = "https://example.com/api"
+    # The HTML response does not contain the expected script tag, and the function raises an exception.
+    def test_retrieve_api_result_missing_script_tag(self):
+        # Mock httpx.get to return a response without the expected script tag
+        class MockResponse:
+            def __init__(self, text):
+                self.text = text
 
-        # Mock API response with invalid format
-        response = httpx.Response(200, json={"invalid": "format"})
-
-        # Mock httpx.get() method
         def mock_get(url):
-            return response
+            return MockResponse("<html><body></body></html>")
 
         httpx.get = mock_get
 
@@ -506,17 +658,17 @@ class TestRetrieveApiResult:
         with pytest.raises(Exception):
             retrieve_api_result()
 
-    # Handles unexpected HTTP status codes and raises an exception.
-    def test_handles_unexpected_http_status_codes_and_raises_exception(self):
-        # Mock API_VERSION_URL
-        API_VERSION_URL = "https://example.com/api"
+    # The script tag does not contain the expected API result, and the function raises an exception.
+    def test_retrieve_api_result_missing_api_result(self):
+        # Mock httpx.get to return a response without the expected API result in the script tag
+        class MockResponse:
+            def __init__(self, text):
+                self.text = text
 
-        # Mock unexpected HTTP status code
-        response = httpx.Response(500)
-
-        # Mock httpx.get() method
         def mock_get(url):
-            return response
+            return MockResponse(
+                '<html><body><script id="__NEXT_DATA__"></script></body></html>'
+            )
 
         httpx.get = mock_get
 
