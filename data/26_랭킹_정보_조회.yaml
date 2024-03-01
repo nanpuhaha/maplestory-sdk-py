@@ -9,9 +9,9 @@ info:
     - 오전 8시 30분부터 오늘의 랭킹 정보를 조회할 수 있습니다. 
     - 게임 콘텐츠 변경으로 ocid가 변경될 수 있습니다. ocid 기반 서비스 갱신 시 유의해 주시길 바랍니다. 
 
-  x-fileName: 26_script20240215021949.yaml
-  x-updateDate: '2024-02-15 02:19:50'
-  x-fileUrl: 'https://d39jgqf8odj4rj.cloudfront.net/api/26_script20240215021949.yaml'
+  x-fileName: 26_script20240229010748.yaml
+  x-updateDate: '2024-02-29 01:07:48'
+  x-fileUrl: 'https://d39jgqf8odj4rj.cloudfront.net/api/26_script20240229010748.yaml'
 servers:
   - url: 'https://open.api.nexon.com'
 tags:

@@ -67,16 +67,16 @@
         "id": 26,
         "gameId": "f95a6fd8",
         "categoryName": "랭킹 정보 조회",
-        "filePath": "/26_script20240215021949.yaml",
-        "fileName": "26_script20240215021949.yaml",
-        "fileUrl": "https://d39jgqf8odj4rj.cloudfront.net/api/26_script20240215021949.yaml",
+        "filePath": "/26_script20240229010748.yaml",
+        "fileName": "26_script20240229010748.yaml",
+        "fileUrl": "https://d39jgqf8odj4rj.cloudfront.net/api/26_script20240229010748.yaml",
         "ordering": 5,
         "createEmpNo": "31532",
         "createEmpName": "%EA%B9%80%EC%A7%80%EC%95%88",
         "updateEmpNo": "31532",
         "updateEmpName": "김지안",
         "createDate": "2023-12-12T10:40:57",
-        "updateDate": "2024-02-15T02:19:50",
+        "updateDate": "2024-02-29T01:07:48",
         "isVisible": true
     }
 ]
