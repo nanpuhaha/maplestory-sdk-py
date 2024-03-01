@@ -36,6 +36,10 @@ class BaseEnum(Enum):
 
         return {k: v.value for k, v in cls._member_map_.items()}
 
+    @classmethod
+    def __contains__(cls, item):
+        return item in cls.values()
+
 
 class Grade(BaseEnum):
     LEGENDARY = "레전드리"
