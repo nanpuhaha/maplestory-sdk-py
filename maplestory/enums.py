@@ -41,7 +41,53 @@ class BaseEnum(Enum):
         return item in cls.values()
 
 
-class Grade(BaseEnum):
+class EquipItemSlot(BaseEnum):
+    # 무기
+    WEAPON = "무기"
+    SECONDARY_WEAPON = "보조무기"
+
+    # 방어구
+    HAT = "모자"
+    TOP = "상의"
+    BOTTOM = "하의"
+    GLOVES = "장갑"
+    SHOES = "신발"
+    CAPE = "망토"
+
+    # 장신구
+    BADGE = "뱃지"
+    BELT = "벨트"
+    EARRINGS = "귀걸이"
+    EYE_ACCESSORY = "눈장식"
+    FACE_ACCESSORY = "얼굴장식"
+    PENDANT1 = "펜던트"
+    PENDANT2 = "펜던트2"
+    POCKET = "포켓 아이템"
+    RING1 = "반지1"
+    RING2 = "반지2"
+    RING3 = "반지3"
+    RING4 = "반지4"
+    SHOULDER = "어깨장식"
+
+    # 기타
+    EMBLEM = "엠블렘"
+    MEDAL = "훈장"
+    MECHANICAL_HEART = "기계 심장"
+
+    # 에반
+    DRAGON_HAT = "드래곤 모자"
+    DRAGON_PENDANT = "드래곤 펜던트"
+    DRAGON_WINGS = "드래곤 날개장식"
+    DRAGON_TAIL = "드래곤 꼬리장식"
+
+    # 메카닉
+    MECHANIC_ENGINE = "메카닉 엔진"
+    MECHANIC_ARM = "메카닉 암"
+    MECHANIC_LEG = "메카닉 레그"
+    MECHANIC_TRANSISTOR = "메카닉 트랜지스터"
+
+
+class GradeEnum(BaseEnum):
     LEGENDARY = "레전드리"
     UNIQUE = "유니크"
     EPIC = "에픽"

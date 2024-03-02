@@ -3,6 +3,8 @@ from typing import Literal
 
 from pydantic import BaseModel, Field, HttpUrl, field_validator
 
+from maplestory.enums import EquipItemSlot
+
 from ..types import (
     CharacterClass,
     CharacterGender,
@@ -440,3 +442,156 @@ class CharacterEquipment(BaseModel):
     preset1: list[EquipmentInfo] = Field(alias="item_equipment_preset_1")
     preset2: list[EquipmentInfo] = Field(alias="item_equipment_preset_2")
     preset3: list[EquipmentInfo] = Field(alias="item_equipment_preset_3")
+
+    def find_slot(self, slot: EquipItemSlot) -> EquipmentInfo | None:
+        return next((item for item in self.items if item.slot == slot.value), None)
+
+    def find_dragon_slot(self, slot: EquipItemSlot) -> DragonEquipmentInfo | None:
+        return next(
+            (item for item in self.dragon_items if item.slot == slot.value), None
+        )
+
+    def find_mechanic_slot(self, slot: EquipItemSlot) -> MechanicEquipmentInfo | None:
+        return next(
+            (item for item in self.mechanic_items if item.slot == slot.value), None
+        )
+
+    @property
+    def hat(self) -> EquipmentInfo | None:
+        return self.find_slot(EquipItemSlot.HAT)
+
+    @property
+    def top(self) -> EquipmentInfo | None:
+        return self.find_slot(EquipItemSlot.TOP)
+
+    @property
+    def bottom(self) -> EquipmentInfo | None:
+        return self.find_slot(EquipItemSlot.BOTTOM)
+
+    @property
+    def shoes(self) -> EquipmentInfo | None:
+        return self.find_slot(EquipItemSlot.SHOES)
+
+    @property
+    def glove(self) -> EquipmentInfo | None:
+        return self.find_slot(EquipItemSlot.GLOVES)
+
+    @property
+    def cape(self) -> EquipmentInfo | None:
+        return self.find_slot(EquipItemSlot.CAPE)
+
+    @property
+    def weapon(self) -> EquipmentInfo | None:
+        return self.find_slot(EquipItemSlot.WEAPON)
+
+    @property
+    def earrings(self) -> EquipmentInfo | None:
+        return self.find_slot(EquipItemSlot.EARRINGS)
+
+    @property
+    def ring1(self) -> EquipmentInfo | None:
+        return self.find_slot(EquipItemSlot.RING1)
+
+    @property
+    def ring2(self) -> EquipmentInfo | None:
+        return self.find_slot(EquipItemSlot.RING2)
+
+    @property
+    def ring3(self) -> EquipmentInfo | None:
+        return self.find_slot(EquipItemSlot.RING3)
+
+    @property
+    def ring4(self) -> EquipmentInfo | None:
+        return self.find_slot(EquipItemSlot.RING4)
+
+    @property
+    def pendant1(self) -> EquipmentInfo | None:
+        return self.find_slot(EquipItemSlot.PENDANT1)
+
+    @property
+    def pendant2(self) -> EquipmentInfo | None:
+        return self.find_slot(EquipItemSlot.PENDANT2)
+
+    @property
+    def pocket(self) -> EquipmentInfo | None:
+        return self.find_slot(EquipItemSlot.POCKET)
+
+    @property
+    def medal(self) -> EquipmentInfo | None:
+        return self.find_slot(EquipItemSlot.MEDAL)
+
+    @property
+    def belt(self) -> EquipmentInfo | None:
+        return self.find_slot(EquipItemSlot.BELT)
+
+    @property
+    def shoulder(self) -> EquipmentInfo | None:
+        return self.find_slot(EquipItemSlot.SHOULDER)
+
+    @property
+    def mechanical_heart(self) -> EquipmentInfo | None:
+        return self.find_slot(EquipItemSlot.MECHANICAL_HEART)
+
+    heart = mechanical_heart
+
+    @property
+    def emblem(self) -> EquipmentInfo | None:
+        return self.find_slot(EquipItemSlot.EMBLEM)
+
+    @property
+    def secondary_weapon(self) -> EquipmentInfo | None:
+        return self.find_slot(EquipItemSlot.SECONDARY_WEAPON)
+
+    sub_weapon = secondary_weapon
+
+    @property
+    def eye_accessory(self) -> EquipmentInfo | None:
+        return self.find_slot(EquipItemSlot.EYE_ACCESSORY)
+
+    eye_acc = eye_accessory
+
+    @property
+    def face_accessory(self) -> EquipmentInfo | None:
+        return self.find_slot(EquipItemSlot.FACE_ACCESSORY)
+
+    face_acc = face_accessory
+
+    @property
+    def badge(self) -> EquipmentInfo | None:
+        return self.find_slot(EquipItemSlot.BADGE)
+
+    # Dragon
+
+    @property
+    def dragon_hat(self) -> DragonEquipmentInfo | None:
+        return self.find_dragon_slot(EquipItemSlot.DRAGON_HAT)
+
+    @property
+    def dragon_pendant(self) -> DragonEquipmentInfo | None:
+        return self.find_dragon_slot(EquipItemSlot.DRAGON_PENDANT)
+
+    @property
+    def dragon_wings(self) -> DragonEquipmentInfo | None:
+        return self.find_dragon_slot(EquipItemSlot.DRAGON_WINGS)
+
+    @property
+    def dragon_tail(self) -> DragonEquipmentInfo | None:
+        return self.find_dragon_slot(EquipItemSlot.DRAGON_TAIL)
+
+    # Mechanic
+
+    @property
+    def mechanic_engine(self) -> MechanicEquipmentInfo | None:
+        return self.find_mechanic_slot(EquipItemSlot.MECHANIC_ENGINE)
+
+    @property
+    def mechanic_arm(self) -> MechanicEquipmentInfo | None:
+        return self.find_mechanic_slot(EquipItemSlot.MECHANIC_ARM)
+
+    @property
+    def mechanic_leg(self) -> MechanicEquipmentInfo | None:
+        return self.find_mechanic_slot(EquipItemSlot.MECHANIC_LEG)
+
+    @property
+    def mechanic_transistor(self) -> MechanicEquipmentInfo | None:
+        return self.find_mechanic_slot(EquipItemSlot.MECHANIC_TRANSISTOR)
