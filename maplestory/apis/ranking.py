@@ -28,7 +28,7 @@ def get_overall_ranking_by_id(
     job_class: JobClass | None = None,
     character_id: str | None = None,
     page_number: int = 1,
-    date: kst.KSTdatetime = kst.yesterday(),
+    date: kst.KSTAwareDatetime = kst.yesterday(),
 ) -> OverallRanking:
     """종합 랭킹 정보를 조회합니다.
 
@@ -98,7 +98,7 @@ def get_union_ranking_by_id(
     world: UnionWorldName | None = None,
     character_id: str | None = None,
     page_number: int = 1,
-    date: kst.KSTdatetime = kst.yesterday(),
+    date: kst.KSTAwareDatetime = kst.yesterday(),
 ) -> UnionRanking:
     """유니온 랭킹 정보를 조회합니다.
 
@@ -138,7 +138,7 @@ def get_guild_ranking_by_id(
     world_name: WorldName | None = None,
     guild: str | None = None,
     page_number: int = 1,
-    date: kst.KSTdatetime = kst.yesterday(),
+    date: kst.KSTAwareDatetime = kst.yesterday(),
 ) -> GuildRanking:
     """길드 랭킹 정보를 조회합니다.
 
@@ -187,7 +187,7 @@ def get_dojang_ranking_by_id(
     character_id: str | None = None,
     page_number: int = 1,
     difficulty_level: int | DojangDifficulty = DojangDifficulty.통달,
-    date: kst.AwareDatetime = kst.yesterday(),
+    date: kst.KSTAwareDatetime = kst.yesterday(),
 ) -> DojangRanking:
     """무릉도장 랭킹 정보를 조회합니다.
 
@@ -251,7 +251,7 @@ def get_theseed_ranking_by_id(
     world_name: WorldName | None = None,
     character_id: str | None = None,
     page_number: int = 1,
-    date: kst.AwareDatetime = kst.yesterday(),
+    date: kst.KSTAwareDatetime = kst.yesterday(),
 ) -> TheSeedRanking:
     """더 시드 랭킹 정보를 조회합니다.
 
@@ -289,7 +289,7 @@ def get_theseed_ranking_by_id(
 def get_achievement_ranking_by_id(
     character_id: str | None = None,
     page_number: int = 1,
-    date: kst.AwareDatetime = kst.yesterday(),
+    date: kst.KSTAwareDatetime = kst.yesterday(),
 ) -> AchievementRanking:
     """조회 기준일(KST)과 캐릭터 식별자를 사용하여 업적 랭킹 정보를 조회합니다.
 

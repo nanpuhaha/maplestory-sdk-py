@@ -1,43 +1,20 @@
 """이 모듈은 한국 표준시(KST)에 대한 날짜와 시간을 처리하는 함수와 클래스를 제공합니다.
 
-- `AwareDatetime` 클래스는 한국 표준시(KST) 시간대 정보를 요구하는 datetime을 나타냅니다.
+- `KSTAwareDatetime` 클래스는 한국 표준시(KST) 시간대 정보를 요구하는 datetime을 나타냅니다.
 - `validate` 함수는 주어진 datetime이 한국 표준시(KST) 시간대 정보를 가지고 있는지 확인합니다.
 - `now`, `yesterday`, `datetime` 함수는 각각 현재, 어제, 주어진 시간의 한국 표준시(KST)을 반환합니다.
 """
 
 from datetime import datetime as _datetime
 from datetime import timedelta
-from typing import Annotated, Any
+from typing import Annotated
 from zoneinfo import ZoneInfo
 
 from annotated_types import Timezone
-from pydantic import GetCoreSchemaHandler
-from pydantic.types import _check_annotated_type
-from pydantic_core import core_schema
 
 KST_TZ = ZoneInfo("Asia/Seoul")
 KST_TZ_CONSTRAINT = 9 * 60 * 60
-KSTdatetime = Annotated[_datetime, Timezone("Asia/Seoul")]
-
-
-class AwareDatetime:
-    """한국 표준시(KST) 시간대 정보를 요구하는 datetime을 나타냅니다."""
-
-    @classmethod
-    def __get_pydantic_core_schema__(
-        cls, source: type[Any], handler: GetCoreSchemaHandler
-    ) -> core_schema.CoreSchema:  # pragma: no cover
-        if cls is source:
-            # used directly as a type
-            return core_schema.datetime_schema(tz_constraint=KST_TZ_CONSTRAINT)
-
-        schema = handler(source)
-        _check_annotated_type(schema["type"], "datetime", cls.__name__)
-        schema["tz_constraint"] = KST_TZ_CONSTRAINT
-        return schema
-
-    def __repr__(self) -> str:
-        return "KstAwareDatetime"
+KSTAwareDatetime = Annotated[_datetime, Timezone("Asia/Seoul")]
 
 
 def validate(date: _datetime):
@@ -49,18 +26,18 @@ def validate(date: _datetime):
         raise ValueError("datetime should have KST timezone info.")
 
 
-def now() -> AwareDatetime:
+def now() -> KSTAwareDatetime:
     """현재 한국 표준시(KST) 시간을 반환합니다."""
     return _datetime.now(KST_TZ)
 
 
-def today() -> AwareDatetime:
+def today() -> KSTAwareDatetime:
     """어제의 한국 표준시(KST) 시간을 반환합니다."""
     today_kst = _datetime.now(KST_TZ)
     return datetime(today_kst.year, today_kst.month, today_kst.day)
 
 
-def yesterday() -> AwareDatetime:
+def yesterday() -> KSTAwareDatetime:
     """어제의 한국 표준시(KST) 시간을 반환합니다."""
     today_kst = _datetime.now(KST_TZ)
     yesterday_kst = today_kst - timedelta(days=1)
@@ -69,15 +46,15 @@ def yesterday() -> AwareDatetime:
 
 def datetime(
     year, month=None, day=None, hour=0, minute=0, second=0, microsecond=0
-) -> AwareDatetime:
+) -> KSTAwareDatetime:
     """주어진 시간의 한국 표준시(KST)를 반환합니다."""
     return _datetime(year, month, day, hour, minute, second, microsecond, tzinfo=KST_TZ)
 
 
-def today_with_time(hour=0, minute=0) -> AwareDatetime:
+def today_with_time(hour=0, minute=0) -> KSTAwareDatetime:
     _today = today()
     return datetime(_today.year, _today.month, _today.day, hour, minute)
 
 
-def is_same_date(date1: AwareDatetime, date2: AwareDatetime) -> bool:
+def is_same_date(date1: KSTAwareDatetime, date2: KSTAwareDatetime) -> bool:
     return date1.date() == date2.date()

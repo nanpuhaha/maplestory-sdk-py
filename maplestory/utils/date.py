@@ -31,11 +31,11 @@ def to_string(date: datetime | None, format: str = DATE_FORMAT) -> str | None:
     raise ValueError(f"Invalid date type: {type(date)}")
 
 
-def is_valid(date: kst.AwareDatetime, category: QueryableDate) -> None:
+def is_valid(date: kst.KSTAwareDatetime, category: QueryableDate) -> None:
     """주어진 날짜가 특정 카테고리에 대해 유효한지 확인합니다. 만약 날짜가 카테고리의 조회 가능한 날짜보다 이전이면 ValueError를 발생시킵니다.
 
     Args:
-        date (kst.AwareDatetime): 확인할 날짜
+        date (kst.KSTAwareDatetime): 확인할 날짜
         category (MinimumDate): 확인할 카테고리
 
     Raises:
