@@ -6,15 +6,62 @@
 """
 
 from datetime import datetime as _datetime
-from datetime import timedelta
-from typing import Annotated
+from datetime import timedelta, timezone
+from functools import wraps
+from typing import Annotated, Callable
 from zoneinfo import ZoneInfo
 
-from annotated_types import Timezone
+from annotated_types import Interval, Timezone
 
 KST_TZ = ZoneInfo("Asia/Seoul")
 KST_TZ_CONSTRAINT = 9 * 60 * 60
 KSTAwareDatetime = Annotated[_datetime, Timezone("Asia/Seoul")]
+Year = Annotated[int, Interval(ge=1, le=9999)]
+Month = Annotated[int, Interval(ge=1, le=12)]
+Day = Annotated[int, Interval(ge=1, le=31)]
+Hour = Annotated[int, Interval(ge=0, le=23)]
+Minute = Annotated[int, Interval(ge=0, le=59)]
+Second = Annotated[int, Interval(ge=0, le=59)]
+Microsecond = Annotated[int, Interval(ge=0, le=999999)]
+
+
+def is_aware(dt: _datetime) -> bool:
+    return dt.tzinfo is not None and dt.tzinfo.utcoffset(dt) is not None
+
+
+def is_naive(dt: _datetime) -> bool:
+    return dt.tzinfo is None or dt.tzinfo.utcoffset(dt) is None
+
+
+def is_kst_timezone(tzinfo) -> bool:
+    if tzinfo in [KST_TZ, timezone(timedelta(seconds=32400))]:
+        return True
+    elif tzinfo is not None and tzinfo.utcoffset(None) == timedelta(hours=9):
+        return True
+    return False
+
+
+def is_kst_datetime(dt: _datetime) -> bool:
+    return is_kst_timezone(dt.tzinfo)
+
+
+def ensure_kst_aware_datetime(func: Callable) -> Callable:
+    @wraps(func)
+    def wrapper(*args, **kwargs) -> KSTAwareDatetime:
+        result = func(*args, **kwargs)
+        if not isinstance(result, _datetime) or not is_kst_timezone(result.tzinfo):
+            raise TypeError("Return value is not a KSTAwareDatetime")
+        return result
+
+    return wrapper
+
+
+@ensure_kst_aware_datetime
+def to_kst(dt: _datetime) -> KSTAwareDatetime:
+    if is_aware(dt):
+        return dt.astimezone(KST_TZ)
+    else:
+        return dt.replace(tzinfo=timezone.utc).astimezone(KST_TZ)
 
 
 def validate(date: _datetime):
@@ -45,7 +92,13 @@ def yesterday() -> KSTAwareDatetime:
 
 
 def datetime(
-    year, month=None, day=None, hour=0, minute=0, second=0, microsecond=0
+    year: Year,
+    month: Month,
+    day: Day,
+    hour: Hour = 0,
+    minute: Minute = 0,
+    second: Second = 0,
+    microsecond: Microsecond = 0,
 ) -> KSTAwareDatetime:
     """주어진 시간의 한국 표준시(KST)를 반환합니다."""
     return _datetime(year, month, day, hour, minute, second, microsecond, tzinfo=KST_TZ)
