@@ -1,6 +1,8 @@
 from __future__ import annotations
 
-from pydantic import BaseModel, Field
+from datetime import datetime
+
+from pydantic import BaseModel, Field, field_validator
 
 import maplestory.utils.kst as kst
 from maplestory.enums import GuildRankTypeEnum
@@ -12,7 +14,7 @@ RankingListType = list[RankingType]
 RankByType = dict[str, RankingListType]
 
 
-class GuildRankingInfo(BaseModel):
+class GuildRankingInfo(DatetimeRepresentation, BaseModel):
     """길드 랭킹 상세 정보
 
     Attributes:
@@ -26,7 +28,7 @@ class GuildRankingInfo(BaseModel):
         guild_point: 길드 포인트
     """
 
-    date: str
+    date: kst.KSTAwareDatetime
     ranking: int
     guild_name: str
     world_name: str
@@ -34,6 +36,32 @@ class GuildRankingInfo(BaseModel):
     guild_master_name: str
     guild_mark: str
     guild_point: int
+
+    @field_validator("date", mode="before")
+    @classmethod
+    def change_date(cls, v: str) -> kst.KSTAwareDatetime:
+        """
+        Change the date format to a KSTAwareDatetime object.
+
+        Args:
+            v (str): The date string in the format "YYYY-MM-DD".
+
+        Returns:
+            kst.KSTAwareDatetime: The converted date as a KSTAwareDatetime object.
+
+        Raises:
+            TypeError: If the input is not a valid datetime object or does not have the KST timezone.
+
+        Example:
+            >>> change_date("2022-01-01")
+            KSTAwareDatetime(2022, 1, 1, 0, 0, 0, tzinfo=KST_TZ)
+        """
+
+        if isinstance(v, datetime):
+            return v
+
+        dt = datetime.strptime(v, "%Y-%m-%d")
+        return kst.datetime(dt.year, dt.month, dt.day)
 
 
 class GuildRanking(RankingModel[GuildRankingInfo]):

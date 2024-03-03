@@ -1,9 +1,13 @@
-from pydantic import BaseModel
+from datetime import datetime
 
+from pydantic import BaseModel, field_validator
+
+import maplestory.utils.kst as kst
 from maplestory.models.ranking.common import RankingModel
+from maplestory.utils.repr import DatetimeRepresentation
 
 
-class TheSeedRankingInfo(BaseModel):
+class TheSeedRankingInfo(DatetimeRepresentation, BaseModel):
     """더 시드 랭킹 상세 정보
 
     Attributes:
@@ -18,7 +22,7 @@ class TheSeedRankingInfo(BaseModel):
         theseed_time_record: 더 시드 클리어 시간 기록 (초 단위)
     """
 
-    date: str
+    date: kst.KSTAwareDatetime
     ranking: int
     character_name: str
     world_name: str
@@ -27,6 +31,12 @@ class TheSeedRankingInfo(BaseModel):
     character_level: int
     theseed_floor: int
     theseed_time_record: int
+
+    @field_validator("date", mode="before")
+    @classmethod
+    def change_date(cls, v: str) -> kst.KSTAwareDatetime:
+        dt = datetime.strptime(v, "%Y-%m-%d")
+        return kst.datetime(dt.year, dt.month, dt.day)
 
 
 class TheSeedRanking(RankingModel[TheSeedRankingInfo]):

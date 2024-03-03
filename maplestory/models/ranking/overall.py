@@ -1,9 +1,13 @@
-from pydantic import BaseModel, Field
+from datetime import datetime
 
+from pydantic import BaseModel, Field, field_validator
+
+import maplestory.utils.kst as kst
 from maplestory.models.ranking.common import RankingModel
+from maplestory.utils.repr import DatetimeRepresentation
 
 
-class OverallRankingInfo(BaseModel):
+class OverallRankingInfo(DatetimeRepresentation, BaseModel):
     """종합 랭킹 상세 정보
 
     Attributes:
@@ -19,7 +23,7 @@ class OverallRankingInfo(BaseModel):
         character_guildname: 길드 명
     """
 
-    date: str
+    date: kst.KSTAwareDatetime
     ranking: int
     character_name: str
     world_name: str
@@ -29,6 +33,12 @@ class OverallRankingInfo(BaseModel):
     character_exp: int
     popularity: int = Field(alias="character_popularity")
     guild_name: str | None = Field(alias="character_guildname")
+
+    @field_validator("date", mode="before")
+    @classmethod
+    def change_date(cls, v: str) -> kst.KSTAwareDatetime:
+        dt = datetime.strptime(v, "%Y-%m-%d")
+        return kst.datetime(dt.year, dt.month, dt.day)
 
     @property
     def 레벨(self) -> int:
@@ -53,3 +63,15 @@ class OverallRanking(RankingModel[OverallRankingInfo]):
     Attributes:
         ranking: 종합 랭킹 정보
     """
+
+    @property
+    def world_names(self) -> set[str]:
+        return {rank.world_name for rank in self.ranking}
+
+    @property
+    def class_names(self) -> set[str]:
+        return {rank.class_name for rank in self.ranking}
+
+    @property
+    def sub_class_names(self) -> set[str]:
+        return {rank.sub_class_name for rank in self.ranking}

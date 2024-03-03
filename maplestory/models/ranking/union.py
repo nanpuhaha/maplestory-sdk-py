@@ -1,5 +1,8 @@
-from pydantic import BaseModel
+from datetime import datetime
 
+from pydantic import BaseModel, field_validator
+
+import maplestory.utils.kst as kst
 from maplestory.models.ranking.common import RankingModel
 from maplestory.types.union import UnionWorldName
 
@@ -18,7 +21,7 @@ class UnionRankingInfo(BaseModel):
         union_power: 유니온 파워
     """
 
-    date: str
+    date: kst.KSTAwareDatetime
     ranking: int
     character_name: str
     world_name: UnionWorldName
@@ -26,6 +29,12 @@ class UnionRankingInfo(BaseModel):
     sub_class_name: str
     union_level: int
     union_power: int
+
+    @field_validator("date", mode="before")
+    @classmethod
+    def change_date(cls, v: str) -> kst.KSTAwareDatetime:
+        dt = datetime.strptime(v, "%Y-%m-%d")
+        return kst.datetime(dt.year, dt.month, dt.day)
 
 
 class UnionRanking(RankingModel[UnionRankingInfo]):

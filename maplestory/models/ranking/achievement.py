@@ -1,9 +1,13 @@
-from pydantic import BaseModel
+from datetime import datetime
 
+from pydantic import BaseModel, field_validator
+
+import maplestory.utils.kst as kst
 from maplestory.models.ranking.common import RankingModel
+from maplestory.utils.repr import DatetimeRepresentation
 
 
-class AchievementRankingInfo(BaseModel):
+class AchievementRankingInfo(DatetimeRepresentation, BaseModel):
     """업적 랭킹 상세 정보
 
     Attributes:
@@ -17,7 +21,7 @@ class AchievementRankingInfo(BaseModel):
         trophy_score: 업적 점수
     """
 
-    date: str
+    date: kst.KSTAwareDatetime
     ranking: int
     character_name: str
     world_name: str
@@ -25,6 +29,12 @@ class AchievementRankingInfo(BaseModel):
     sub_class_name: str
     trophy_grade: str
     trophy_score: int
+
+    @field_validator("date", mode="before")
+    @classmethod
+    def change_date(cls, v: str) -> kst.KSTAwareDatetime:
+        dt = datetime.strptime(v, "%Y-%m-%d")
+        return kst.datetime(dt.year, dt.month, dt.day)
 
 
 class AchievementRanking(RankingModel[AchievementRankingInfo]):

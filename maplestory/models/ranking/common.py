@@ -1,4 +1,4 @@
-from typing import Generic, TypeVar
+from typing import Any, Generic, TypeVar
 
 from pydantic import BaseModel
 
@@ -13,6 +13,9 @@ class RankingModel(BaseModel, Generic[RankingInfoType]):
     """
 
     ranking: list[RankingInfoType]
+
+    def model_post_init(self, __context: Any) -> None:
+        self.ranking = sorted(self.ranking, key=lambda x: x.ranking)
 
     def __iter__(self):
         return iter(self.ranking)
