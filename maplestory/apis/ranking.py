@@ -8,7 +8,12 @@ Note:
 
 import maplestory.utils.date as date_util
 import maplestory.utils.kst as kst
-from maplestory.enums import DojangDifficulty, GuildRankType, QueryableDate, WorldType
+from maplestory.enums import (
+    DojangDifficultyEnum,
+    GuildRankTypeEnum,
+    QueryableDateEnum,
+    WorldTypeEnum,
+)
 from maplestory.models.ranking import (
     AchievementRanking,
     DojangRanking,
@@ -24,7 +29,7 @@ from maplestory.utils.network import fetch
 
 def get_overall_ranking_by_id(
     world_name: WorldName | None = None,
-    world_type: int | WorldType | None = None,
+    world_type: int | WorldTypeEnum | None = None,
     job_class: JobClass | None = None,
     character_id: str | None = None,
     page_number: int = 1,
@@ -72,12 +77,12 @@ def get_overall_ranking_by_id(
         #     }
         # }
 
-    date_util.is_valid(date, QueryableDate.랭킹)
+    date_util.is_valid(date, QueryableDateEnum.랭킹)
 
-    if isinstance(world_type, WorldType):
+    if isinstance(world_type, WorldTypeEnum):
         world_type = world_type.value
 
-    if isinstance(world_type, int) and world_type not in WorldType.values():
+    if isinstance(world_type, int) and world_type not in WorldTypeEnum.values():
         raise ValueError("world_type must be 0 or 1.")
 
     path = "/maplestory/v1/ranking/overall"
@@ -95,7 +100,7 @@ def get_overall_ranking_by_id(
 
 
 def get_union_ranking_by_id(
-    world: UnionWorldName | None = None,
+    world_name: UnionWorldName | None = None,
     character_id: str | None = None,
     page_number: int = 1,
     date: kst.KSTAwareDatetime = kst.yesterday(),
@@ -119,12 +124,12 @@ def get_union_ranking_by_id(
         - 게임 콘텐츠 변경으로 ocid가 변경될 수 있습니다. ocid 기반 서비스 갱신 시 유의해 주시길 바랍니다.
     """
 
-    date_util.is_valid(date, QueryableDate.랭킹)
+    date_util.is_valid(date, QueryableDateEnum.랭킹)
 
     path = "/maplestory/v1/ranking/union"
     query = {
         "date": date_util.to_string(date),
-        "world_name": world,
+        "world_name": world_name,
         "ocid": character_id,
         "page": page_number,
     }
@@ -134,7 +139,7 @@ def get_union_ranking_by_id(
 
 
 def get_guild_ranking_by_id(
-    ranking_type: int | GuildRankType = GuildRankType.주간명성치,
+    ranking_type: int | GuildRankTypeEnum = GuildRankTypeEnum.주간명성치,
     world_name: WorldName | None = None,
     guild: str | None = None,
     page_number: int = 1,
@@ -160,12 +165,12 @@ def get_guild_ranking_by_id(
         - 게임 콘텐츠 변경으로 ocid가 변경될 수 있습니다. ocid 기반 서비스 갱신 시 유의해 주시길 바랍니다.
     """
 
-    date_util.is_valid(date, QueryableDate.랭킹)
+    date_util.is_valid(date, QueryableDateEnum.랭킹)
 
-    if isinstance(ranking_type, GuildRankType):
+    if isinstance(ranking_type, GuildRankTypeEnum):
         ranking_type = ranking_type.value
 
-    if ranking_type not in GuildRankType.values():
+    if ranking_type not in GuildRankTypeEnum.values():
         raise ValueError("ranking_type must be 0, 1, or 2.")
 
     path = "/maplestory/v1/ranking/guild"
@@ -186,7 +191,7 @@ def get_dojang_ranking_by_id(
     job_class: JobClass | None = None,
     character_id: str | None = None,
     page_number: int = 1,
-    difficulty_level: int | DojangDifficulty = DojangDifficulty.통달,
+    difficulty_level: int | DojangDifficultyEnum = DojangDifficultyEnum.통달,
     date: kst.KSTAwareDatetime = kst.yesterday(),
 ) -> DojangRanking:
     """무릉도장 랭킹 정보를 조회합니다.
@@ -225,12 +230,12 @@ def get_dojang_ranking_by_id(
         - 게임 콘텐츠 변경으로 ocid가 변경될 수 있습니다. ocid 기반 서비스 갱신 시 유의해 주시길 바랍니다.
     """
 
-    date_util.is_valid(date, QueryableDate.랭킹)
+    date_util.is_valid(date, QueryableDateEnum.랭킹)
 
-    if isinstance(difficulty_level, DojangDifficulty):
+    if isinstance(difficulty_level, DojangDifficultyEnum):
         difficulty_level = difficulty_level.value
 
-    if difficulty_level not in DojangDifficulty.values():
+    if difficulty_level not in DojangDifficultyEnum.values():
         raise ValueError("difficulty_level must be 0 or 1.")
 
     path = "/maplestory/v1/ranking/dojang"
@@ -272,7 +277,7 @@ def get_theseed_ranking_by_id(
         - 게임 콘텐츠 변경으로 ocid가 변경될 수 있습니다. ocid 기반 서비스 갱신 시 유의해 주시길 바랍니다.
     """
 
-    date_util.is_valid(date, QueryableDate.랭킹)
+    date_util.is_valid(date, QueryableDateEnum.랭킹)
 
     path = "/maplestory/v1/ranking/theseed"
     query = {
@@ -307,7 +312,7 @@ def get_achievement_ranking_by_id(
         - 게임 콘텐츠 변경으로 ocid가 변경될 수 있습니다. ocid 기반 서비스 갱신 시 유의해 주시길 바랍니다.
     """
 
-    date_util.is_valid(date, QueryableDate.랭킹)
+    date_util.is_valid(date, QueryableDateEnum.랭킹)
 
     path = "/maplestory/v1/ranking/achievement"
     query = {

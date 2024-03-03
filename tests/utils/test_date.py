@@ -3,7 +3,7 @@ from datetime import datetime, timedelta, timezone
 import pytest
 
 import maplestory.utils.kst as kst
-from maplestory.enums import QueryableDate
+from maplestory.enums import QueryableDateEnum
 from maplestory.utils.date import is_valid, to_string
 
 
@@ -54,19 +54,19 @@ class TestToString:
 
 class TestIsValid:
     def test_invalid_date(self):
-        category = QueryableDate.캐릭터
+        category = QueryableDateEnum.캐릭터
         invalid_date = category.value - timedelta(days=1)
 
         with pytest.raises(
             ValueError,
-            match=r"캐릭터{은,는} 2023-12-21부터 데이터를 조회할 수 있습니다.",
+            match=r"CHARACTER{은,는} 2023-12-21부터 데이터를 조회할 수 있습니다.",
         ):
             _ = is_valid(invalid_date, category)
 
     # Verify that a valid date for a given category does not raise any exception
     def test_valid_date_no_exception(self):
         valid_date = kst.datetime(2023, 12, 21)
-        category = QueryableDate.캐릭터
+        category = QueryableDateEnum.캐릭터
 
         try:
             is_valid(valid_date, category)
@@ -75,8 +75,8 @@ class TestIsValid:
 
     # Verify that a date equal to the minimum date for a given category does not raise any exception
     def test_minimum_date_no_exception(self):
-        minimum_date = QueryableDate.캐릭터.value
-        category = QueryableDate.캐릭터
+        minimum_date = QueryableDateEnum.캐릭터.value
+        category = QueryableDateEnum.캐릭터
 
         try:
             is_valid(minimum_date, category)
@@ -86,7 +86,7 @@ class TestIsValid:
     # Verify that a date greater than the minimum date for a given category does not raise any exception
     def test_greater_than_minimum_date_no_exception(self):
         greater_date = kst.datetime(2024, 1, 1)
-        category = QueryableDate.캐릭터
+        category = QueryableDateEnum.캐릭터
 
         try:
             is_valid(greater_date, category)
@@ -96,7 +96,7 @@ class TestIsValid:
     # Verify that a date with timezone other than KST raises a ValueError
     def test_timezone_value_error(self):
         invalid_date = datetime(2023, 12, 21, tzinfo=timezone.utc)
-        category = QueryableDate.캐릭터
+        category = QueryableDateEnum.캐릭터
 
         with pytest.raises(ValueError):
             is_valid(invalid_date, category)
@@ -104,7 +104,7 @@ class TestIsValid:
     # Verify that a date with no timezone raises a ValueError
     def test_no_timezone_value_error(self):
         invalid_date = datetime(2023, 12, 21)
-        category = QueryableDate.캐릭터
+        category = QueryableDateEnum.캐릭터
 
         with pytest.raises(ValueError):
             is_valid(invalid_date, category)
@@ -113,7 +113,7 @@ class TestIsValid:
     def test_different_value_errors(self):
         invalid_date_with_timezone = datetime(2023, 12, 21, tzinfo=timezone.utc)
         invalid_date_no_timezone = datetime(2023, 12, 21)
-        category = QueryableDate.캐릭터
+        category = QueryableDateEnum.캐릭터
 
         with pytest.raises(ValueError) as exc_info:
             is_valid(invalid_date_with_timezone, category)

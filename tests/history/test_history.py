@@ -285,7 +285,7 @@ class TestGetStarforceHistory:
     def test_invalid_date(self):
         with pytest.raises(
             ValueError,
-            match="스타포스{은,는} 2023-12-27부터 데이터를 조회할 수 있습니다.",
+            match="STARFORCE{은,는} 2023-12-27부터 데이터를 조회할 수 있습니다.",
         ):
             get_starforce_history(date=kst_datetime(2023, 12, 26))
 
@@ -470,7 +470,7 @@ class TestGetPotentialHistory:
     def test_with_invalid_date(self):
         with pytest.raises(
             ValueError,
-            match="잠재능력{은,는} 2024-01-25부터 데이터를 조회할 수 있습니다.",
+            match="POTENTIAL{은,는} 2024-01-25부터 데이터를 조회할 수 있습니다.",
         ):
             get_potential_history(date=kst_datetime(2022, 1, 1))
 

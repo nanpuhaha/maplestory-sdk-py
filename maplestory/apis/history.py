@@ -8,7 +8,7 @@ from datetime import datetime
 
 import maplestory.utils.date as date_util
 import maplestory.utils.kst as kst
-from maplestory.enums import QueryableDate
+from maplestory.enums import QueryableDateEnum
 from maplestory.models.history import Account, CubeHistory, StarforceHistory
 from maplestory.models.history.potential import PotentialHistory
 from maplestory.models.types import PageCursor
@@ -88,7 +88,7 @@ def get_starforce_history(
     validate_date_and_cursor(date, page_cursor)
 
     if isinstance(date, datetime):
-        date_util.is_valid(date, QueryableDate.스타포스)
+        date_util.is_valid(date, QueryableDateEnum.스타포스)
 
     path = "/maplestory/v1/history/starforce"
     query = {
@@ -129,7 +129,7 @@ def get_cube_usage_history(
     validate_date_and_cursor(date, page_cursor)
 
     if isinstance(date, datetime):
-        date_util.is_valid(date, QueryableDate.큐브)
+        date_util.is_valid(date, QueryableDateEnum.큐브)
 
     path = "/maplestory/v1/history/cube"
     query = {
@@ -167,7 +167,7 @@ def get_potential_history(
     validate_date_and_cursor(date, page_cursor)
 
     if isinstance(date, datetime):
-        date_util.is_valid(date, QueryableDate.잠재능력)
+        date_util.is_valid(date, QueryableDateEnum.잠재능력)
 
     path = "/maplestory/v1/history/potential"
     query = {
