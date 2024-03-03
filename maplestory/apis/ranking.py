@@ -22,6 +22,7 @@ from maplestory.models.ranking import (
     TheSeedRanking,
     UnionRanking,
 )
+from maplestory.models.ranking.guild import GuildTypeRanking
 from maplestory.models.types import JobClass, WorldName
 from maplestory.types.union import UnionWorldName
 from maplestory.utils.network import fetch
@@ -144,7 +145,7 @@ def get_guild_ranking_by_id(
     guild: str | None = None,
     page_number: int = 1,
     date: kst.KSTAwareDatetime = kst.yesterday(),
-) -> GuildRanking:
+) -> GuildTypeRanking:
     """길드 랭킹 정보를 조회합니다.
 
     Args:
@@ -157,7 +158,7 @@ def get_guild_ranking_by_id(
         date : 조회 기준일(KST)
 
     Returns:
-        GuildRanking: 길드 랭킹 정보
+        GuildTypeRanking: 길드 랭킹 정보
 
     Note:
         - 2023년 12월 22일 데이터부터 조회할 수 있습니다.
@@ -183,7 +184,8 @@ def get_guild_ranking_by_id(
     }
     response = fetch(path, query)
 
-    return GuildRanking.model_validate(response)
+    ranking = GuildRanking.model_validate(response)
+    return GuildTypeRanking.from_ranking(ranking, GuildRankTypeEnum(ranking_type))
 
 
 def get_dojang_ranking_by_id(
@@ -248,6 +250,9 @@ def get_dojang_ranking_by_id(
         "difficulty": difficulty_level,
     }
     response = fetch(path, query)
+
+    for rank in response["ranking"]:
+        rank["difficulty"] = difficulty_level
 
     return DojangRanking.model_validate(response)
 
