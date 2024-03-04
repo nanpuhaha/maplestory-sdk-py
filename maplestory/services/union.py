@@ -178,7 +178,7 @@ class UnionStat(BaseModel):
         return "," in self.name or "/" in self.name
 
     @property
-    def multi_name(self) -> str | None:
+    def multi_name(self) -> list[str] | None:
         if "," in self.name:
             # 'STR, DEX, LUK 40 증가'
             return [s.strip() for s in self.name.split(",")]
@@ -243,39 +243,27 @@ class UnionStats(RootModel):
     def model_post_init(self, __context: Any) -> None:
         """
         모델 생성 후 초기화를 수행합니다. 스탯의 이름을 기준으로 root를 정렬합니다.
-
-        Args:
-            __context (Any): 초기화 후의 컨텍스트.
-        """
-        """
         Initializes the model post creation. Sorts the root based on the name of the stat.
-
-        Args:
-            __context (Any): The context for post initialization.
         """
-
         self.root = sorted(self.root, key=lambda x: x.name)
 
-    def group_stats(self, split_multiple: bool = False) -> dict[str, list[UnionStat]]:
+    def group_stats(
+        self, split_multiple: bool = False
+    ) -> dict[tuple[str, bool], list[UnionStat]]:
         """
         스탯의 이름과 퍼센트 여부를 기준으로 스탯을 그룹화합니다.
-        split_multiple이 True인 경우, 다중 이름 스탯을 개별 스탯으로 분리합니다.
-
-        Args:
-            split_multiple (bool): 다중 이름 스탯을 분리할지 여부. 기본값은 False입니다.
-
-        Returns:
-            Dict[str, List[UnionStat]]: 그룹화된 스탯.
-        """
-        """
         Groups the stats based on the name and whether it is a percentage.
+
+        split_multiple이 True인 경우, 다중 이름 스탯을 개별 스탯으로 분리합니다.
         If split_multiple is True, splits the multi-name stats into individual stats.
 
         Args:
-            split_multiple (bool): Whether to split multi-name stats. Default is False.
+            split_multiple (bool): 다중 이름 스탯을 분리할지 여부. 기본값은 False입니다.
+                                   Whether to split multi-name stats. Default is False.
 
         Returns:
-            Dict[str, List[UnionStat]]: The grouped stats.
+            dict[str, list[UnionStat]]: 그룹화된 스탯.
+                                        The grouped stats.
         """
         stats = []
         if split_multiple:
@@ -306,15 +294,11 @@ class UnionStats(RootModel):
     def group_with_split_multiple(self) -> dict[str, list[UnionStat]]:
         """
         split_multiple을 True로 설정하여 스탯을 그룹화합니다.
-
-        Returns:
-            Dict[str, List[UnionStat]]: 그룹화된 스탯.
-        """
-        """
         Groups the stats with split_multiple set to True.
 
         Returns:
-            Dict[str, List[UnionStat]]: The grouped stats.
+            dict[str, list[UnionStat]]: 그룹화된 스탯.
+                                        The grouped stats.
         """
         return self.group_stats(split_multiple=True)
 
@@ -322,43 +306,31 @@ class UnionStats(RootModel):
     def parse_list(cls, data: list[str]) -> UnionStats:
         """
         스탯의 리스트를 파싱하여 UnionStats 객체를 생성합니다.
-
-        Args:
-            data (List[str]): 스탯의 리스트.
-
-        Returns:
-            UnionStats: 생성된 UnionStats 객체.
-        """
-        """
         Parses a list of stats and creates a UnionStats object.
 
         Args:
-            data (List[str]): The list of stats.
+            data (list[str]): 스탯의 리스트.
+                              The list of stats.
 
         Returns:
-            UnionStats: The created UnionStats object.
+            UnionStats: 생성된 UnionStats 객체.
+                        The created UnionStats object.
         """
         return cls(root=[UnionStat(stat=stat) for stat in data])
 
     def summarize(self, split_multiple: bool = False) -> UnionStats:
         """
         스탯을 요약합니다. '방어율 무시'는 합이 아닌 곱으로 처리되므로 별도로 처리합니다.
-
-        Args:
-            split_multiple (bool): 다중 이름 스탯을 분리할지 여부. 기본값은 False입니다.
-
-        Returns:
-            UnionStats: 요약된 스탯.
-        """
-        """
-        Summarizes the stats. '방어율 무시' (Ignore Defense Rate) is handled separately
+        Summarizes the stats. 'Ignore Defense Rate' is handled separately
         as it is not summed but multiplied.
 
         Args:
-            split_multiple (bool): Whether to split multi-name stats. Default is False.
+            split_multiple (bool): 다중 이름 스탯을 분리할지 여부. 기본값은 False입니다.
+                                   Whether to split multi-name stats. Default is False.
 
         Returns:
-            UnionStats: The summarized stats.
+            UnionStats: 요약된 스탯.
+                        The summarized stats.
         """
         combined_stats = []
         grouped_stats = self.group_stats(split_multiple)

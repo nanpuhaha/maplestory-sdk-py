@@ -18,6 +18,7 @@ class Guild(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
     @computed_field
+    @property
     def id(self) -> str:
         return get_guild_id(self.name, self.world)
 
@@ -26,50 +27,62 @@ class Guild(BaseModel):
         return self.id
 
     @computed_field(repr=False)
+    @property
     def basic(self) -> GuildBasic:
         return get_basic_info(self.name, self.world)
 
     @computed_field
+    @property
     def level(self) -> int:
         return self.basic.level
 
     @computed_field
+    @property
     def point(self) -> int:
         return self.basic.point
 
     @computed_field
-    def point_str(self) -> int:
+    @property
+    def point_str(self) -> str:
         return korean_format_number(self.point)
 
     @computed_field
+    @property
     def fame(self) -> int:
         return self.basic.fame
 
     @computed_field
-    def fame_str(self) -> int:
+    @property
+    def fame_str(self) -> str:
         return korean_format_number(self.fame)
 
     @computed_field
+    @property
     def member_count(self) -> int:
         return self.basic.member_count
 
     @computed_field
+    @property
     def member_names(self) -> list[str]:
         return self.basic.members
 
     @computed_field
+    @property
     def master_name(self) -> str:
         return self.basic.master_name
 
     @computed_field
+    @property
     def skills(self) -> list[GuildSkill]:
         return self.basic.skills
 
     @computed_field
+    @property
     def noblesse_skills(self) -> list[GuildSkill]:
         return self.basic.noblesse_skills
 
     @computed_field
+    @property
     def mark(self) -> Image.Image | None:
         if self.basic.mark:
             return get_image_from_url(self.basic.mark)
@@ -78,6 +91,7 @@ class Guild(BaseModel):
         return None
 
     @computed_field
+    @property
     def is_custom_mark(self) -> bool:
         return self.basic.custom_mark is not None
 

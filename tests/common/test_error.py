@@ -1,5 +1,3 @@
-# Codium
-
 import pytest
 
 from maplestory.apis.guild import get_guild_id

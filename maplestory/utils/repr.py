@@ -81,7 +81,6 @@ def convert_datetime_as_str(value: Any):
 
 
 class DatetimeRepresentation:
-
     def __repr_args__(self: BaseModel):
         for k, v in self.__dict__.items():
             field = self.model_fields.get(k)
