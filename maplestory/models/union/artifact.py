@@ -1,7 +1,6 @@
 import re
-from datetime import datetime
+from datetime import datetime, timedelta
 from enum import Enum
-from typing import Any
 
 from pydantic import BaseModel, Field, computed_field, field_validator
 
@@ -141,10 +140,6 @@ class UnionArtifactEffect(BaseModel):
     def is_max_level(self) -> bool:
         return self.level == UNION_ARTIFACT_MAX_LEVEL
 
-    def required_ap_for_max_level(self) -> int:
-        # TODO: Implement required AP calculation
-        pass
-
 
 class UnionArtifactCrystal(BaseModel):
     """유니온 아티팩트 크리스탈 정보
@@ -161,7 +156,7 @@ class UnionArtifactCrystal(BaseModel):
 
     name: str
     validity_flag: str = Field(repr=False)
-    date_expire: datetime
+    date_expire: kst.KSTAwareDatetime
     level: int
     option1: ArtifactCrystalOption = Field(alias="crystal_option_name_1", repr=False)
     option2: ArtifactCrystalOption = Field(alias="crystal_option_name_2", repr=False)
@@ -169,12 +164,15 @@ class UnionArtifactCrystal(BaseModel):
 
     @field_validator("date_expire", mode="before")
     @classmethod
-    def make_date_expire(cls, v: Any) -> datetime:
+    def make_date_expire(cls, v: datetime | str) -> kst.KSTAwareDatetime:
+        if isinstance(v, datetime):
+            return kst.to_kst(v)
+
         try:
-            # 2024/02/20 19:26:00:000
+            # 2024-01-26T00:00+09:00
             date = datetime.strptime(v, "%Y-%m-%dT%H:%M%z")
         except ValueError:
-            # 2024-01-26T00:00+09:00
+            # 2024/02/20 19:26:00:000
             try:
                 date = datetime.strptime(v, "%Y/%m/%d %H:%M:%S:%f")
             except ValueError as error:
@@ -183,25 +181,30 @@ class UnionArtifactCrystal(BaseModel):
         return date
 
     @computed_field
+    @property
     def expired(self) -> bool:
         return self.validity_flag == "1"
 
     @computed_field(repr=False)
+    @property
     def active(self) -> bool:
         return self.validity_flag == "0"
 
     valid = active
 
     @computed_field
+    @property
     def options(self) -> list[ArtifactCrystalOption]:
         return [self.option1, self.option2, self.option3]
 
     @computed_field
-    def remaining_time(self) -> int:
+    @property
+    def remaining_time(self) -> timedelta:
         return self.date_expire - kst.now()
 
     @computed_field
-    def remaining_time_str(self) -> int:
+    @property
+    def remaining_time_str(self) -> str:
         days = self.remaining_time.days
         seconds = self.remaining_time.seconds
         hours = seconds // 3600
@@ -210,33 +213,40 @@ class UnionArtifactCrystal(BaseModel):
         return f"{days}일 {hours}시간 {minutes}분 {seconds}초"
 
     @computed_field
-    def remaining_time_short_str(self) -> int:
+    @property
+    def remaining_time_short_str(self) -> str:
         days = self.remaining_time.days + self.remaining_time.seconds // 3600 / 24
         return f"{days:.1f}일"
 
     @computed_field
+    @property
     def remaining_days(self) -> int:
         return (self.date_expire - kst.now()).days
 
 
-class UnionArtifactCrystalGrade(Enum):
-    GRADE_1 = (0, 0)
-    GRADE_2 = (1, 1)
-    GRADE_3 = (2, 3)
-    GRADE_4 = (2, 5)
-    GRADE_5 = (3, 8)
+class ArtifactCrystalRequiredAP(Enum):
+    LEVEL_1 = (0, 1)
+    LEVEL_2 = (1, 2)
+    LEVEL_3 = (3, 2)
+    LEVEL_4 = (5, 3)
+    LEVEL_5 = (8, 0)
 
-    def __init__(self, consumed_ap, cumulative_ap):
-        self.consumed_ap = consumed_ap
-        self.cumulative_ap = cumulative_ap
+    def __init__(self, cumulative, required):
+        self.cumulative = cumulative
+        self.required = required
+
+    @classmethod
+    def from_level(cls, level: int):
+        key = f"LEVEL_{level}"
+        return cls[key]
 
     @property
     def required_ap_for_next_level(self) -> int:
-        return self.consumed_ap
+        return self.required
 
     @property
     def required_ap_for_max_level(self) -> int:
-        return self.__class__.GRADE_5.cumulative_ap - self.cumulative_ap
+        return self.__class__.LEVEL_5.cumulative - self.cumulative
 
 
 class UnionArtifact(BaseModel):
