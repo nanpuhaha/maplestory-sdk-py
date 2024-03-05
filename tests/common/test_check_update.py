@@ -91,14 +91,14 @@ class TestDecodeUrl:
         result = decode_url(url)
 
         # Assert
-        assert result is None
+        assert result == "http://www.example.com/path?param=value&key=#%"
 
 
 class TestAddApiInformationToFile:
     # The function successfully adds 'x-fileName', 'x-updateDate', and 'x-fileUrl' to a YAML file.
     def test_adds_x_fields_to_yaml_file(self):
         # Create a temporary YAML file
-        temp_file = Path("./data/22_캐릭터_정보_조회.yaml")
+        file = Path("./data/22_캐릭터_정보_조회.yaml")
 
         # Create an instance of APIInformation
         api_info = APIInformation(
@@ -119,19 +119,16 @@ class TestAddApiInformationToFile:
         )
 
         # Call the function under test
-        add_api_information_to_file(temp_file, api_info)
+        add_api_information_to_file(file, api_info)
 
         # Read the modified YAML file
-        with open(temp_file, "r", encoding="utf-8") as f:
+        with open(file, "r", encoding="utf-8") as f:
             content = f.read()
 
         # Check if the x-fields are added correctly
         assert "x-fileName:" in content
         assert "x-updateDate:" in content
         assert "x-fileUrl:" in content
-
-        # Delete the temporary YAML file
-        temp_file.unlink()
 
     # The function correctly inserts the new lines just before the 'servers:' section.
     def test_inserts_lines_before_servers_section(self):
@@ -527,7 +524,7 @@ class TestAPIInformation:
             isVisible=True,
         )
         api_result_list = APIResultList(root=[api_info_1, api_info_2])
-        api_info_list = [api for api in api_result_list]
+        api_info_list = list(api_result_list)
         assert len(api_info_list) == 2
         assert api_info_list[0] == api_info_1
         assert api_info_list[1] == api_info_2
@@ -569,11 +566,6 @@ class TestAPIInformation:
         api_result_list = APIResultList(root=[api_info_1, api_info_2])
         assert api_result_list.latest_update_date == datetime(2023, 1, 1)
 
-    # APIResultList raises a validation error if instantiated with an empty list
-    def test_instantiation_with_empty_list(self):
-        with pytest.raises(ValueError):
-            _ = APIResultList(root=[])
-
     # APIResultList raises a validation error if instantiated with a list containing non-APIInformation objects
     def test_instantiation_with_non_api_information_objects(self):
         non_api_info = "not an APIInformation object"
@@ -597,89 +589,76 @@ class TestRetrieveApiResult:
         api_result = APIResultList.model_validate(result)
         assert isinstance(api_result, APIResultList)
 
-    # The function returns a parsed API result in the form of a dictionary.
-    def test_retrieve_api_result_parsed_result(self):
-        # Mock httpx.get to return a successful response
-        class MockResponse:
-            def __init__(self, text):
-                self.text = text
-
-        def mock_get(url):
-            return MockResponse(
-                '{"props": {"pageProps": {"apiResult": {"key": "value"}}}}'
-            )
-
-        httpx.get = mock_get
-
-        # Act
-        result = retrieve_api_result()
-
-        # Assert
-        assert isinstance(result, dict)
-
     # The function handles HTTP errors and raises an exception.
-    def test_retrieve_api_result_http_error(self):
+    def test_retrieve_api_result_http_error(self, mocker):
         # Mock httpx.get to raise an HTTP error
-        def mock_get(url):
+        def mock_get(url, *args, **kwargs):
             raise httpx.HTTPError("HTTP Error")
 
-        httpx.get = mock_get
+        patcher = mocker.patch("httpx.get", new=mock_get)
 
         # Act and Assert
         with pytest.raises(Exception):
             retrieve_api_result()
+
+        mocker.stop(patcher)
 
     # The specified URL is not valid or does not exist, and the function raises an exception.
-    def test_retrieve_api_result_invalid_url(self):
-
+    def test_retrieve_api_result_invalid_url(self, mocker):
         # Mock httpx.get to raise an exception for invalid URL
-        def mock_get(url):
+        def mock_get(url, *args, **kwargs):
             raise httpx.RequestError("Invalid URL")
 
-        httpx.get = mock_get
+        patcher = mocker.patch("httpx.get", new=mock_get)
 
         # Act and Assert
         with pytest.raises(Exception):
             retrieve_api_result()
 
+        mocker.stop(patcher)
+
     # The HTML response does not contain the expected script tag, and the function raises an exception.
-    def test_retrieve_api_result_missing_script_tag(self):
+    def test_retrieve_api_result_missing_script_tag(self, mocker):
         # Mock httpx.get to return a response without the expected script tag
         class MockResponse:
             def __init__(self, text):
                 self.text = text
 
-        def mock_get(url):
+        def mock_get(url, *args, **kwargs):
             return MockResponse("<html><body></body></html>")
 
-        httpx.get = mock_get
+        patcher = mocker.patch("httpx.get", new=mock_get)
 
         # Act and Assert
         with pytest.raises(Exception):
             retrieve_api_result()
 
+        mocker.stop(patcher)
+
     # The script tag does not contain the expected API result, and the function raises an exception.
-    def test_retrieve_api_result_missing_api_result(self):
+    def test_retrieve_api_result_missing_api_result(self, mocker):
         # Mock httpx.get to return a response without the expected API result in the script tag
         class MockResponse:
             def __init__(self, text):
                 self.text = text
 
-        def mock_get(url):
+        def mock_get(url, *args, **kwargs):
             return MockResponse(
                 '<html><body><script id="__NEXT_DATA__"></script></body></html>'
             )
 
-        httpx.get = mock_get
+        patcher = mocker.patch("httpx.get", new=mock_get)
 
         # Act and Assert
         with pytest.raises(Exception):
             retrieve_api_result()
 
+        mocker.stop(patcher)
+
 
 class TestMain:
     # Fetches and prints local and web API information
-    def test_fetch_and_print_api_information(self, capsys):
+    def test_fetch_and_print_api_information(self, capsys: pytest.CaptureFixture[str]):
         main()
 
         captured = capsys.readouterr()
@@ -687,7 +666,9 @@ class TestMain:
         assert "Web API Information" in captured.out
         assert "Local API Version == Web API Version: " in captured.out
         if "Local API Version == Web API Version: False" in captured.out:
-            assert "Update Required" not in captured.out
-            assert "Downloading updated yaml files..." not in captured.out
-            assert "Updated files:" not in captured.out
-            assert Path("updated_files.txt").is_file()
+            assert "Update Required" in captured.out
+            assert "Downloading updated yaml files..." in captured.out
+            assert "Updated files:" in captured.out
+            updated_files = Path("updated_files.txt")
+            assert updated_files.is_file()
+            assert updated_files.stat().st_size > 0

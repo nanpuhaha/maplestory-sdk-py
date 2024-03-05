@@ -7,11 +7,41 @@ from pydantic import ValidationError
 from rich import print
 
 from maplestory.apis.guild import get_basic_info_by_id, get_guild_id
+from maplestory.error import APIError
 from maplestory.models.guild.basic import GuildBasic, GuildSkill
 from maplestory.services.guild import Guild, get_basic_info
 from maplestory.utils.kst import KST_TZ
 
 TEST_GUILDS = [("리더", "스카니아"), ("좋은부자", "엘리시움")]
+
+
+class TestGetBasicInfoById:
+
+    # Should return a GuildBasic object when given a valid guild_id and date
+    def test_valid_guild_id_and_date(self):
+        guild_id = "9c64f32a53218b692a2360b4616fc15c"  # 스카니아 온앤온
+        date = datetime(2024, 1, 1)
+
+        result = get_basic_info_by_id(guild_id, date)
+
+        assert isinstance(result, GuildBasic)
+        assert isinstance(result.custom_mark_img, Image.Image)
+
+    # Should raise an APIError when the API returns an error message
+    def test_invalid_guild_id(self):
+        guild_id = "invalid_guild_id"
+        date = datetime(2024, 1, 1)
+
+        with pytest.raises(APIError, match="Please input valid id"):
+            get_basic_info_by_id(guild_id, date)
+
+    # Should raise an APIError when the API returns an error message
+    def test_invalid_date(self):
+        guild_id = "9c64f32a53218b692a2360b4616fc15c"  # 스카니아 온앤온
+        date = datetime(2023, 12, 10)
+
+        with pytest.raises(ValidationError):
+            get_basic_info_by_id(guild_id, date)
 
 
 @pytest.mark.parametrize("guild_name,world_name", TEST_GUILDS)
@@ -24,7 +54,7 @@ def test_get_id(guild_name: str, world_name: str):
 @pytest.mark.parametrize(
     "guild_id", ["789b457f357ce6ac3e1bfa1c95ccaac6", "604aebb0f9aaaaea871231a0412ec0b3"]
 )
-def test_get_basic_character_info_by_ocid(guild_id: str):
+def test_get_basic_info_by_ocid(guild_id: str):
     result = get_basic_info_by_id(guild_id)
     print(result)
     assert isinstance(result, GuildBasic)
@@ -114,7 +144,7 @@ class TestGuild:
     # Guild object has an id computed field that can be retrieved.
     def test_guild_id_computed_field(self, mocker):
         # Mock the get_guild_id function
-        mocker.patch(
+        patcher = mocker.patch(
             "httpx.get",
             return_value=httpx.Response(
                 200,
@@ -125,9 +155,11 @@ class TestGuild:
         guild_id = get_guild_id(guild_name="ExampleGuild", world_name="Scania")
         assert guild_id == "1234567890"
 
+        mocker.stop(patcher)
+
     # Guild object has computed fields for level, point, fame, member_count, member_names, master_name, skills, noblesse_skills, mark, and is_custom_mark.
     def test_computed_fields(self, mocker):
-        mocker.patch("httpx.get", side_effect=custom_side_effect)
+        patcher = mocker.patch("httpx.get", side_effect=custom_side_effect)
 
         # Create a Guild object
         guild = Guild(name="온앤온", world="스카니아")
@@ -165,9 +197,11 @@ class TestGuild:
         assert guild.is_custom_mark is True
         assert guild.basic == get_basic_info("온앤온", "스카니아")
 
+        mocker.stop(patcher)
+
     # Computed fields return expected data types.
     def test_computed_fields_data_types(self, mocker):
-        mocker.patch("httpx.get", side_effect=custom_side_effect)
+        patcher = mocker.patch("httpx.get", side_effect=custom_side_effect)
 
         # Create an instance of the Guild class
         guild = Guild(name="ExampleGuild", world="Scania")
@@ -191,9 +225,11 @@ class TestGuild:
         assert isinstance(guild.mark, (Image.Image, type(None)))
         assert isinstance(guild.is_custom_mark, bool)
 
+        mocker.stop(patcher)
+
     # Guild object has a basic computed field that returns a GuildBasic object.
     def test_basic_computed_field_returns_GuildBasic_object(self, mocker):
-        mocker.patch("httpx.get", side_effect=custom_side_effect)
+        patcher = mocker.patch("httpx.get", side_effect=custom_side_effect)
 
         # Create a Guild object
         guild = Guild(name="온앤온", world="스카니아")
@@ -234,3 +270,5 @@ class TestGuild:
             guild.basic.custom_mark
             == "iVBORw0KGgoAAAANSUhEUgAAABEAAAARCAYAAAA7bUf6AAAAf0lEQVQ4y92Q0Q2AIAxEr40zuIKjORNuhiPgEDUaJYgFbGL88H7oQbhcH/4lKmwjyUyKv4i1ABGB86Hk0QrZP2QXmObFhH8LEeeDpPPpnzZRNQ49KvzQWVpmnjTSNx41EVH8z2nA8RDPBrzYjvGCWEmHZa3XmOTLWyq0wX0rACtmD0XA3MLsTAAAAABJRU5ErkJggg=="
         )
+
+        mocker.stop(patcher)

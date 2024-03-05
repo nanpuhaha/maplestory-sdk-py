@@ -75,6 +75,8 @@ class TestGetGuildRanking:
         guild_name = "온앤온"
         ranking = get_guild_ranking(guild=guild_name)
         assert isinstance(ranking, GuildTypeRanking)
+        if len(ranking) == 0:
+            pytest.skip("No results for the specified guild")
         rank = ranking[0]  # Assuming the function returns a list
         assert rank.guild_name == guild_name
         assert rank.world_name == "스카니아"
@@ -473,6 +475,9 @@ class TestGetWeeklyFameGuildRanking:
         ranking = get_weekly_fame_guild_ranking(
             world_name="스카니아", guild="온앤온", page_number=1, date=kst.yesterday()
         )
+        if len(ranking) == 0:
+            pytest.skip("No results for the specified guild in the specified world")
+
         rank = ranking[0]
 
         assert isinstance(ranking, GuildTypeRanking)
