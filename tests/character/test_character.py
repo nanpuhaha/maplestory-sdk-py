@@ -1,3 +1,5 @@
+import sys
+
 from PIL import Image
 from pydantic_core import Url
 
@@ -232,7 +234,10 @@ class TestCharacter:
         ability = character.ability
         assert isinstance(ability, Ability)
         assert ability.date == kst.yesterday()
-        assert ability.grade in GradeEnum
+        if sys.version_info >= (3, 12):
+            assert ability.grade in GradeEnum
+        else:
+            assert ability.grade in GradeEnum.values()
         assert isinstance(ability.info, list)
         assert isinstance(ability.remain_fame, int)
         assert isinstance(ability.preset_no, int)

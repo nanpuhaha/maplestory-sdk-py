@@ -24,7 +24,7 @@ class BaseEnum(Enum):
             list: Enum 클래스의 모든 값을 포함하는 리스트입니다.
         """
 
-        return [c.value for c in cls]
+        return [member.value for member in cls]
 
     @classmethod
     def members(cls) -> dict:

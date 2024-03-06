@@ -1,3 +1,5 @@
+import sys
+
 import pytest
 
 import maplestory.utils.kst as kst
@@ -90,7 +92,10 @@ class TestGetNormalWorldOverallRanking:
         assert isinstance(first_rank, OverallRankingInfo)
         assert first_rank.ranking == 1
         assert first_rank.date == kst.yesterday()
-        assert first_rank.world_name in NormalWorld
+        if sys.version_info >= (3, 12):
+            assert first_rank.world_name in NormalWorld
+        else:
+            assert first_rank.world_name in NormalWorld.values()
 
     # Tests retrieving overall ranking for a normal world with specific job class, page number, and date
     def test_specific_parameters_normal_world(self):
@@ -108,7 +113,10 @@ class TestGetNormalWorldOverallRanking:
         assert first_rank.ranking == 201  # Assuming a specific ranking for this test
         assert first_rank.class_name == "전사"
         assert kst.is_same_date(first_rank.date, date)
-        assert first_rank.world_name in NormalWorld
+        if sys.version_info >= (3, 12):
+            assert first_rank.world_name in NormalWorld
+        else:
+            assert first_rank.world_name in NormalWorld.values()
 
     # Tests error handling when an invalid job class is provided
     def test_invalid_job_class_normal_world(self):
@@ -133,7 +141,10 @@ class TestGetRebootWorldOverallRanking:
         assert isinstance(first_rank, OverallRankingInfo)
         assert first_rank.ranking == 1
         assert first_rank.date == kst.yesterday()
-        assert first_rank.world_name in RebootWorld
+        if sys.version_info >= (3, 12):
+            assert first_rank.world_name in RebootWorld
+        else:
+            assert first_rank.world_name in RebootWorld.values()
 
     # Tests retrieving overall ranking for a reboot world with specific parameters
     def test_specific_parameters_reboot_world(self):
@@ -153,7 +164,10 @@ class TestGetRebootWorldOverallRanking:
         assert first_rank.class_name == "전사"
         assert first_rank.sub_class_name == "히어로"
         assert first_rank.date == kst.yesterday()
-        assert first_rank.world_name in RebootWorld
+        if sys.version_info >= (3, 12):
+            assert first_rank.world_name in RebootWorld
+        else:
+            assert first_rank.world_name in RebootWorld.values()
 
     # Tests error handling for a non-existent job class in a reboot world
     def test_nonexistent_job_class_reboot_world(self):
