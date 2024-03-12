@@ -236,8 +236,8 @@ class Character(DatetimeRepresentation, BaseModel):
         return get_character_dojang_record(self.name, self.date)
 
     def required_exp_for_level(self, target_level: int) -> int:
-        now_culmulative = CharacterExperience.from_level(self.basic.level).culmulative
-        target_culmulative = CharacterExperience.from_level(target_level).culmulative
+        now_culmulative = CharacterExperience.from_level(self.basic.level).cumulative
+        target_culmulative = CharacterExperience.from_level(target_level).cumulative
         required_exp = target_culmulative - now_culmulative - self.basic.exp
         return max(required_exp, 0)
 
