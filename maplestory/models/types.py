@@ -295,6 +295,7 @@ PetSkill = Literal[
     "펫 훈련 스킬",
     "HP 물약충전",
     "MP 물약충전",
+    "특정 아이템 줍지 않기",
 ]
 LinkSkillLevel = Annotated[int, Ge(1), Le(10)]
 GuildLevel = Annotated[int, Ge(1), Le(30)]
