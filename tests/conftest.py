@@ -51,7 +51,21 @@ def character_ocid(character_name: str) -> str:
     return get_character_id(character_name)
 
 
-@pytest.fixture(params=[0, 1, 2, 3, 4, 5, 6])
-def skill_grade(request) -> int:
+@pytest.fixture(
+    params=[
+        "0",
+        "1",
+        "1.5",
+        "2",
+        "2.5",
+        "3",
+        "4",
+        "hyperpassive",
+        "hyperactive",
+        "5",
+        "6",
+    ]
+)
+def skill_grade(request) -> str:
     print(f"skill_grade = {request.param!r}")
     return request.param

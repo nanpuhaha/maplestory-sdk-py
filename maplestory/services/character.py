@@ -48,6 +48,7 @@ from maplestory.models.character import (
     VMatrix,
 )
 from maplestory.services.guild import Guild
+from maplestory.types.character import SkillGradeList
 from maplestory.utils.kst import yesterday
 from maplestory.utils.repr import DatetimeRepresentation
 
@@ -179,6 +180,12 @@ class Character(DatetimeRepresentation, BaseModel):
     @property
     def pet_equipment(self) -> CharacterPet:
         return get_character_pet_equipment(self.name, self.date)
+
+    @property
+    def skills(self) -> list[CharacterSkill]:
+        return [
+            get_character_skill(self.name, grade, self.date) for grade in SkillGradeList
+        ]
 
     @property
     def skill_0th(self) -> CharacterSkill:

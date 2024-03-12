@@ -376,7 +376,7 @@ def get_character_pet_equipment_by_ocid(
 
 def get_character_skill_by_ocid(
     character_ocid: str,
-    skill_grade: int,
+    skill_grade: str,
     date: datetime = kst.yesterday(),
 ) -> CharacterSkill:
     """
