@@ -213,15 +213,15 @@ components:
         union_artifact_level:
           type: number
           format: int64
-          description: 아티팩트 레벨 
+          description: 아티팩트 레벨
         union_artifact_exp:
           type: number
           format: int64
-          description: 보유 아티팩트 경험치  
+          description: 보유 아티팩트 경험치
         union_artifact_point:
           type: number
           format: int64
-          description: 보유 아티팩트 포인트  
+          description: 보유 아티팩트 포인트
     UnionRaider:
       type: object
       properties:
@@ -311,23 +311,23 @@ components:
           description: 아티팩트 효과 정보
           items:
             type: object
-            properties: 
+            properties:
               name:
                 type: string
-                description: 아티팩트 효과 명 
+                description: 아티팩트 효과 명
               level:
                 type: number
                 format: int64
-                description: 아티팩트 효과 레벨 
+                description: 아티팩트 효과 레벨
         union_artifact_crystal:
           type: array
           description: 아티팩트 크리스탈 정보
           items:
             type: object
-            properties: 
-              name: 
+            properties:
+              name:
                 type: string
-                description: 아티팩트 크리스탈 명 
+                description: 아티팩트 크리스탈 명
               validity_flag:
                 type: string
                 description: 능력치 유효 여부 (0:유효, 1:유효하지 않음)
@@ -339,19 +339,19 @@ components:
                 type: number
                 format: int64
                 description: 아티팩트 크리스탈 등급
-              crystal_option_name_1: 
+              crystal_option_name_1:
                 type: string
                 description: 아티팩트 크리스탈 첫 번째 옵션 명
-              crystal_option_name_2: 
+              crystal_option_name_2:
                 type: string
-                description: 아티팩트 크리스탈 두 번째 옵션 명              
-              crystal_option_name_3: 
+                description: 아티팩트 크리스탈 두 번째 옵션 명
+              crystal_option_name_3:
                 type: string
-                description: 아티팩트 크리스탈 세 번째 옵션 명  
+                description: 아티팩트 크리스탈 세 번째 옵션 명
         union_artifact_remain_ap:
           type: number
           format: int64
-          description: 잔여 아티팩트 AP           
+          description: 잔여 아티팩트 AP
     ErrorMessage:
       type: object
       properties:
