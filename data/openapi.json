@@ -3,17 +3,17 @@
         "id": 22,
         "gameId": "2332",
         "categoryName": "캐릭터 정보 조회",
-        "filePath": "/22_script20240321042617.yaml",
-        "fileName": "22_script20240321042617.yaml",
-        "fileUrl": "https://d39jgqf8odj4rj.cloudfront.net/api/22_script20240321042617.yaml",
+        "filePath": "/22_script20240523040750.yaml",
+        "fileName": "22_script20240523040750.yaml",
+        "fileUrl": "https://d39jgqf8odj4rj.cloudfront.net/api/22_script20240523040750.yaml",
         "isVisible": true,
         "ordering": 1,
         "createEmpNo": "31532",
         "createEmpName": "%EA%B9%80%EC%A7%80%EC%95%88",
-        "updateEmpNo": "29523",
-        "updateEmpName": "연준명",
+        "updateEmpNo": "22322",
+        "updateEmpName": "윤진영2",
         "createDate": "2023-12-12T10:39:22",
-        "updateDate": "2024-05-15T23:00:13"
+        "updateDate": "2024-05-23T04:07:50"
     },
     {
         "id": 23,
