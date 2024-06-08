@@ -6,12 +6,12 @@ info:
     name: help_openapi@nexon.co.kr
   description: |-
     - 메이플스토리 게임 데이터는 평균 15분 후 확인 가능합니다.
-    - 2023년 12월 21일 데이터부터 조회할 수 있습니다.
+    - 2023년 12월 21일 데이터부터 조회할 수 있습니다. (단, 캐릭터 목록 조회는 기간과 무관하게 모두 조회 됩니다.)
     - 과거 데이터는 원하는 일자를 입력해 조회할 수 있으며, 전일 데이터는 다음날 오전 1시부터 확인할 수 있습니다. (12월 22일 데이터 조회 시, 22일 00시부터 23일 00시 사이 데이터가 조회 됩니다.)
     - 게임 콘텐츠 변경으로 ocid가 변경될 수 있습니다. ocid 기반 서비스 갱신 시 유의해 주시길 바랍니다.
-  x-fileName: 22_script20240523040750.yaml
-  x-updateDate: '2024-05-23 04:07:50'
-  x-fileUrl: 'https://d39jgqf8odj4rj.cloudfront.net/api/22_script20240523040750.yaml'
+  x-fileName: 22_script20240607011215.yaml
+  x-updateDate: '2024-06-07 01:12:15'
+  x-fileUrl: 'https://d39jgqf8odj4rj.cloudfront.net/api/22_script20240607011215.yaml'
 servers:
   - url: 'https://open.api.nexon.com'
 tags:
@@ -19,7 +19,7 @@ tags:
     description: 캐릭터 정보 조회
 
 paths:
-  /maplestory/v1/id:
+ /maplestory/v1/id:
     get:
       tags:
         - Character
@@ -71,8 +71,54 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorMessage'
                 
- 
-  /maplestory/v1/character/basic:
+ /maplestory/v1/character/list:
+    get:
+      tags:
+        - Character
+      summary: 캐릭터 목록 조회
+      description: 계정의 보유 캐릭터 목록을 조회합니다.
+      operationId: maplestory_get_character_list
+      parameters:
+        - name: x-nxopen-api-key
+          in: header
+          description: API KEY
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: SUCCESS
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CharacterList'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+                
+                
+ /maplestory/v1/character/basic:
     get:
       tags:
         - Character
@@ -128,7 +174,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorMessage'
-  /maplestory/v1/character/popularity:
+ /maplestory/v1/character/popularity:
     get:
       tags:
         - Character
@@ -184,7 +230,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorMessage'
-  /maplestory/v1/character/stat:
+ /maplestory/v1/character/stat:
     get:
       tags:
         - Character
@@ -240,7 +286,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorMessage'
-  /maplestory/v1/character/hyper-stat:
+ /maplestory/v1/character/hyper-stat:
     get:
       tags:
         - Character
@@ -296,7 +342,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorMessage'
-  /maplestory/v1/character/propensity:
+ /maplestory/v1/character/propensity:
     get:
       tags:
         - Character
@@ -352,7 +398,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorMessage'
-  /maplestory/v1/character/ability:
+ /maplestory/v1/character/ability:
     get:
       tags:
         - Character
@@ -409,7 +455,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorMessage'
 
-  /maplestory/v1/character/item-equipment:
+ /maplestory/v1/character/item-equipment:
     get:
       tags:
         - Character
@@ -467,7 +513,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorMessage'
 
-  /maplestory/v1/character/cashitem-equipment:
+ /maplestory/v1/character/cashitem-equipment:
     get:
       tags:
         - Character
@@ -525,7 +571,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorMessage'
 
-  /maplestory/v1/character/symbol-equipment:
+ /maplestory/v1/character/symbol-equipment:
     get:
       tags:
         - Character
@@ -582,7 +628,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorMessage'
-  /maplestory/v1/character/set-effect:
+ /maplestory/v1/character/set-effect:
     get:
       tags:
         - Character
@@ -639,7 +685,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorMessage'
-  /maplestory/v1/character/beauty-equipment:
+ /maplestory/v1/character/beauty-equipment:
     get:
       tags:
         - Character
@@ -696,7 +742,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorMessage'
-  /maplestory/v1/character/android-equipment:
+ /maplestory/v1/character/android-equipment:
     get:
       tags:
         - Character
@@ -753,7 +799,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorMessage'
-  /maplestory/v1/character/pet-equipment:
+ /maplestory/v1/character/pet-equipment:
     get:
       tags:
         - Character
@@ -810,7 +856,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorMessage'
-  /maplestory/v1/character/skill:
+ /maplestory/v1/character/skill:
     get:
       tags:
         - Character
@@ -898,7 +944,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorMessage'
-  /maplestory/v1/character/link-skill:
+ /maplestory/v1/character/link-skill:
     get:
       tags:
         - Character
@@ -955,7 +1001,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorMessage'
-  /maplestory/v1/character/vmatrix:
+ /maplestory/v1/character/vmatrix:
     get:
       tags:
         - Character
@@ -1012,7 +1058,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorMessage'
-  /maplestory/v1/character/hexamatrix:
+ /maplestory/v1/character/hexamatrix:
     get:
       tags:
         - Character
@@ -1069,7 +1115,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorMessage'
-  /maplestory/v1/character/hexamatrix-stat:
+ /maplestory/v1/character/hexamatrix-stat:
     get:
       tags:
         - Character
@@ -1126,7 +1172,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorMessage'
-  /maplestory/v1/character/dojang:
+ /maplestory/v1/character/dojang:
     get:
       tags:
         - Character
@@ -1191,7 +1237,40 @@ components:
         ocid:
           type: string
           description: 캐릭터 식별자
-   
+    CharacterList:
+      type: object
+      properties:
+        account_list:
+          type: array
+          description: 메이플스토리 계정 목록
+          items:
+            type: object
+            properties:
+              account_id:
+                type: string
+                description: 메이플스토리 계정 식별자
+              character_list:
+                type: array
+                description: 캐릭터 목록
+                items:
+                  type: object
+                  properties:
+                    ocid:
+                      type: string
+                      description: 캐릭터 식별자
+                    character_name: 
+                      type: string
+                      description: 캐릭터 명
+                    world_name:
+                      type: string
+                      description: 월드 명
+                    character_class:
+                      type: string
+                      description: 캐릭터 직업
+                    character_level:
+                      type: number
+                      format: int64
+                      description: 캐릭터 레벨
     CharacterBasic:
       type: object
       properties:
@@ -1231,7 +1310,17 @@ components:
         character_image:
           type: string
           description: 캐릭터 외형 이미지
-  
+        character_date_create:
+          type: string
+          description: 캐릭터  생성일 (KST, 일 단위 데이터로 시, 분은 일괄 0으로 표기)
+          example: "2023-12-21T00:00+09:00"
+        access_flag:
+          type: string
+          description: 최근 7일간 접속 여부 (true 접속, false 미접속)
+        liberation_quest_clear_flag:
+          type: string
+          description: 해방 퀘스트 완료 여부 (true 완료, false 미완료)
+          
     CharacterPopularity:
       type: object
       properties:
