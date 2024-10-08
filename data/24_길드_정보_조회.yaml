@@ -59,7 +59,7 @@ paths:
               - 아케인
               - 노바
               - 리부트
-              - 리부트2 
+              - 리부트2
               - 버닝
               - 버닝2
               - 버닝3
@@ -157,7 +157,7 @@ components:
       properties:
         oguild_id:
           type: string
-          description: 길드 식별자 
+          description: 길드 식별자
     GuildBasic:
       type: object
       properties:
