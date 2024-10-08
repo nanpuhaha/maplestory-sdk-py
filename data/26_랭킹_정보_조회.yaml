@@ -1,13 +1,13 @@
 openapi: 3.0.3
 info:
-  title: 메이플스토리 API 
+  title: 메이플스토리 API
   version: 1.0.0
   contact:
     name: help_openapi@nexon.co.kr
   description: |-
     - 2023년 12월 22일 데이터부터 조회할 수 있습니다.
-    - 오전 8시 30분부터 오늘의 랭킹 정보를 조회할 수 있습니다. 
-    - 게임 콘텐츠 변경으로 ocid가 변경될 수 있습니다. ocid 기반 서비스 갱신 시 유의해 주시길 바랍니다. 
+    - 오전 8시 30분부터 오늘의 랭킹 정보를 조회할 수 있습니다.
+    - 게임 콘텐츠 변경으로 ocid가 변경될 수 있습니다. ocid 기반 서비스 갱신 시 유의해 주시길 바랍니다.
 
   x-fileName: 26_script20240305074948.yaml
   x-updateDate: '2024-06-19 23:03:28'
@@ -59,7 +59,7 @@ paths:
               - 아케인
               - 노바
               - 리부트
-              - 리부트2 
+              - 리부트2
               - 버닝
               - 버닝2
               - 버닝3
@@ -175,7 +175,7 @@ paths:
               - 칼리-전체 전직
         - name: ocid
           in: query
-          description: 캐릭터 식별자 
+          description: 캐릭터 식별자
           required: false
           schema:
             type: string
@@ -258,10 +258,10 @@ paths:
               - 아케인
               - 노바
               - 리부트
-              - 리부트2 
+              - 리부트2
         - name: ocid
           in: query
-          description: 캐릭터 식별자 
+          description: 캐릭터 식별자
           required: false
           schema:
             type: string
@@ -344,7 +344,7 @@ paths:
               - 아케인
               - 노바
               - 리부트
-              - 리부트2 
+              - 리부트2
               - 버닝
               - 버닝2
               - 버닝3
@@ -440,7 +440,7 @@ paths:
               - 아케인
               - 노바
               - 리부트
-              - 리부트2 
+              - 리부트2
               - 버닝
               - 버닝2
               - 버닝3
@@ -639,13 +639,13 @@ paths:
               - 아케인
               - 노바
               - 리부트
-              - 리부트2 
+              - 리부트2
               - 버닝
               - 버닝2
               - 버닝3
         - name: ocid
           in: query
-          description: 캐릭터 식별자 
+          description: 캐릭터 식별자
           required: false
           schema:
             type: string
@@ -814,7 +814,7 @@ components:
               ranking:
                 type: number
                 format: int32
-                description: 유니온 랭킹 순위 
+                description: 유니온 랭킹 순위
               character_name:
                 type: string
                 description: 캐릭터 명
@@ -850,7 +850,7 @@ components:
               ranking:
                 type: number
                 format: int32
-                description: 길드 랭킹 순위 
+                description: 길드 랭킹 순위
               guild_name:
                 type: string
                 description: 길드 명
@@ -886,7 +886,7 @@ components:
               ranking:
                 type: number
                 format: int32
-                description: 무릉도장 랭킹 순위 
+                description: 무릉도장 랭킹 순위
               character_name:
                 type: string
                 description: 캐릭터 명
@@ -966,7 +966,7 @@ components:
               ranking:
                 type: number
                 format: int32
-                description: 업적 랭킹 순위 
+                description: 업적 랭킹 순위
               character_name:
                 type: string
                 description: 캐릭터 명
