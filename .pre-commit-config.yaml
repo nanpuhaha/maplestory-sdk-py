@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.5.0
+    rev: v5.0.0
     hooks:
       - id: check-ast
       - id: check-json
@@ -13,7 +13,7 @@ repos:
   # https://black.readthedocs.io/en/stable/integrations/source_version_control.html
   # Using this mirror lets us use mypyc-compiled black, which is about 2x faster
   - repo: https://github.com/psf/black-pre-commit-mirror
-    rev: 24.2.0
+    rev: 24.10.0
     hooks:
       - id: black
         # It is recommended to specify the latest version of Python
@@ -24,13 +24,13 @@ repos:
 
   # https://pycqa.github.io/isort/docs/configuration/pre-commit.html
   - repo: https://github.com/pycqa/isort
-    rev: 5.13.2
+    rev: 6.0.0
     hooks:
       - id: isort
         name: isort (python)
 
   - repo: https://github.com/PyCQA/autoflake
-    rev: v2.3.0
+    rev: v2.3.1
     hooks:
       - id: autoflake
         args:
