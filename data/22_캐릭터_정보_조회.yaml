@@ -70,7 +70,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorMessage'
-                
+
  /maplestory/v1/character/list:
     get:
       tags:
@@ -116,8 +116,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorMessage'
-                
-                
+
+
  /maplestory/v1/character/basic:
     get:
       tags:
@@ -912,7 +912,7 @@ paths:
               - "hyperactive"
               - "5"
               - "6"
-            
+
       responses:
         '200':
           description: SUCCESS
@@ -1258,7 +1258,7 @@ components:
                     ocid:
                       type: string
                       description: 캐릭터 식별자
-                    character_name: 
+                    character_name:
                       type: string
                       description: 캐릭터 명
                     world_name:
@@ -1278,7 +1278,7 @@ components:
           type: string
           description: 조회 기준일 (KST, 일 단위 데이터로 시, 분은 일괄 0으로 표기)
           example: "2023-12-21T00:00+09:00"
-        character_name: 
+        character_name:
           type: string
           description: 캐릭터 명
         world_name:
@@ -1320,7 +1320,7 @@ components:
         liberation_quest_clear_flag:
           type: string
           description: 해방 퀘스트 완료 여부 (true 완료, false 미완료)
-          
+
     CharacterPopularity:
       type: object
       properties:
@@ -1509,76 +1509,76 @@ components:
           type: number
           format: int64
           description: 보유 명성치
-        preset_no: 
+        preset_no:
           type: number
           format: int64
           description: 적용 중인 어빌리티 프리셋 번호(number)
-        ability_preset_1: 
+        ability_preset_1:
           type: object
-          description: 어빌리티 1번 프리셋 전체 정보  
+          description: 어빌리티 1번 프리셋 전체 정보
           properties:
             ability_preset_grade:
               type: string
-              description: 어빌리티 1번 프리셋의 어빌리티 등급  
+              description: 어빌리티 1번 프리셋의 어빌리티 등급
             ability_info:
               type: array
               description: 어빌리티 1번 프리셋 정보
               items:
-                type: object 
+                type: object
                 properties:
-                  ability_no: 
-                    type: string 
-                    description: 어빌리티 번호  
-                  ability_grade: 
-                    type: string 
-                    description: 어빌리티 등급    
-                  ability_value: 
-                    type: string 
-                    description: 어빌리티 옵션 및 수치      
-        ability_preset_2: 
+                  ability_no:
+                    type: string
+                    description: 어빌리티 번호
+                  ability_grade:
+                    type: string
+                    description: 어빌리티 등급
+                  ability_value:
+                    type: string
+                    description: 어빌리티 옵션 및 수치
+        ability_preset_2:
           type: object
-          description: 어빌리티 2번 프리셋 전체 정보  
+          description: 어빌리티 2번 프리셋 전체 정보
           properties:
             ability_preset_grade:
               type: string
-              description: 어빌리티 2번 프리셋의 어빌리티 등급  
+              description: 어빌리티 2번 프리셋의 어빌리티 등급
             ability_info:
               type: array
               description: 어빌리티 2번 프리셋 정보
               items:
-                type: object 
+                type: object
                 properties:
-                  ability_no: 
-                    type: string 
-                    description: 어빌리티 번호  
-                  ability_grade: 
-                    type: string 
-                    description: 어빌리티 등급    
-                  ability_value: 
-                    type: string 
-                    description: 어빌리티 옵션 및 수치      
-        ability_preset_3: 
+                  ability_no:
+                    type: string
+                    description: 어빌리티 번호
+                  ability_grade:
+                    type: string
+                    description: 어빌리티 등급
+                  ability_value:
+                    type: string
+                    description: 어빌리티 옵션 및 수치
+        ability_preset_3:
           type: object
-          description: 어빌리티 3번 프리셋 전체 정보  
+          description: 어빌리티 3번 프리셋 전체 정보
           properties:
             ability_preset_grade:
               type: string
-              description: 어빌리티 3번 프리셋의 어빌리티 등급  
+              description: 어빌리티 3번 프리셋의 어빌리티 등급
             ability_info:
               type: array
               description: 어빌리티 3번 프리셋 정보
               items:
-                type: object 
+                type: object
                 properties:
-                  ability_no: 
-                    type: string 
-                    description: 어빌리티 번호  
-                  ability_grade: 
-                    type: string 
-                    description: 어빌리티 등급    
-                  ability_value: 
-                    type: string 
-                    description: 어빌리티 옵션 및 수치                  
+                  ability_no:
+                    type: string
+                    description: 어빌리티 번호
+                  ability_grade:
+                    type: string
+                    description: 어빌리티 등급
+                  ability_value:
+                    type: string
+                    description: 어빌리티 옵션 및 수치
     CharacterItemEquipment:
       type: object
       properties:
@@ -1875,7 +1875,7 @@ components:
                 description: 소울 명
               soul_option:
                 type: string
-                description: 소울 옵션 
+                description: 소울 옵션
               item_etc_option:
                 type: object
                 description: 장비 기타 옵션 정보
@@ -1915,7 +1915,7 @@ components:
                     description: 점프력
               starforce:
                 type: string
-                description: 강화 단계 
+                description: 강화 단계
               starforce_scroll_flag:
                 type: string
                 description: 놀라운 장비 강화 주문서 사용 여부 (0:미사용, 1:사용)
@@ -2243,7 +2243,7 @@ components:
                 description: 소울 명
               soul_option:
                 type: string
-                description: 소울 옵션 
+                description: 소울 옵션
               item_etc_option:
                 type: object
                 description: 장비 기타 옵션 정보
@@ -2283,7 +2283,7 @@ components:
                     description: 점프력
               starforce:
                 type: string
-                description: 강화 단계 
+                description: 강화 단계
               starforce_scroll_flag:
                 type: string
                 description: 놀라운 장비 강화 주문서 사용 여부 (0:미사용, 1:사용)
@@ -2611,7 +2611,7 @@ components:
                 description: 소울 명
               soul_option:
                 type: string
-                description: 소울 옵션 
+                description: 소울 옵션
               item_etc_option:
                 type: object
                 description: 장비 기타 옵션 정보
@@ -2651,7 +2651,7 @@ components:
                     description: 점프력
               starforce:
                 type: string
-                description: 강화 단계 
+                description: 강화 단계
               starforce_scroll_flag:
                 type: string
                 description: 놀라운 장비 강화 주문서 사용 여부 (0:미사용, 1:사용)
@@ -2979,7 +2979,7 @@ components:
                 description: 소울 명
               soul_option:
                 type: string
-                description: 소울 옵션 
+                description: 소울 옵션
               item_etc_option:
                 type: object
                 description: 장비 기타 옵션 정보
@@ -3019,7 +3019,7 @@ components:
                     description: 점프력
               starforce:
                 type: string
-                description: 강화 단계 
+                description: 강화 단계
               starforce_scroll_flag:
                 type: string
                 description: 놀라운 장비 강화 주문서 사용 여부 (0:미사용, 1:사용)
@@ -3067,7 +3067,7 @@ components:
               date_expire:
                 type: string
                 description: 장비 유효 기간(KST)
-                example: "2023-12-21T17:28+09:00" 
+                example: "2023-12-21T17:28+09:00"
         title:
           type: object
           description: 칭호 정보
@@ -3112,7 +3112,7 @@ components:
                 description: 장비 설명
               item_shape_name:
                 type: string
-                description: 장비 외형 
+                description: 장비 외형
               item_shape_icon:
                 type: string
                 description: 장비 외형 아이콘
@@ -3345,7 +3345,7 @@ components:
                 description: 소울 명
               soul_option:
                 type: string
-                description: 소울 옵션 
+                description: 소울 옵션
               item_etc_option:
                 type: object
                 description: 장비 기타 옵션 정보
@@ -3385,7 +3385,7 @@ components:
                     description: 점프력
               starforce:
                 type: string
-                description: 강화 단계 
+                description: 강화 단계
               starforce_scroll_flag:
                 type: string
                 description: 놀라운 장비 강화 주문서 사용 여부 (0:미사용, 1:사용)
@@ -3457,7 +3457,7 @@ components:
                 description: 장비 설명
               item_shape_name:
                 type: string
-                description: 장비 외형 
+                description: 장비 외형
               item_shape_icon:
                 type: string
                 description: 장비 외형 아이콘
@@ -3690,7 +3690,7 @@ components:
                 description: 소울 명
               soul_option:
                 type: string
-                description: 소울 옵션 
+                description: 소울 옵션
               item_etc_option:
                 type: object
                 description: 장비 기타 옵션 정보
@@ -3730,7 +3730,7 @@ components:
                     description: 점프력
               starforce:
                 type: string
-                description: 강화 단계 
+                description: 강화 단계
               starforce_scroll_flag:
                 type: string
                 description: 놀라운 장비 강화 주문서 사용 여부 (0:미사용, 1:사용)
@@ -3795,10 +3795,10 @@ components:
         preset_no:
           type: number
           format: int64
-          description: 적용 중인 캐시 장비 프리셋 번호 
+          description: 적용 중인 캐시 장비 프리셋 번호
         cash_item_equipment_base:
           type: array
-          description: 장착 중인 캐시 장비 
+          description: 장착 중인 캐시 장비
           items:
             type: object
             properties:
@@ -3861,7 +3861,7 @@ components:
                     description: 컬러링프리즘 명도
               item_gender:
                 type: string
-                description: 아이템 장착 가능 성별 
+                description: 아이템 장착 가능 성별
         cash_item_equipment_preset_1:
           type: array
           description: 1번 코디 프리셋
@@ -3927,11 +3927,11 @@ components:
                     description: 컬러링프리즘 명도
               base_preset_item_disable_flag:
                 type: string
-                description: 다른 프리셋에서 장비 추가 장착 없이 1번 프리셋의 장비 공유를 비활성화 했는지 여부  
+                description: 다른 프리셋에서 장비 추가 장착 없이 1번 프리셋의 장비 공유를 비활성화 했는지 여부
                 deprecated: true
               item_gender:
                 type: string
-                description: 아이템 장착 가능 성별 
+                description: 아이템 장착 가능 성별
         cash_item_equipment_preset_2:
           type: array
           description: 2번 코디 프리셋
@@ -3997,14 +3997,14 @@ components:
                     description: 컬러링프리즘 명도
               base_preset_item_disable_flag:
                 type: string
-                description: 다른 프리셋에서 장비 추가 장착 없이 1번 프리셋의 장비 공유를 비활성화 했는지 여부  
+                description: 다른 프리셋에서 장비 추가 장착 없이 1번 프리셋의 장비 공유를 비활성화 했는지 여부
                 deprecated: true
               item_gender:
                 type: string
-                description: 아이템 장착 가능 성별 
+                description: 아이템 장착 가능 성별
         cash_item_equipment_preset_3:
           type: array
-          description: 3번 코디 프리셋 
+          description: 3번 코디 프리셋
           items:
             type: object
             properties:
@@ -4067,11 +4067,11 @@ components:
                     description: 컬러링프리즘 명도
               base_preset_item_disable_flag:
                 type: string
-                description: 다른 프리셋에서 장비 추가 장착 없이 1번 프리셋의 장비 공유를 비활성화 했는지 여부  
+                description: 다른 프리셋에서 장비 추가 장착 없이 1번 프리셋의 장비 공유를 비활성화 했는지 여부
                 deprecated: true
               item_gender:
                 type: string
-                description: 아이템 장착 가능 성별                     
+                description: 아이템 장착 가능 성별
         additional_cash_item_equipment_base:
           type: array
           description: 제로인 경우 베타, 엔젤릭버스터인 경우 드레스 업 모드에서 장착 중인 캐시 장비
@@ -4137,7 +4137,7 @@ components:
                     description: 컬러링프리즘 명도
               item_gender:
                 type: string
-                description: 아이템 장착 가능 성별       
+                description: 아이템 장착 가능 성별
         additional_cash_item_equipment_preset_1:
           type: array
           description: 제로인 경우 베타, 엔젤릭버스터인 경우 드레스 업 모드의 1번 코디 프리셋
@@ -4203,11 +4203,11 @@ components:
                     description: 컬러링프리즘 명도
               base_preset_item_disable_flag:
                 type: string
-                description: 다른 프리셋에서 장비 추가 장착 없이 1번 프리셋의 장비 공유를 비활성화 했는지 여부  
+                description: 다른 프리셋에서 장비 추가 장착 없이 1번 프리셋의 장비 공유를 비활성화 했는지 여부
                 deprecated: true
               item_gender:
                 type: string
-                description: 아이템 장착 가능 성별       
+                description: 아이템 장착 가능 성별
         additional_cash_item_equipment_preset_2:
           type: array
           description: 제로인 경우 베타, 엔젤릭버스터인 경우 드레스 업 모드의 2번 코디 프리셋
@@ -4273,11 +4273,11 @@ components:
                     description: 컬러링프리즘 명도
               base_preset_item_disable_flag:
                 type: string
-                description: 다른 프리셋에서 장비 추가 장착 없이 1번 프리셋의 장비 공유를 비활성화 했는지 여부  
+                description: 다른 프리셋에서 장비 추가 장착 없이 1번 프리셋의 장비 공유를 비활성화 했는지 여부
                 deprecated: true
               item_gender:
                 type: string
-                description: 아이템 장착 가능 성별       
+                description: 아이템 장착 가능 성별
         additional_cash_item_equipment_preset_3:
           type: array
           description: 제로인 경우 베타, 엔젤릭버스터인 경우 드레스 업 모드의 3번 코디 프리셋
@@ -4343,11 +4343,11 @@ components:
                     description: 컬러링프리즘 명도
               base_preset_item_disable_flag:
                 type: string
-                description: 다른 프리셋에서 장비 추가 장착 없이 1번 프리셋의 장비 공유를 비활성화 했는지 여부  
+                description: 다른 프리셋에서 장비 추가 장착 없이 1번 프리셋의 장비 공유를 비활성화 했는지 여부
                 deprecated: true
               item_gender:
                 type: string
-                description: 아이템 장착 가능 성별       
+                description: 아이템 장착 가능 성별
     CharacterSymbolEquipment:
       type: object
       properties:
@@ -4562,7 +4562,7 @@ components:
               description: 안드로이드 헤어 명
             base_color:
               type: string
-              description: 안드로이드 헤어 베이스 컬러 
+              description: 안드로이드 헤어 베이스 컬러
             mix_color:
               type: string
               description: 안드로이드 헤어 믹스 컬러
@@ -4653,34 +4653,34 @@ components:
                     description: 컬러링프리즘 명도
               android_item_gender:
                 type: string
-                description: 아이템 장착 가능 성별       
+                description: 아이템 장착 가능 성별
         android_ear_sensor_clip_flag:
           type: string
           description: 안드로이드 이어센서 클립 적용 여부
-        android_gender: 
+        android_gender:
           type: string
-          description: 안드로이드 성별 
-        android_grade: 
+          description: 안드로이드 성별
+        android_grade:
           type: string
           description: 안드로이드 등급
-        android_non_humanoid_flag: 
+        android_non_humanoid_flag:
           type: string
-          description: 비인간형 안드로이드 여부      
-        android_shop_usable_flag: 
+          description: 비인간형 안드로이드 여부
+        android_shop_usable_flag:
           type: string
-          description: 잡화상점 기능 이용 가능 여부                  
-        preset_no: 
+          description: 잡화상점 기능 이용 가능 여부
+        preset_no:
           type: number
           format: int64
-          description: 적용 중인 장비 프리셋 번호(number)      
-        android_preset_1: 
+          description: 적용 중인 장비 프리셋 번호(number)
+        android_preset_1:
           type: object
           description: 1번 프리셋 안드로이드 정보
-          properties: 
-            android_name: 
+          properties:
+            android_name:
               type: string
               description: 안드로이드 명
-            android_nickname: 
+            android_nickname:
               type: string
               description: 안드로이드 닉네임
             android_icon:
@@ -4688,16 +4688,16 @@ components:
               description: 안드로이드 아이콘
             android_description:
               type: string
-              description: 안드로이드 아이템 설명                
+              description: 안드로이드 아이템 설명
             android_gender:
               type: string
-              description: 안드로이드 성별             
+              description: 안드로이드 성별
             android_grade:
               type: string
-              description: 안드로이드 등급             
+              description: 안드로이드 등급
             android_skin_name:
               type: string
-              description: 안드로이드 피부             
+              description: 안드로이드 피부
             android_hair:
               type: object
               description: 안드로이드 헤어 정보
@@ -4707,7 +4707,7 @@ components:
                   description: 안드로이드 헤어 명
                 base_color:
                   type: string
-                  description: 안드로이드 헤어 베이스 컬러 
+                  description: 안드로이드 헤어 베이스 컬러
                 mix_color:
                   type: string
                   description: 안드로이드 헤어 믹스 컬러
@@ -4729,24 +4729,24 @@ components:
                   description: 안드로이드 성형 믹스 컬러
                 mix_rate:
                   type: string
-                  description: 안드로이드 성형 믹스 컬러의 염색 비율      
+                  description: 안드로이드 성형 믹스 컬러의 염색 비율
             android_ear_sensor_clip_flag:
               type: string
               description: 안드로이드 이어센서 클립 적용 여부
-            android_non_humanoid_flag: 
+            android_non_humanoid_flag:
               type: string
-              description: 비인간형 안드로이드 여부      
-            android_shop_usable_flag: 
+              description: 비인간형 안드로이드 여부
+            android_shop_usable_flag:
               type: string
-              description: 잡화상점 기능 이용 가능 여부                  
-        android_preset_2: 
+              description: 잡화상점 기능 이용 가능 여부
+        android_preset_2:
           type: object
           description: 2번 프리셋 안드로이드 정보
-          properties: 
-            android_name: 
+          properties:
+            android_name:
               type: string
               description: 안드로이드 명
-            android_nickname: 
+            android_nickname:
               type: string
               description: 안드로이드 닉네임
             android_icon:
@@ -4754,16 +4754,16 @@ components:
               description: 안드로이드 아이콘
             android_description:
               type: string
-              description: 안드로이드 아이템 설명                
+              description: 안드로이드 아이템 설명
             android_gender:
               type: string
-              description: 안드로이드 성별             
+              description: 안드로이드 성별
             android_grade:
               type: string
-              description: 안드로이드 등급             
+              description: 안드로이드 등급
             android_skin_name:
               type: string
-              description: 안드로이드 피부             
+              description: 안드로이드 피부
             android_hair:
               type: object
               description: 안드로이드 헤어 정보
@@ -4773,7 +4773,7 @@ components:
                   description: 안드로이드 헤어 명
                 base_color:
                   type: string
-                  description: 안드로이드 헤어 베이스 컬러 
+                  description: 안드로이드 헤어 베이스 컬러
                 mix_color:
                   type: string
                   description: 안드로이드 헤어 믹스 컬러
@@ -4795,24 +4795,24 @@ components:
                   description: 안드로이드 성형 믹스 컬러
                 mix_rate:
                   type: string
-                  description: 안드로이드 성형 믹스 컬러의 염색 비율      
+                  description: 안드로이드 성형 믹스 컬러의 염색 비율
             android_ear_sensor_clip_flag:
               type: string
               description: 안드로이드 이어센서 클립 적용 여부
-            android_non_humanoid_flag: 
+            android_non_humanoid_flag:
               type: string
-              description: 비인간형 안드로이드 여부      
-            android_shop_usable_flag: 
+              description: 비인간형 안드로이드 여부
+            android_shop_usable_flag:
               type: string
-              description: 잡화상점 기능 이용 가능 여부         
-        android_preset_3: 
+              description: 잡화상점 기능 이용 가능 여부
+        android_preset_3:
           type: object
           description: 3번 프리셋 안드로이드 정보
-          properties: 
-            android_name: 
+          properties:
+            android_name:
               type: string
               description: 안드로이드 명
-            android_nickname: 
+            android_nickname:
               type: string
               description: 안드로이드 닉네임
             android_icon:
@@ -4820,16 +4820,16 @@ components:
               description: 안드로이드 아이콘
             android_description:
               type: string
-              description: 안드로이드 아이템 설명                
+              description: 안드로이드 아이템 설명
             android_gender:
               type: string
-              description: 안드로이드 성별             
+              description: 안드로이드 성별
             android_grade:
               type: string
-              description: 안드로이드 등급             
+              description: 안드로이드 등급
             android_skin_name:
               type: string
-              description: 안드로이드 피부             
+              description: 안드로이드 피부
             android_hair:
               type: object
               description: 안드로이드 헤어 정보
@@ -4839,7 +4839,7 @@ components:
                   description: 안드로이드 헤어 명
                 base_color:
                   type: string
-                  description: 안드로이드 헤어 베이스 컬러 
+                  description: 안드로이드 헤어 베이스 컬러
                 mix_color:
                   type: string
                   description: 안드로이드 헤어 믹스 컬러
@@ -4861,16 +4861,16 @@ components:
                   description: 안드로이드 성형 믹스 컬러
                 mix_rate:
                   type: string
-                  description: 안드로이드 성형 믹스 컬러의 염색 비율      
+                  description: 안드로이드 성형 믹스 컬러의 염색 비율
             android_ear_sensor_clip_flag:
               type: string
               description: 안드로이드 이어센서 클립 적용 여부
-            android_non_humanoid_flag: 
+            android_non_humanoid_flag:
               type: string
-              description: 비인간형 안드로이드 여부      
-            android_shop_usable_flag: 
+              description: 비인간형 안드로이드 여부
+            android_shop_usable_flag:
               type: string
-              description: 잡화상점 기능 이용 가능 여부     
+              description: 잡화상점 기능 이용 가능 여부
 
     CharacterPetEquipment:
       type: object
@@ -4926,10 +4926,10 @@ components:
               description: 업그레이드 가능 횟수
             item_shape:
               type: string
-              description: 아이템 외형 
+              description: 아이템 외형
             item_shape_icon:
               type: string
-              description: 아이템 외형 아이콘   
+              description: 아이템 외형 아이콘
         pet_1_auto_skill:
           type: object
           description: 펫1 펫 버프 자동스킬 정보
@@ -5011,10 +5011,10 @@ components:
               description: 업그레이드 가능 횟수
             item_shape:
               type: string
-              description: 아이템 외형 
+              description: 아이템 외형
             item_shape_icon:
               type: string
-              description: 아이템 외형 아이콘   
+              description: 아이템 외형 아이콘
         pet_2_auto_skill:
           type: object
           description: 펫2 펫 버프 자동 스킬 정보
@@ -5096,10 +5096,10 @@ components:
               description: 업그레이드 가능 횟수
             item_shape:
               type: string
-              description: 아이템 외형 
+              description: 아이템 외형
             item_shape_icon:
               type: string
-              description: 아이템 외형 아이콘  
+              description: 아이템 외형 아이콘
         pet_3_auto_skill:
           type: object
           description: 펫3 펫 버프 자동 스킬 정보
@@ -5133,7 +5133,7 @@ components:
           description: 펫3 외형
         pet_3_appearance_icon:
           type: string
-          description: 펫3 외형 아이콘          
+          description: 펫3 외형 아이콘
     CharacterSkill:
       type: object
       properties:
@@ -5149,7 +5149,7 @@ components:
           description: 스킬 전직 차수
         character_skill:
           type: array
-          description: 스킬 정보 
+          description: 스킬 정보
           items:
             type: object
             properties:
@@ -5211,9 +5211,9 @@ components:
           items:
             type: object
             properties:
-              skill_name: 
+              skill_name:
                 type: string
-                description: 스킬 명  
+                description: 스킬 명
               skill_description:
                 type: string
                 description: 스킬 설명
@@ -5226,16 +5226,16 @@ components:
                 description: 스킬 효과
               skill_icon:
                 type: string
-                description: 스킬 아이콘         
+                description: 스킬 아이콘
         character_link_skill_preset_2:
           type: array
           description: 링크 스킬 2번 프리셋 정보
           items:
             type: object
             properties:
-              skill_name: 
+              skill_name:
                 type: string
-                description: 스킬 명  
+                description: 스킬 명
               skill_description:
                 type: string
                 description: 스킬 설명
@@ -5248,16 +5248,16 @@ components:
                 description: 스킬 효과
               skill_icon:
                 type: string
-                description: 스킬 아이콘               
+                description: 스킬 아이콘
         character_link_skill_preset_3:
           type: array
           description: 링크 스킬 3번 프리셋 정보
           items:
             type: object
             properties:
-              skill_name: 
+              skill_name:
                 type: string
-                description: 스킬 명  
+                description: 스킬 명
               skill_description:
                 type: string
                 description: 스킬 설명
@@ -5270,10 +5270,10 @@ components:
                 description: 스킬 효과
               skill_icon:
                 type: string
-                description: 스킬 아이콘             
+                description: 스킬 아이콘
         character_owned_link_skill:
           type: object
-          description: 내 링크 스킬 정보 
+          description: 내 링크 스킬 정보
           properties:
             skill_name:
               type: string
@@ -5293,7 +5293,7 @@ components:
               description: 스킬 아이콘
         character_owned_link_skill_preset_1:
           type: object
-          description: 내 링크 스킬 1번 프리셋 정보  
+          description: 내 링크 스킬 1번 프리셋 정보
           properties:
             skill_name:
               type: string
@@ -5313,7 +5313,7 @@ components:
               description: 스킬 아이콘
         character_owned_link_skill_preset_2:
           type: object
-          description: 내 링크 스킬 2번 프리셋 정보  
+          description: 내 링크 스킬 2번 프리셋 정보
           properties:
             skill_name:
               type: string
@@ -5333,7 +5333,7 @@ components:
               description: 스킬 아이콘
         character_owned_link_skill_preset_3:
           type: object
-          description: 내 링크 스킬 3번 프리셋 정보  
+          description: 내 링크 스킬 3번 프리셋 정보
           properties:
             skill_name:
               type: string
@@ -5406,7 +5406,7 @@ components:
           example: "2023-12-21T00:00+09:00"
         character_hexa_core_equipment:
           type: array
-          description: HEXA 코어 정보 
+          description: HEXA 코어 정보
           items:
             type: object
             properties:
@@ -5442,7 +5442,7 @@ components:
           description: 캐릭터 직업
         character_hexa_stat_core:
           type: array
-          description: HEXA 스탯 코어 정보 
+          description: HEXA 스탯 코어 정보
           items:
             type: object
             properties:
